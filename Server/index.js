@@ -7,7 +7,7 @@ dotenv.config()
 const MongoClient = mongodb.MongoClient
 
 //use port in .env or 5000
-const port = process.env.PORT || 5000
+const port = process.env.PORT || 3000
 
 //Connect to mongodb
 MongoClient.connect(
