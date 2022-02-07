@@ -5,7 +5,7 @@
         $ cd server
         $ NPM run dev
 
-## To run the server:
+## To run the react-app:
         
         $ cd my-app
         $ NPM start
