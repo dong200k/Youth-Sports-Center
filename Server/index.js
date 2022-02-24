@@ -2,7 +2,7 @@
 import app from "./server.js"
 import mongodb from "mongodb"
 import dotenv from "dotenv"
-
+import announcementDao from "./dao/announcementDAO.js"
 dotenv.config()
 const MongoClient = mongodb.MongoClient
 
@@ -29,6 +29,7 @@ MongoClient.connect(
 })
 .then(async client =>{
   //if connection was successful start server and listen on port
+  announcementDao.injectDB(client)
   app.listen(port, ()=>{
     console.log(`listening on ${port}`)
   })
