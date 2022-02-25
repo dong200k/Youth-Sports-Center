@@ -1,0 +1,152 @@
+.topHeader{
+    position: fixed;
+    top: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background: #fff;
+    font-family: 'Quicksand', sans-serif;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.05);
+}
+
+/* .topLogo{
+    height: 60px;
+    text-decoration: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+} */
+
+.topToggle{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 60px;
+    height: 60px;
+    background: #9051ff;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.topToggle::before{
+    content: '';
+    position: absolute;
+    width: 28px;
+    height: 2px;
+    background: #fff;
+    transform: translateY(-5px);
+    transition: 0.2s;
+
+}
+
+.topToggle::after{
+    content: '';
+    position: absolute;
+    width: 28px;
+    height: 2px;
+    background: #fff;
+    transform: translateY(5px);
+    transition: 0.2s;
+}
+
+
+.close{
+    background-color: #f7226a;
+}
+
+.close::before{
+    transform: translateY(0px) rotate(45deg);
+}
+
+.close::after{
+    transform: translateY(0px) rotate(-45deg);
+}
+
+.topNavbar{
+    position: relative;
+    height: 60px;
+    right: 60px;
+    background: #fff;
+    transition: 0.5s;
+}
+
+.hidden{
+    transform: translateY(-100%);
+    visibility: hidden;
+}
+
+.topList{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    margin-top: 0;
+}
+
+.topListItem{
+    list-style: none;
+    color: #12334e;
+    height: 60px;
+    line-height: 60px;
+    display: inline-block;
+    text-decoration: none;
+    font-size: 1.2em;
+    padding: 0 15px;
+    letter-spacing: 2px;
+}
+
+.topListItem:hover{
+    color: #fff;
+    background: #9051ff;
+}
+
+.topImg{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.topRight{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.topSubList{
+    display: none;
+    list-style: none;
+    padding-left: 0 ;
+    background-color: #fff;
+}
+
+/* 
+.topSubItem > ul{
+    list-style: none;
+    padding-left: 0 ;
+    background-color: #fff;
+} */
+
+.topListItem:hover .topSubList{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    margin-left: -15px;
+    color: #9051ff;
+}
+
+/* .topSubItem:hover{
+    color: #fff;
+    background: #9051ff;
+} */
+
+.topSubListItem:hover{
+    color: #fff;
+    background: #9051ff;
+}
