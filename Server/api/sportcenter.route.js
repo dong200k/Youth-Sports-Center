@@ -1,11 +1,14 @@
 //handles all routing logic for the project
 import express from "express"
-import AnnouncementController from "./announcement.Controller.js"
+import AnnouncementController from "../controller/announcement.controller.js"
 const router = express.Router()
 
 router.route("/").get((req,res)=>{
     res.send("hello world!")
 })
+//login
+
+
 //announcements
 router
     .route("/announcement")
@@ -21,7 +24,6 @@ router
 
 //kids
 
-//login
 
 
 export default router
