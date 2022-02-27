@@ -1,0 +1,235 @@
+.login{
+    display: flex;
+    height: 100%;
+}
+
+.loginColorBlock{
+    position: absolute;
+    background-color: #986060;
+    width: 30%;
+    height: 100vh;
+    z-index: 1;
+    transition: transform 1s ease;
+    /* border-left: 50px solid transparent;
+    border-bottom: 50px solid transparent; */
+}
+
+.left{
+    transform: translateX(0%);
+}
+
+.right{
+    transform: translateX(235%);
+}
+
+@keyframes fadein {
+    0% {opacity: 0;}
+    50% {opacity: 0;}
+    100% {opacity: 1;}
+}
+
+@keyframes fadeout {
+    0% {opacity: 0;}
+    15% {opacity: 0;}
+    50% {opacity: 0;}
+    100% {opacity: 0;}
+}
+
+.active{
+    visibility: visible;
+}
+
+.inactive{
+    visibility: hidden;
+}
+
+.fadeIn{
+    animation: fadein 1s ease; 
+}
+
+.fadeOut{
+    animation: fadeout 1s ease; 
+}
+
+.moveLeft{
+    transform: translateX(-100%);
+}
+
+.moveRight{
+    transform: translateX(100%);
+}
+
+
+/* .helloActive{
+    visibility: visible;
+    right: 0;
+    transform: translateX(0%);
+}
+
+.helloInactive{
+    visibility: hidden;
+    right: 0;
+    transform: translateX(100%);
+} */
+
+
+.loginSubBox{
+    z-index: 2;
+    display: flex;
+    position: absolute;
+    transition: all .8s ease-in-out;
+    width: 30%;
+    font-family: 'Quicksand';
+    flex-direction: column;
+    align-items: center;
+}
+
+.loginSubContainer{
+    margin-top: 35%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    width: 60%;
+    text-align: center;
+}
+
+.loginSubContainerTitle{
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.loginSubContainerContent{
+    margin-top: 12px;
+    font-size: 13px;
+    font-family: 'Quicksand', sans-serif;
+}
+
+.loginSubContainerButton{
+    margin-top: 40px;
+    border: solid 2px white;
+    background-color: #986060;
+    color: white;
+    width: 80%;
+    height: 40px;
+    border-radius: 30px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.loginMainBox{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    z-index: 2;
+    width: 70%;
+    transition: all .8s ease-in-out;
+}
+
+.loginMainBoxContainer{
+    position: absolute;
+    background-color: #fff;
+    flex-direction: column;
+    border-radius: 5px;
+    box-shadow: 10px 10px 10px rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #fff;
+    padding: 25px;
+}
+
+.loginImg{
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    object-fit:cover;
+}
+
+.SignUp{
+    left: 30.5%;
+}
+
+.SignIn{
+    left: 0;
+}
+
+
+.loginMainBoxTitle{
+    display: block;
+    color: #986060;
+    font-weight: bold;
+    font-size: 30px;
+    font-family: 'Quicksand';
+    font-weight: Bold;
+}
+
+.loginMainBoxForm{
+    transform: translateX(0%);
+    margin-top: 3%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.loginMainBoxInput{
+    background-repeat: no-repeat;
+    background-position: 10px center;
+    padding-left: 40px;
+    font-size: 15px;
+    background-size: 23px;
+    width: 290px;
+    height: 34px;
+    border-radius: 3px;
+    border: none;
+    background-color: #f1f1f1;
+    margin-bottom: 10px;
+    color: #242424;
+}
+
+.loginMainBoxButton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin-top: 15px;
+    color: white;
+    background-color: #986060;
+    border: solid 2px white;
+    width: 50%;
+    height: 40px;
+    border-radius: 15px;
+    font-size: 18px;
+    cursor: pointer;
+    
+}
+
+.loginSelectBox > input{
+    display: none;
+}
+
+.loginSelectBox{
+    outline:0; 
+    background:#fff;
+    border:none;
+    padding:6px 40px;
+    border-radius: 2px;
+    transition:all .3s ease-out; 
+    font-family: 'Quicksand';
+    box-shadow:inset 0 -5px 0 0 rgba(0,0,0,.2);
+}
+
+.isChecked{
+    background: #986060;
+    color: white;
+}
+
+.notChecked{
+    background-color: none;
+}
+
+
