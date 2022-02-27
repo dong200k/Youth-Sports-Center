@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import "./login.css"
+import football from "../../assets/football.jpg"
+import basketball from "../../assets/kidbasket.jpg"
 
 export default class login extends Component {
 
@@ -40,12 +42,11 @@ export default class login extends Component {
     render() {
         return (
             <div className="login">
-                {/* 颜色块 */}
+                {/* color block */}
                 <div className={`loginColorBlock ${this.state.isNewUser ? 'left' : 'right'}`}></div>
 
-                {/* 注册页面欢迎语 */}
+                {/* The welcome words of sign up page */}
                 <div className={`loginSubBox left ${this.state.isNewUser ? 'active fadeIn' : 'inactive fadeOut'}`}>
-                    {/* 左上角logo */}
                     <div className="loginSubContainer">
                         <span className="loginSubContainerTitle">
                             Welcome Back!
@@ -64,7 +65,7 @@ export default class login extends Component {
                     </div>
                 </div>
 
-                {/* 登录页面欢迎语 */} 
+                {/* the welcome word for log in page  */} 
                 <div className={`loginSubBox right ${!this.state.isNewUser ? 'active fadeIn' : 'inactive fadeOut'}`}>
                     <div className="loginSubContainer">
                         <span className="loginSubContainerTitle">
@@ -85,11 +86,13 @@ export default class login extends Component {
 
                 </div>
 
-                {/* 注册页面 */}
+                {/* Create Account */}
                 <div className={`loginMainBox SignUp ${this.state.isNewUser ? 'active' : 'inactive moveRight'}`}>
-                    <span className="loginMainBoxTitle">
+                    <img src={football} alt="" className="loginImg" />
+                    <div className="loginMainBoxContainer">
+                    <div className="loginMainBoxTitle">
                         Create Account
-                    </span>
+                    </div>
                     <form className="loginMainBoxForm">
                         <input
                             className="loginMainBoxInput"
@@ -134,14 +137,16 @@ export default class login extends Component {
                             Sign Up
                         </button>
                     </form>
+                    </div>
                 </div>
 
-                {/* 登录页面 */}
+                {/* Log In */}
                 <div className={`loginMainBox SignIn ${!this.state.isNewUser ? 'active' : 'inactive moveLeft'}`}>
-                    <span className="loginMainBoxTitle">
-                        Youth Sport Center
-                    </span>
-
+                    <img src={basketball} alt="" className="loginImg" />
+                    <div className="loginMainBoxContainer">
+                        <span className="loginMainBoxTitle">
+                            Youth Sport Center
+                        </span>
                         <form className="loginMainBoxForm">
                             <input
                                 className="loginMainBoxInput"
@@ -178,6 +183,8 @@ export default class login extends Component {
                                 Sign In
                         </button>
                         </form>
+                    </div>
+                    
                 </div>
             </div>
         );
