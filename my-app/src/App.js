@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import Topbar from './component/topbar/topbar'
 import Login from "./pages/login/login"
-import Calendar from "./component/calendar/calendar"
+import Announcements from './component/announcements/announcements'
 
 export default class App extends Component {
   render() {
     return (
       <div>
-        <Topbar />
+        <Announcements/>
       </div>
     )
   }
