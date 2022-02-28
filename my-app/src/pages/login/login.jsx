@@ -35,6 +35,7 @@ export default class login extends Component {
         console.log(data)
         AuthService.login(data)
             .then(response=>{
+                console.log(".then")
                 console.log(response.data)
             })
             .catch((e)=>{

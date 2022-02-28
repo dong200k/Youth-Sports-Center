@@ -17,7 +17,7 @@ export default class home extends Component {
           <div className="homeCalendar">
             <Mycalendar/>
           </div>
-          
+
       </div>
     )
   }
