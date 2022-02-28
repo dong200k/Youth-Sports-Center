@@ -1,7 +1,7 @@
 import AnnouncementDao from "../dao/announcementDAO.js";
 
 export default class AnnouncementController{
-    static async apiUpdateAnnouncement(req, res, next){//returns {status: "success"} on success
+    static async updateAnnouncement(req, res, next){//returns {status: "success"} on success
         let {id, user_id, message, title} = req.body
         try{
             const date = new Date()
@@ -23,7 +23,7 @@ export default class AnnouncementController{
             res.status(500).json({ error: e.message })
         }
     }
-    static async apiPostAnnouncement(req, res, next){//returns {status: "success"} on success
+    static async postAnnouncement(req, res, next){//returns {status: "success"} on success
         let {sender_id, program_id, message, title} = req.body
         try{
             let {error} = await AnnouncementDao.createAnnouncement(sender_id, program_id, message, title)
@@ -36,7 +36,7 @@ export default class AnnouncementController{
             res.status(500).json({ error: e.message })
         }
     }
-    static async apiGetProgramAnnouncement(req, res, next){//returns {announcements: []}, empty array if invalid or empty collection
+    static async getProgramAnnouncement(req, res, next){//returns {announcements: []}, empty array if invalid or empty collection
         //extract program id from route
         let program_id = req.params.id
         try{
@@ -49,7 +49,7 @@ export default class AnnouncementController{
             res.json({announcements: []})
         }
     } 
-    static async apiGetAllAnnouncement(req, res, next){//returns {announcements: []}, empty array if invalid or empty collection
+    static async getAllAnnouncement(req, res, next){//returns {announcements: []}, empty array if invalid or empty collection
         try{
             //get all announcements
             let announcements = await AnnouncementDao.getAllAnnouncement()
