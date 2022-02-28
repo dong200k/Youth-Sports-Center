@@ -3,8 +3,12 @@ import bcrypt from "bcryptjs"
 export default class UserController{
     static async Login(req, res, next){
         const {email, password} = req.body;
-        if(!email || !password)
+        console.log(email)
+        console.log(password)
+        if(!email || !password){
             res.json({error: "Please enter email and password!"})
+            return
+        }
         try{
             let query = {
                 email: email
