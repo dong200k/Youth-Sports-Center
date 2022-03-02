@@ -1,5 +1,4 @@
 import axiosInstance from "axios"
-import axios from "axios"
 class AuthService{
     constructor(){
         this.baseURL = "http://localhost:5000/api/v1/youthsportcenter"
