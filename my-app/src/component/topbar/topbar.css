@@ -1,13 +1,12 @@
-.topHeader{
+.topbar{
     position: fixed;
     top: 0;
-    right: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
     background: #fff;
-    font-family: 'Quicksand', sans-serif;
+    font-family: 'Quicksand';
     box-shadow:inset 0 -5px 0 0 rgba(0,0,0,.2);
 }
 
@@ -21,9 +20,7 @@
 } */
 
 .topToggle{
-    position: absolute;
-    top: 0;
-    left: 0;
+    position: relative;
     width: 60px;
     height: 60px;
     background: #9051ff;
@@ -109,6 +106,7 @@
 .topListItem:hover{
     color: #fff;
     background: #9051ff;
+    box-shadow:inset 0 -5px 0 0 rgba(0,0,0,.2);
 }
 
 .topImg{
@@ -129,10 +127,15 @@
 .topSubList{
     display: none;
     list-style: none;
-    padding-left: 0 ;
+    margin: 0;
+    padding: 0;
     background-color: #fff;
+    box-shadow:inset 0 -5px 0 0 rgba(0,0,0,.2);
 }
 
+.topSubListItem{
+    padding: 0 10px;
+}
 /* 
 .topSubItem > ul{
     list-style: none;
@@ -156,4 +159,15 @@
 .topSubListItem:hover{
     color: #fff;
     background: #9051ff;
+    box-shadow:inset 0 -5px 0 0 rgba(0,0,0,.2);
+}
+
+.topLogo{
+    display: none;
+    
+}
+
+.active{
+    visibility: visible;
+
 }

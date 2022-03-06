@@ -7,10 +7,7 @@ export default class topbar1 extends Component {
     };
     render() {
         return (
-            <header className="topHeader">
-                <div className="topLogo"> 
-                    <img className="topImg" src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt=""></img>
-                </div>
+            <div className="topbar">
                 <div className={`topToggle ${this.state.isUnfold ? 'close' : ''}`}
                 onClick={() => {
                     this.setState({
@@ -30,12 +27,15 @@ export default class topbar1 extends Component {
                         <li className="topListItem"><span>Message</span></li>
                     </ul>
                 </div>
+                <div className={`topLogo ${this.state.isUnfold ? '' : 'active'}`}>
+                    Youth Sport Center
+                </div>
                 <div className="topProfile">
                 {
                     <img className="topImg" src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt=""></img>
                 }
                 </div>
-            </header>
+            </div>
         )
     }
 }
