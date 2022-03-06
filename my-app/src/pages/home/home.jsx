@@ -9,15 +9,15 @@ export default class home extends Component {
     return (
       <div className="home">
         <div className="homeHeader">
-          <img className='homeHeaderImg' src={runningtracks} />
+          <img className='homeHeaderImg' src={runningtracks} alt="track"/>
         </div>
       
-        <Topbar/>
+        {/* <Topbar/> */}
           
           <div className="homeCalendar">
             <Mycalendar/>
           </div>
-          
+
       </div>
     )
   }

@@ -2,12 +2,11 @@ import React, { Component } from 'react'
 import "./login.css"
 import football from "../../assets/football.jpg"
 import basketball from "../../assets/kidbasket.jpg"
-
+import AuthService from '../../services/services.js'
 export default class login extends Component {
-
     state = {
         isNewUser: true,
-        role: "",
+        role: "Parent",
         signUpForm: {
             name: "",
             email: "",
@@ -18,6 +17,58 @@ export default class login extends Component {
             password: ""
         }
     };
+
+    constructor(props){
+        super(props)
+        this.handleLogin = this.handleLogin.bind(this)
+        this.handleRegister = this.handleRegister.bind(this)
+    };
+    
+    handleLogin(event){
+        event.preventDefault();
+        let user = {
+            email: this.state.signInForm.email,
+            password: this.state.signInForm.password,
+        }
+
+        AuthService.login(user)
+            .then(response=>{
+                if(response.data.status!=="success"){
+                    console.log(response.data.error)
+                    throw(new Error("Login Error"))
+                }
+                console.log(response.data)
+                // this.props.navigate("/")
+            })
+            .catch((e)=>{
+                console.log("error!")
+                console.log(e)
+            })
+    }
+
+    handleRegister(event){
+        event.preventDefault();
+        let newUser = {
+            first_name: this.state.signUpForm.name,
+            email: this.state.signUpForm.email,
+            password: this.state.signUpForm.password,
+            user_type: this.state.role
+        }
+        console.log(newUser)
+        AuthService.register(newUser)
+            .then(response=>{
+                if(response.data.status!=="success"){
+                    console.log(response.data.error)
+                    throw(new Error("Registration Error"))
+                }
+                console.log(response)
+                // this.props.navigate("/")
+            })
+            .catch(e=>{
+                console.log("error!")
+                console.log(e)
+            })
+    }
 
     setSignUp(event, key) {
         let obj = {...this.state.signUpForm};
@@ -36,8 +87,10 @@ export default class login extends Component {
     }
 
     setRole(event){
+        console.log(event.target.value)
         this.setState({role: event.target.value});
     }
+    
 
     render() {
         return (
@@ -93,7 +146,7 @@ export default class login extends Component {
                     <div className="loginMainBoxTitle">
                         Create Account
                     </div>
-                    <form className="loginMainBoxForm">
+                    <form className="loginMainBoxForm" onSubmit={this.handleRegister}>
                         <input
                             className="loginMainBoxInput"
                             type="text"
@@ -120,14 +173,14 @@ export default class login extends Component {
                             />
 
                         <div>
-                            <label className={`loginSelectBox ${this.state.role=="parent" ? 'isChecked' : 'notChecked'}`}> 
-                                <input type="radio" name = "role" value="parent"
+                            <label className={`loginSelectBox ${this.state.role=="Parent" ? 'isChecked' : 'notChecked'}`}> 
+                                <input type="radio" name = "role" value="Parent" checked={this.state.role==="Parent"}
                                     onChange={(event) => {
                                         this.setRole(event);
                                     }}/>I'm parent</label>
                             
-                            <label className={`loginSelectBox ${this.state.role=="instructor" ? 'isChecked' : 'notChecked'}`}> 
-                                <input type="radio" name = "role" value="instructor"
+                            <label className={`loginSelectBox ${this.state.role=="Instructor" ? 'isChecked' : 'notChecked'}`}> 
+                                <input type="radio" name = "role" value="Instructor" checked={this.state.role==="Instructor"}
                                     onChange={(event) => {
                                         this.setRole(event);
                                     }}/>I'm instructor</label>
@@ -147,7 +200,7 @@ export default class login extends Component {
                         <span className="loginMainBoxTitle">
                             Youth Sport Center
                         </span>
-                        <form className="loginMainBoxForm">
+                        <form className="loginMainBoxForm" onSubmit={this.handleLogin}>
                             <input
                                 className="loginMainBoxInput"
                                 type="email"
@@ -165,14 +218,14 @@ export default class login extends Component {
                                 }}
                                 />
                         <div>
-                            <label className={`loginSelectBox ${this.state.role=="parent" ? 'isChecked' : 'notChecked'}`}> 
-                                <input type="radio" name = "role" value="parent"
+                            <label className={`loginSelectBox ${this.state.role=="Parent" ? 'isChecked' : 'notChecked'}`}> 
+                                <input type="radio" name = "role" value="Parent" checked={this.state.role==="Parent"}
                                     onChange={(event) => {
                                         this.setRole(event);
                                     }}/>I'm parent</label>
                             
-                            <label className={`loginSelectBox ${this.state.role=="instructor" ? 'isChecked' : 'notChecked'}`}> 
-                                <input type="radio" name = "role" value="instructor"
+                            <label className={`loginSelectBox ${this.state.role=="Instructor" ? 'isChecked' : 'notChecked'}`}> 
+                                <input type="radio" name = "role" value="Instructor" checked={this.state.role==="Instructor"}
                                     onChange={(event) => {
                                         this.setRole(event);
                                     }}/>I'm instructor</label>

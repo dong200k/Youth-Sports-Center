@@ -150,7 +150,7 @@
 }
 
 .SignUp{
-    left: 30.5%;
+    left: 31.5%;
 }
 
 .SignIn{
@@ -226,10 +226,12 @@
 .isChecked{
     background: #986060;
     color: white;
+    transition: 0.5s;
 }
 
 .notChecked{
     background-color: none;
+    transition: 0.5s;
 }
 
 
