@@ -50,5 +50,5 @@ userSchema.methods.validatePassword = async (password, encryptedPassword)=>{
     return await bcrypt.compare(password, encryptedPassword)
 }
 
-const User = mongoose.model("Users", userSchema, process.env.USER_COLLECTION)
+const User = mongoose.model("users", userSchema, process.env.USER_COLLECTION)
 export default User
