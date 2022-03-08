@@ -1,6 +1,6 @@
 .header {
+    margin: auto;
     text-align: center;
-    display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
     font-size: x-large;
@@ -80,4 +80,10 @@
   ::-webkit-scrollbar-thumb {
       background: #f7226a;
       border-radius: 25px;
+  }
+
+  .annoucement{
+      width: 700px;
+      height: 500px;
+      overflow: scroll;
   }

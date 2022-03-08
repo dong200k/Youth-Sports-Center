@@ -2,11 +2,13 @@ import React from 'react'
 import Header from './header'
 import Cards from './cards'
 import { useState } from "react"
+import Button from './button'
 
 function Announcements(){
   return (
-    <div>
+    <div className="annoucement">
         <Header/>
+        <Button/>
         <Cards/>
         <Cards/>
         <Cards/>

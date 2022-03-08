@@ -5,7 +5,6 @@ import Button from './button'
 const Header = ({title}) => {
   return (
     <div className='header'>
-        <Button></Button>
         {title}
     </div>
   )
