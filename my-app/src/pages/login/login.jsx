@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import "./login.css"
-
+import football from "../../assets/football.jpg"
+import basketball from "../../assets/kidbasket.jpg"
+import AuthService from '../../services/services.js'
 export default class login extends Component {
-
     state = {
         isNewUser: true,
-        role: "",
+        role: "Parent",
         signUpForm: {
             name: "",
             email: "",
@@ -16,6 +17,58 @@ export default class login extends Component {
             password: ""
         }
     };
+
+    constructor(props){
+        super(props)
+        this.handleLogin = this.handleLogin.bind(this)
+        this.handleRegister = this.handleRegister.bind(this)
+    };
+    
+    handleLogin(event){
+        event.preventDefault();
+        let user = {
+            email: this.state.signInForm.email,
+            password: this.state.signInForm.password,
+        }
+
+        AuthService.login(user)
+            .then(response=>{
+                if(response.data.status!=="success"){
+                    console.log(response.data.error)
+                    throw(new Error("Login Error"))
+                }
+                console.log(response.data)
+                // this.props.navigate("/")
+            })
+            .catch((e)=>{
+                console.log("error!")
+                console.log(e)
+            })
+    }
+
+    handleRegister(event){
+        event.preventDefault();
+        let newUser = {
+            first_name: this.state.signUpForm.name,
+            email: this.state.signUpForm.email,
+            password: this.state.signUpForm.password,
+            user_type: this.state.role
+        }
+        console.log(newUser)
+        AuthService.register(newUser)
+            .then(response=>{
+                if(response.data.status!=="success"){
+                    console.log(response.data.error)
+                    throw(new Error("Registration Error"))
+                }
+                console.log(response)
+                // this.props.navigate("/")
+            })
+            .catch(e=>{
+                console.log("error!")
+                console.log(e)
+            })
+    }
 
     setSignUp(event, key) {
         let obj = {...this.state.signUpForm};
@@ -34,18 +87,19 @@ export default class login extends Component {
     }
 
     setRole(event){
+        console.log(event.target.value)
         this.setState({role: event.target.value});
     }
+    
 
     render() {
         return (
             <div className="login">
-                {/* 颜色块 */}
+                {/* color block */}
                 <div className={`loginColorBlock ${this.state.isNewUser ? 'left' : 'right'}`}></div>
 
-                {/* 注册页面欢迎语 */}
+                {/* The welcome words of sign up page */}
                 <div className={`loginSubBox left ${this.state.isNewUser ? 'active fadeIn' : 'inactive fadeOut'}`}>
-                    {/* 左上角logo */}
                     <div className="loginSubContainer">
                         <span className="loginSubContainerTitle">
                             Welcome Back!
@@ -64,7 +118,7 @@ export default class login extends Component {
                     </div>
                 </div>
 
-                {/* 登录页面欢迎语 */} 
+                {/* the welcome word for log in page  */} 
                 <div className={`loginSubBox right ${!this.state.isNewUser ? 'active fadeIn' : 'inactive fadeOut'}`}>
                     <div className="loginSubContainer">
                         <span className="loginSubContainerTitle">
@@ -85,12 +139,14 @@ export default class login extends Component {
 
                 </div>
 
-                {/* 注册页面 */}
+                {/* Create Account */}
                 <div className={`loginMainBox SignUp ${this.state.isNewUser ? 'active' : 'inactive moveRight'}`}>
-                    <span className="loginMainBoxTitle">
+                    <img src={football} alt="" className="loginImg" />
+                    <div className="loginMainBoxContainer">
+                    <div className="loginMainBoxTitle">
                         Create Account
-                    </span>
-                    <form className="loginMainBoxForm">
+                    </div>
+                    <form className="loginMainBoxForm" onSubmit={this.handleRegister}>
                         <input
                             className="loginMainBoxInput"
                             type="text"
@@ -117,14 +173,14 @@ export default class login extends Component {
                             />
 
                         <div>
-                            <label className={`loginSelectBox ${this.state.role=="parent" ? 'isChecked' : 'notChecked'}`}> 
-                                <input type="radio" name = "role" value="parent"
+                            <label className={`loginSelectBox ${this.state.role=="Parent" ? 'isChecked' : 'notChecked'}`}> 
+                                <input type="radio" name = "role" value="Parent" checked={this.state.role==="Parent"}
                                     onChange={(event) => {
                                         this.setRole(event);
                                     }}/>I'm parent</label>
                             
-                            <label className={`loginSelectBox ${this.state.role=="instructor" ? 'isChecked' : 'notChecked'}`}> 
-                                <input type="radio" name = "role" value="instructor"
+                            <label className={`loginSelectBox ${this.state.role=="Instructor" ? 'isChecked' : 'notChecked'}`}> 
+                                <input type="radio" name = "role" value="Instructor" checked={this.state.role==="Instructor"}
                                     onChange={(event) => {
                                         this.setRole(event);
                                     }}/>I'm instructor</label>
@@ -134,15 +190,17 @@ export default class login extends Component {
                             Sign Up
                         </button>
                     </form>
+                    </div>
                 </div>
 
-                {/* 登录页面 */}
+                {/* Log In */}
                 <div className={`loginMainBox SignIn ${!this.state.isNewUser ? 'active' : 'inactive moveLeft'}`}>
-                    <span className="loginMainBoxTitle">
-                        Youth Sport Center
-                    </span>
-
-                        <form className="loginMainBoxForm">
+                    <img src={basketball} alt="" className="loginImg" />
+                    <div className="loginMainBoxContainer">
+                        <span className="loginMainBoxTitle">
+                            Youth Sport Center
+                        </span>
+                        <form className="loginMainBoxForm" onSubmit={this.handleLogin}>
                             <input
                                 className="loginMainBoxInput"
                                 type="email"
@@ -160,14 +218,14 @@ export default class login extends Component {
                                 }}
                                 />
                         <div>
-                            <label className={`loginSelectBox ${this.state.role=="parent" ? 'isChecked' : 'notChecked'}`}> 
-                                <input type="radio" name = "role" value="parent"
+                            <label className={`loginSelectBox ${this.state.role=="Parent" ? 'isChecked' : 'notChecked'}`}> 
+                                <input type="radio" name = "role" value="Parent" checked={this.state.role==="Parent"}
                                     onChange={(event) => {
                                         this.setRole(event);
                                     }}/>I'm parent</label>
                             
-                            <label className={`loginSelectBox ${this.state.role=="instructor" ? 'isChecked' : 'notChecked'}`}> 
-                                <input type="radio" name = "role" value="instructor"
+                            <label className={`loginSelectBox ${this.state.role=="Instructor" ? 'isChecked' : 'notChecked'}`}> 
+                                <input type="radio" name = "role" value="Instructor" checked={this.state.role==="Instructor"}
                                     onChange={(event) => {
                                         this.setRole(event);
                                     }}/>I'm instructor</label>
@@ -178,6 +236,8 @@ export default class login extends Component {
                                 Sign In
                         </button>
                         </form>
+                    </div>
+                    
                 </div>
             </div>
         );

@@ -2,9 +2,9 @@ import mongodb from 'mongodb'
 const ObjectId = mongodb.ObjectId
 let announcement
 
-//create announcement
-//update announcement
-//read
+//create/post announcement
+//update/put announcement
+//read/get announcement
 export default class AnnouncementDao{
     static async injectDB(conn){
         // if we have the annoucement collection return
@@ -21,12 +21,13 @@ export default class AnnouncementDao{
     }
     static async createAnnouncement(sender_id, program_id, message, title){
         try{
-            //new document
+            //new announcement document
             let doc = {
                 sender_id: ObjectId(sender_id),
                 program_id: ObjectId(program_id),
                 message: message,
-                title: title
+                title: title, 
+                date: new Date()
             }
             //insert document
             return await announcement.insertOne(doc)
@@ -48,7 +49,7 @@ export default class AnnouncementDao{
             return { error: e }
         }
     }
-    static async getProgramAnnouncement(program_id){// returns array
+    static async getProgramAnnouncement(program_id){// returns array of announcements/empty
         try{
             let query = {program_id: ObjectId(program_id)}
             let cursor = await announcement.find(query)
@@ -59,7 +60,7 @@ export default class AnnouncementDao{
             //return empty array
             return []
         }
-    }   
+    }       
     static async getAllAnnouncement(){// returns array
         try{
             let query = {}
