@@ -1,0 +1,12 @@
+.accountPage{
+    background-image: url(../../assets/AccountBackground.jpg);
+    z-index: -1;
+    background-repeat: repeat;
+    background-size: contain;
+}
+
+.accountMainbox{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
