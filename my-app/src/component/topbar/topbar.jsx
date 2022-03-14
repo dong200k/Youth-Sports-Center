@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { NavLink } from 'react-router-dom';
 import "./topbar.css"
 
 export default class topbar1 extends Component {
@@ -7,10 +8,7 @@ export default class topbar1 extends Component {
     };
     render() {
         return (
-            <header className="topHeader">
-                <div className="topLogo"> 
-                    <img className="topImg" src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt=""></img>
-                </div>
+            <div className="topbar">
                 <div className={`topToggle ${this.state.isUnfold ? 'close' : ''}`}
                 onClick={() => {
                     this.setState({
@@ -19,23 +17,28 @@ export default class topbar1 extends Component {
                 }}></div>
                 <div className={`topNavbar ${this.state.isUnfold ? '' : 'hidden'}`}>
                     <ul className="topList">
-                        <li className="topListItem"><span>Home</span></li>
-                        <li className="topListItem"><span>Programs</span>
-                            <ul className= "topSubList">
-                                <li className= "topSubListItem">Available Program</li>
-                                <li className= "topSubListItem">My Program</li>
-                            </ul>
-                        </li>
-                        <li className="topListItem"><span>Account/Kids</span></li>
-                        <li className="topListItem"><span>Message</span></li>
+                        <NavLink to=""><li className="topListItem"><span>Home</span></li></NavLink>
+                        <NavLink to="program">
+                            <li className="topListItem"><span>Programs</span>
+                                <ul className= "topSubList">
+                                    <li className= "topSubListItem">Available Program</li>
+                                    <li className= "topSubListItem">My Program</li>
+                                </ul>
+                            </li>
+                        </NavLink>
+                        <NavLink to="account"><li className="topListItem"><span>Account/Kids</span></li></NavLink>
+                        <NavLink to="message"><li className="topListItem"><span>Message</span></li></NavLink>
                     </ul>
+                </div>
+                <div className={`topLogo ${this.state.isUnfold ? '' : 'active'}`}>
+                    Youth Sport Center
                 </div>
                 <div className="topProfile">
                 {
                     <img className="topImg" src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt=""></img>
                 }
                 </div>
-            </header>
+            </div>
         )
     }
 }

@@ -1,8 +1,10 @@
 import axios from "axios"
 
-export default axios.create({
+const axiosInstance = axios.create({
     baseURL: "http://localhost:5000/api/v1/youthsportcenter",
-    headers: {
-        "Content-type": "application/json"
-    }
+    // headers: {
+    //     "Content-type": "application/json"
+    // }
 })
+
+export default axiosInstance
