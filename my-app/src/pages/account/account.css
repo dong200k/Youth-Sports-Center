@@ -1,6 +1,10 @@
+
 .accountPage{
-    background-image: url(../../assets/AccountBackground.jpg);
-    z-index: -1;
+    min-height: 100vh;
+    min-width: 1000px;
+    height: auto;
+    background-image: url(../../assets/pink.jpg);
+    z-index: -1; 
     background-repeat: repeat;
     background-size: contain;
 }
@@ -9,4 +13,5 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
 }
