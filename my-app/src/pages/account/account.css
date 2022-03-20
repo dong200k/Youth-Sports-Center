@@ -1,0 +1,17 @@
+
+.accountPage{
+    min-height: 100vh;
+    min-width: 1000px;
+    height: auto;
+    background-image: url(../../assets/pink.jpg);
+    z-index: -1; 
+    background-repeat: repeat;
+    background-size: contain;
+}
+
+.accountMainbox{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}

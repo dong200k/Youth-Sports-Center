@@ -7,7 +7,7 @@ export default function Mainpage(){
     return <div className="" style={{textAlign: "center"}}>
         <div><Topbar/></div> 
         
-        {(location.pathname==="/") || (<div><br/><br/><br/></div>)}
+        {(location.pathname==="/home") || (<div><br/><br/><br/></div>)}
        
         <div><Outlet/></div>
     </div>

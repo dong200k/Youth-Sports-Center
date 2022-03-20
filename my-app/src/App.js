@@ -6,7 +6,7 @@ import Home from './pages/home/home'
 // import Form from './component/form/form'
 import Message from './component/message.jsx'
 import Announcement from './component/announcement.jsx'
-import Account from './component/account.jsx'
+import Account from './pages/account/account.jsx'
 import Program from './component/program.jsx'
 import {
   BrowserRouter,
