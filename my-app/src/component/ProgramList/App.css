@@ -1,4 +1,4 @@
-* {
+/* * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -12,7 +12,7 @@
       rgb(5, 5, 5) 40%,
       rgb(15, 127, 255) 100%
     );
-  }
+  } */
   .program-app {
     display: flex;
     flex-direction: column;
@@ -26,11 +26,11 @@
     padding-bottom: 32px;
   }
   
-  h1 {
+  /* h1 {
     margin: 32px 0;
     color: rgb(0, 0, 0);
     font-size: 24px;
-  }
+  } */
   
   .complete {
     text-decoration: line-through;

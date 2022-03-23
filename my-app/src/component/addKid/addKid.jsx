@@ -19,6 +19,8 @@ export default class addKid extends Component {
             ],
         },
     }
+
+    
     render() {
         return (
         <div className={`buttonContainer ${this.state.isAdding ? 'unfold' : ''}`}>
