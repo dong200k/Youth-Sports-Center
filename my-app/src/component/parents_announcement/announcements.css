@@ -1,0 +1,16 @@
+.AnnouncementBox{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    flex-direction: column;
+}
+
+.Card{
+    width: 25rem;
+    margin-bottom: 10px !important;
+}
+
+.Card:hover{
+    width: 30rem;
+}
