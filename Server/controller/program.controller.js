@@ -142,8 +142,8 @@ export default class ProgramController{
     }
     static async updateProgram(req, res, next){
         const {program_name, days, location, ages, sport_type, 
-            capacity, waitlist_capacity, time, user_id, program_id
-        } = req.body.filter
+            capacity, waitlist_capacity, instructors, time, user_id, program_id
+        } = req.body
 
         try{
             //must be instructor to edit
@@ -164,7 +164,22 @@ export default class ProgramController{
                 _id: program_id
             }
 
-            update = {
+            const instructor_ids = instructors.map(instructor=>ObjectId(instructor))
+
+            //filter for instructors we are adding to program
+            const instructor_filter = {
+                _id: {
+                    "$in": instructor_ids
+                },
+                user_type: "Instructor"
+            }
+            const instructors_to_add = await User.find(instructor_filter)
+
+            if(instructors_to_add.length!==instructors.length){
+                throw new Error("invalid instructor to add!")
+            }
+
+            const update = {
                 program_name: program_name,
                 sport_type: sport_type, 
                 location: location, 
@@ -172,13 +187,8 @@ export default class ProgramController{
                 ages: ages,
                 capacity: capacity, 
                 waitlist_capacity: waitlist_capacity, 
-                time:{
-                    start_date: new Date(time.start_date),
-                    end_date: new Date(time.end_date),
-                    start_time: time.start_time,
-                    end_time: time.end_time
-                },
-                instructors: instructors.map(instructor=>ObjectId(instructor))
+                time: time,
+                instructors: instructor_ids
             }
             const program = await Program.findOne(filter_program)
 
@@ -290,8 +300,9 @@ export default class ProgramController{
             //check for time conflict for every kid
             for(const kid_id of kids){
                 let conflictingProgram = await Kid().getConflictingProgram(kid_id, program)
+                console.log(`conflict: ${conflictingProgram}`)
                 if(conflictingProgram){
-                    throw new Error(`${kid_id} program conflict with ${conflictingProgram}`)
+                    throw new Error(`kid ${kid_id} has program conflict with ${conflictingProgram}`)
                 }
             }
 
@@ -374,6 +385,41 @@ export default class ProgramController{
 
         } catch (error) {
             res.status(404).json({error: error.message})
+        }
+    }
+    static async getUserProgram(req, res, body){
+        const {user_id} = req.body
+        try {
+            const user = await User.findById(ObjectId(user_id))
+
+            if(!user){
+                throw new Error("invalid user in getUserProgram!")
+            }
+
+            let programs
+            if(user.user_type==="Parent"){
+                const kid_ids = user.kids.map(kid=> ObjectId(kid))
+                
+                //filter for programs of the parent's kids
+                const program_filter = {
+                    kids: {
+                        "$in": kid_ids
+                    }
+                }
+
+                programs = await Program.find(program_filter)
+            }else if(user.user_type==="Instructor"){
+                //filter for programs instructor teach
+                const program_filter = {
+                    instructors: ObjectId(user_id)
+                }
+
+                programs = await Program.find(program_filter)
+            }
+
+            res.json({status:"success", programs: programs})
+        } catch (e) {
+            res.status(404).json({error: e.message})
         }
     }
 }

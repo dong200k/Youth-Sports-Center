@@ -27,6 +27,9 @@ router
 router
     .route("/announcement/id/:id")
     .get(AnnouncementController.getProgramAnnouncement)
+router
+    .route("/announcement/user/:id")
+    .get(AnnouncementController.getUserAnnouncement)
 //programs
 router 
     .route("/program")
@@ -40,6 +43,9 @@ router
 router
     .route("/program/drop")
     .put(ProgramController.dropKidsProgram)
+router 
+    .route("/program/user_programs")
+    .get(ProgramController.getUserProgram)
 
 //messages
 

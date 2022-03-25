@@ -30,9 +30,7 @@ const KidSchema = new Schema({
     programs: [ObjectId]
 })
 
-KidSchema.methods.getConflictingProgram = async (kid_id, {time, days}) =>{
-    let result = null
-
+KidSchema.methods.getConflictingProgram = async (kid_id, {time, days, _id}) =>{
     //filter for all programs kid is in
     const program_filter = {
         kids: ObjectId(kid_id)
@@ -40,6 +38,9 @@ KidSchema.methods.getConflictingProgram = async (kid_id, {time, days}) =>{
     const programs = await Program.find(program_filter)
 
     for(const program of programs){
+        if(ObjectId(program._id)===ObjectId(_id))
+            return program.name
+        console.log(program.program_name)
         let {start_time, end_time, start_date, end_date} = program.time
         //running period conflict
         if(!validateTime(start_date.getTime(), end_date.getTime(), time.start_date.getTime(), time.end_date.getTime()))
@@ -47,19 +48,17 @@ KidSchema.methods.getConflictingProgram = async (kid_id, {time, days}) =>{
             if(dayConflict(program.days, days))
                 //time/hour conflict
                 if(!validateTime(start_time, end_time, time.start_time, time.end_time)){
-                    return program.name
+                    return program.program_name
                 }
     }
 
     return null
 }
 function validateTime(start1, end1, start2, end2){
-    console.log(`start1: ${start1}, end1: ${end1}`)
-    console.log(`start2: ${start2}, end2: ${end2}`)
     return validateOneWay(start1, end1, start2, end2) && validateOneWay(start2, end2, start1, end1)
 }
 function validateOneWay(start1, end1, start2, end2){
-    return (start1<start2||start1>end2)&&(end1<start2||end1>end2)
+    return ((start1<start2)||(start1>end2))&&((end1<start2)||(end1>end2))
 }
 function dayConflict(days1, days2){
     for(const day1 of days1){
