@@ -81,9 +81,9 @@
     border: 1px solid #000;
 }
 
-.profileContent{
+/* .profileContent{
 
-}
+} */
 
 .profileText{
     margin-bottom: 15px;
@@ -133,7 +133,7 @@
 }
 
 .button-53 {
-    background-color: #3DD1E7;
+    background-color: rosybrown;
     border: 0 solid #E5E7EB;
     box-sizing: border-box;
     color: #000000;
