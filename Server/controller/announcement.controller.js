@@ -9,7 +9,7 @@ export default class AnnouncementController{
             //error with querying
             if(response.error){
                 res.status(400).json({error})
-                return
+                return 
             }
             //nothing updated   
             if (response.modifiedCount === 0) {

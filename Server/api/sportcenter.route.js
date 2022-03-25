@@ -1,7 +1,8 @@
 //handles all routing logic for the project
-import express from "express"
+import express, { Router } from "express"
 import AnnouncementController from "../controller/announcement.controller.js"
 import KidController from "../controller/kid.controller.js"
+import ProgramController from "../controller/program.controller.js"
 import UserController from "../controller/user.controller.js"
 const router = express.Router()
 
@@ -27,6 +28,18 @@ router
     .route("/announcement/id/:id")
     .get(AnnouncementController.getProgramAnnouncement)
 //programs
+router 
+    .route("/program")
+    .post(ProgramController.postProgram)
+    .put(ProgramController.updateProgram)
+    .get(ProgramController.getProgram)
+    .delete(ProgramController.deleteProgram)
+router
+    .route("/program/enroll")
+    .post(ProgramController.enrollKid)
+router
+    .route("/program/drop")
+    .put(ProgramController.dropKidsProgram)
 
 //messages
 
@@ -37,5 +50,9 @@ router
     .get(KidController.getKids)
     .put(KidController.updateKid)
     .delete(KidController.deleteKid)
+//instructors
+router
+    .route("/instructor")
+    .get(UserController.getInstructors)
 export default router
 
