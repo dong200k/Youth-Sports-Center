@@ -7,6 +7,7 @@ import "./account.css"
 
 export default function AccountKids(){
 
+    
     return (
         <div className="accountPage">
             <div className="accountMainbox">
