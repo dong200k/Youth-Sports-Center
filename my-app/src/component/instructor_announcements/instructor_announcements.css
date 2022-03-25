@@ -6,5 +6,25 @@
     flex-direction: column;
 }
 
+.Card{
+    width: 25rem;
+    margin-bottom: 10px !important;
+}
+
+.Card:hover{
+    width: 27.5rem;
+}
+
 .Button{
+    margin-bottom: 10px;
+}
+
+.AnnouncementForm{
+    width: 25rem;   
+}
+
+.FormBox{
+    align-items: center;
+    display: flex;
+    justify-content: center;
 }

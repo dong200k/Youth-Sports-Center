@@ -15,7 +15,6 @@ import {
   useNavigate,
 } from "react-router-dom";
 import Mainpage from './component/mainpage.jsx'
-import Instructor_Announcement from './component/instructor_announcement'
 
 
 export default function App() {
@@ -31,7 +30,6 @@ export default function App() {
             <Route path="account" element = {<Account/>}/>
             <Route path="program" element = {<Program/>}/>
             <Route path="announcement" element = {<Announcement/>}/>
-            <Route path="instructor_announcement" element={<Instructor_Announcement/>}/>
           </Route>
         </Routes>
       </div>

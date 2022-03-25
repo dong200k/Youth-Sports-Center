@@ -37,10 +37,10 @@ const Announcements = () => {
 
     const renderAnnouncement = (card, index) => {
         return (
-            <Card className="Card" key={index} style={{width: '25rem'}} >
-                <Card.Header>{card.programId}</Card.Header>
+            <Card className="Card" key={index}  >
+                <Card.Header>{card.programName}</Card.Header>
                 <Card.Body>
-                    <Card.Title>{card.programName}</Card.Title>
+                    <Card.Title>{card.title}</Card.Title>
                     <Card.Text>{card.message}</Card.Text>
                 </Card.Body>
                 <Card.Footer className="text-muted">{card.date}</Card.Footer>

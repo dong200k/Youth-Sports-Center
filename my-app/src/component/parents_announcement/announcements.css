@@ -12,5 +12,9 @@
 }
 
 .Card:hover{
-    width: 30rem;
+    width: 27.5rem;
+}
+
+.Button{
+    margin-bottom: 10px;
 }

@@ -2,10 +2,14 @@ import React from 'react'
 import {Form} from 'react-bootstrap'
 import { Button } from 'react-bootstrap'
 
-const Create_Announcement_Form = () => {
+const Create_Announcement_Form = (props) => {
+    const something = (e) => {
+        e.preventDefault()
+        console.log(props)
+    }
   return (
-    <div>
-        <Form>
+    <div className='FormBox'>
+        <Form className="AnnouncementForm" onSubmit={props.onCreateAnnouncement}>
             <Form.Group className="mb-3" controlId="formBasicProgram">
                 <Form.Label>Program Name</Form.Label>
                 <Form.Control type="programName" placeholder='Program Name'></Form.Control>
@@ -18,7 +22,7 @@ const Create_Announcement_Form = () => {
                 <Form.Label>Message</Form.Label>
                 <Form.Control as="textarea" rows={3} placeholder="Enter Message" />
             </Form.Group>
-            <Button variant="primary" type="submit">Submit</Button>
+            <Button className="Button" variant="primary" type="submit">Submit</Button>
         </Form>
     </div>
   )
