@@ -1,3 +1,25 @@
-.programCard:hover{
+.programCard{
+    font-family: 'Quicksand';
+    font-weight: bold;
+    text-align: start;
+    color: rgb(77, 77, 77);
+    }
+    .programCard:hover{
     box-shadow: 0 0 12px 3px rgba(0, 0, 0, 0.5);
+}
+
+.weekday{
+    color:hotpink;
+}
+
+.modalSize{
+    min-width: 900px;
+}
+
+.textcenter{
+    text-align: center;
+}
+
+.nihao{
+    background-color: red;
 }
