@@ -5,11 +5,22 @@ import Col from 'react-bootstrap/Col'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import './program.css'
+import basketImg from '../../assets/basketball-program.jpg'
+import baseballImg from '../../assets/baseball-program.jpg'
+import soccerImg from '../../assets/soccer-program.jpg'
+import defaultImg from '../../assets/default-program.jpg'
+import Form from 'react-bootstrap/Form'
 
 export default class program extends Component {
   state = {
     showModal: false,
+    programImg: defaultImg,
+    kids: [{name: 'Lun', select:false},
+    {name:'Lucky', select:false}]
   }
+
+
+
   render() {
     return (
       <>
@@ -20,7 +31,7 @@ export default class program extends Component {
             });
         }}
         >
-            <Card.Img variant="top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" />
+            <Card.Img variant="top" src={this.state.programImg} />
             <Card.Body>
                 <Card.Title style={{fontWeight:'bolder', borderBottom: '1px solid grey'}}>{this.props.program.program_name}</Card.Title>
                 <Card.Text>
@@ -42,17 +53,14 @@ export default class program extends Component {
                 {this.props.program.weekday}: {this.props.program.starttime}
                 ~{this.props.program.endtime}
                 </Card.Text>
-
                 <Card.Text style={{ borderTop:'1px solid grey', color:'grey', justifyContent:'space-between', display:'flex'}}>
-  
                     <span className={`${this.props.program.weekday == 'Mon' ? 'weekday':''}`}>M</span>
                     <span className={`${this.props.program.weekday == 'Tue' ? 'weekday':''}`}>T</span>
                     <span className={`${this.props.program.weekday == 'Wed' ? 'weekday':''}`}>W</span>
                     <span className={`${this.props.program.weekday == 'Thu' ? 'weekday':''}`}>Th</span>
                     <span className={`${this.props.program.weekday == 'Fri' ? 'weekday':''}`}>F</span>
                     <span className={`${this.props.program.weekday == 'Sat' ? 'weekday':''}`}>Sa</span>
-                    <span className={`${this.props.program.weekday == 'Sun' ? 'weekday':''}`}>S</span>
-               
+                    <span className={`${this.props.program.weekday == 'Sun' ? 'weekday':''}`}>S</span>      
                 </Card.Text>
             </Card.Body>
         </Card>
@@ -65,24 +73,58 @@ export default class program extends Component {
           }}
           dialogClassName="modalSize"
         >
-          <Modal.Header closeButton>
-            <Modal.Title >
+          <Modal.Header style={{marginLeft:'2.5%', width:'95%'}} closeButton>
+            <Modal.Title style={{position:'absolute', left:'50%', width:'140px', marginLeft:'-70px', textAlign:'center'}}>
               Class Details
             </Modal.Title>
           </Modal.Header>
-          <Modal.Body >
+          <Modal.Body style={{fontFamily:'Quicksand',fontWeight:'500', fontSize:'20px'}}>
             <Row>
-              <Modal.Title>
-                Course Name
-              </Modal.Title>
+              <Col style={{maxWidth:'130px'}}>Program:</Col>
+              <Col>{this.props.program.program_name}</Col>
             </Row>
             <Row>
-              <form>
-                Name
-              </form>
+              <Col style={{maxWidth:'130px'}}>Address:</Col>
+              <Col>{this.props.program.location}</Col>
             </Row>
             <Row>
-              <Button style={{border:'none',backgroundColor:'rosybrown', color:'#fff'}}>Register Kid</Button>
+              <Col style={{maxWidth:'130px'}}>Session:</Col>
+              <Col>{this.props.program.session}</Col>
+            </Row>
+            <Row>
+              <Col style={{maxWidth:'130px'}}>Schedule:</Col>
+              <Col>{this.props.program.weekday}| {this.props.program.starttime}
+                ~{this.props.program.endtime}</Col>
+            </Row>
+            <Row>
+              <Col style={{maxWidth:'130px'}}>Coach:</Col>
+              <Col>{this.props.program.instructors.map((i)=>{
+                  return(<span key={i}> {i} </span>)
+                })
+                }
+              </Col>
+            </Row>
+            <Row>
+              <Col style={{maxWidth:'130px'}}>Age range:</Col>
+              <Col>{this.props.program.ages.map((age)=>{
+                  return(<span key={age}> {age} </span>)
+                })
+                }</Col>
+            </Row>
+            <Form style={{display:'flex', justifyContent:'center', marginTop: '20px', borderTop:'1px solid rgb(204, 204, 204)'}}>
+              <Row style={{width:'90%'}}>
+              {this.state.kids.map((kid) => (
+                <Col key={kid.name} className="mb-3">
+                  <Form.Check type='checkbox' id={`${kid.name}`}>
+                    <Form.Check.Input type='checkbox' isValid />
+                    <Form.Check.Label>{`${kid.name}`}</Form.Check.Label>
+                  </Form.Check>
+                </Col>
+              ))}
+              </Row>
+            </Form>
+            <Row style={{display:'flex', justifyContent:'center'}}>
+              <Button style={{border:'none',backgroundColor:'rosybrown', color:'#fff', width:'90%'}}>Register Kid</Button>
             </Row>
           </Modal.Body>
         </Modal>

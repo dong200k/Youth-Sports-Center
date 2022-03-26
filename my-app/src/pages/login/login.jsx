@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import "./login.css"
-import football from "../../assets/football.jpg"
-import basketball from "../../assets/kidbasket.jpg"
+import football from "../../assets/signup-bg.jpg"
+import basketball from "../../assets/signup-bg.jpg"
 import AuthService from '../../services/services.js'
 export default class login extends Component {
     state = {
