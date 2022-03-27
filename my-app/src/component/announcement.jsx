@@ -35,10 +35,20 @@ export default function Announcement(){
         },
     ]);
    
+    const [filteredAnnouncements, setFilteredAnnouncements] = useState(announcementInfo)
+    
+    /*const filterAnnouncements = useCallback(
+       (e) => {
+            e.preventDefault();
+            const filteredAnnouncements = announcementInfo.map( announcement => announcement.programName != "Soccer 5U" ? null : {
+            return: {...announcement}}) 
+       },
+       setFilteredAnnouncements(filteredAnnouncements)
+    )
+*/
     const onCreateAnnouncement = useCallback(
       (e) => {
         e.preventDefault();
-        console.log("Function Used")
         const newAnnouncement = {id: 5, programId: 4, programName: "Ping Pong", title: "Welcome Class", message: "Hello World", senderId: 6, date: "3/21/22"}
         setAnnouncementInfo([newAnnouncement, ...announcementInfo])
       },
