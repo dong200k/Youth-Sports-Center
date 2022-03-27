@@ -12,6 +12,19 @@ import defaultImg from '../../assets/default-program.jpg'
 import Form from 'react-bootstrap/Form'
 
 export default class program extends Component {
+  constructor(props){
+    super(props)
+    if(props.program.sport_type === 'basketball'){
+      this.state.programImg = basketImg
+    }
+    else if(props.program.sport_type === 'baseball'){
+      this.state.programImg = baseballImg
+    }
+    else if(props.program.sport_type === 'soccer'){
+      this.state.programImg = soccerImg
+    }
+  }
+
   state = {
     showModal: false,
     programImg: defaultImg,
@@ -23,6 +36,7 @@ export default class program extends Component {
   render() {
     return (
       <>
+
         <Card className='programCard' style={{ width: '380px', margin : '10px' }}
           onClick={() => {
             this.setState({
@@ -30,7 +44,7 @@ export default class program extends Component {
             });
         }}
         >
-            <Card.Img variant="top" src={this.state.programImg} />
+            <Card.Img variant="top" style={{width:'100%', height:'250px', objectFit:'cover'}} src={this.state.programImg} />
             <Card.Body>
                 <Card.Title style={{fontWeight:'bolder', borderBottom: '1px solid grey'}}>{this.props.program.program_name}</Card.Title>
                 <Card.Text>

@@ -42,8 +42,8 @@ const programs = [
   },
   {
   id: '13456',
-  program_name: 'Basketall 500',
-  sport_type: 'basketall',
+  program_name: 'Basketball 500',
+  sport_type: 'basketball',
   instructors: ['coach a', 'b', 'c'],
   ages: ['1', '2', '3', '4'],
   location: '5000 x street',
