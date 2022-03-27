@@ -6,6 +6,12 @@
     justify-content: center;
 }
 
+.pageHeader{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
 .pageBody{
     width: 100%;
     display: flex;

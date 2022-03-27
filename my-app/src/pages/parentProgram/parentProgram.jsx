@@ -18,6 +18,7 @@ const programs = [
   weekday: 'Mon',
   starttime: '11:11am',
   endtime:'12:12pm',
+  session:'Spring 2/22~3/27'
   },
   {
   id: '12346',
@@ -54,7 +55,7 @@ export default class parentProgram extends Component {
 
   state = {
       programs: programs,
-      isLoad:false,
+      isLoad: false,
       isError:''
   }
     
@@ -71,10 +72,6 @@ export default class parentProgram extends Component {
         <div className="pageBody">
           <Programs {...this.state}/>
         </div>
-        <div className="loading">
-          <Loading />
-        </div>
-
       </div>
     )
   }
