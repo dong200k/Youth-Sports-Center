@@ -15,6 +15,9 @@ const programs = [
   location: '5000 x street',
   capacity: '30',
   enrolled: '20',
+  weekday: 'Mon',
+  starttime: '11:11am',
+  endtime:'12:12pm',
   },
   {
   id: '12346',
