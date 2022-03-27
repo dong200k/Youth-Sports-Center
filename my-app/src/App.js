@@ -6,8 +6,9 @@ import Home from './pages/home/home'
 // import Form from './component/form/form'
 import Message from './component/message.jsx'
 import Announcement from './component/announcement.jsx'
-import Account from './component/account.jsx'
-import Program from './component/program.jsx'
+import Account from './pages/account/account.jsx'
+import Program from './pages/parentProgram/parentProgram.jsx'
+// import Program from './component/ProgramList/programApp.jsx'
 import {
   BrowserRouter,
   Routes,
@@ -15,7 +16,6 @@ import {
   useNavigate,
 } from "react-router-dom";
 import Mainpage from './component/mainpage.jsx'
-
 
 export default function App() {
   // const navigate = useNavigate()
