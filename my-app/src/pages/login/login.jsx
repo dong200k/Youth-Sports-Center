@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import "./login.css"
 import football from "../../assets/signup-bg.jpg"
 import basketball from "../../assets/signup-bg.jpg"
-import AuthService from '../../services/services.js'
+import AuthService from '../../services/auth.service.js'
 export default class login extends Component {
     state = {
         isNewUser: true,

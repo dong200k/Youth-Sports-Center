@@ -9,6 +9,7 @@ import Announcement from './component/announcement.jsx'
 import Account from './pages/account/account.jsx'
 import Program from './pages/parentProgram/parentProgram.jsx'
 // import Program from './component/ProgramList/programApp.jsx'
+import ParentProgram from './pages/parentProgram/parentProgram.jsx'
 import {
   BrowserRouter,
   Routes,
@@ -28,7 +29,7 @@ export default function App() {
             <Route index element={<Home/>}/>
             <Route path="message" element = {<Message/>}/>
             <Route path="account" element = {<Account/>}/>
-            <Route path="program" element = {<Program/>}/>
+            <Route path="program" element = {<ParentProgram/>}/>
             <Route path="announcement" element = {<Announcement/>}/>
           </Route>
         </Routes>
