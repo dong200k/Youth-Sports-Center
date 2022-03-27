@@ -40,8 +40,6 @@ router
 router
     .route("/program/enroll")
     .post(ProgramController.enrollKid)
-router
-    .route("/program/drop")
     .put(ProgramController.dropKidsProgram)
 router 
     .route("/program/user_programs")
