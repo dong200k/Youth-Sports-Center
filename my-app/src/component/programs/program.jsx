@@ -15,8 +15,7 @@ export default class program extends Component {
   state = {
     showModal: false,
     programImg: defaultImg,
-    kids: [{name: 'Lun', select:false},
-    {name:'Lucky', select:false}]
+    kids: [{name:'Lun'},{name:'ki'}]
   }
 
 
@@ -54,13 +53,13 @@ export default class program extends Component {
                 ~{this.props.program.endtime}
                 </Card.Text>
                 <Card.Text style={{ borderTop:'1px solid grey', color:'grey', justifyContent:'space-between', display:'flex'}}>
-                    <span className={`${this.props.program.weekday == 'Mon' ? 'weekday':''}`}>M</span>
-                    <span className={`${this.props.program.weekday == 'Tue' ? 'weekday':''}`}>T</span>
-                    <span className={`${this.props.program.weekday == 'Wed' ? 'weekday':''}`}>W</span>
-                    <span className={`${this.props.program.weekday == 'Thu' ? 'weekday':''}`}>Th</span>
-                    <span className={`${this.props.program.weekday == 'Fri' ? 'weekday':''}`}>F</span>
-                    <span className={`${this.props.program.weekday == 'Sat' ? 'weekday':''}`}>Sa</span>
-                    <span className={`${this.props.program.weekday == 'Sun' ? 'weekday':''}`}>S</span>      
+                    <span className={`${this.props.program.weekday === 'Mon' ? 'weekday':''}`}>M</span>
+                    <span className={`${this.props.program.weekday === 'Tue' ? 'weekday':''}`}>T</span>
+                    <span className={`${this.props.program.weekday === 'Wed' ? 'weekday':''}`}>W</span>
+                    <span className={`${this.props.program.weekday === 'Thu' ? 'weekday':''}`}>Th</span>
+                    <span className={`${this.props.program.weekday === 'Fri' ? 'weekday':''}`}>F</span>
+                    <span className={`${this.props.program.weekday === 'Sat' ? 'weekday':''}`}>Sa</span>
+                    <span className={`${this.props.program.weekday === 'Sun' ? 'weekday':''}`}>S</span>      
                 </Card.Text>
             </Card.Body>
         </Card>
@@ -112,19 +111,25 @@ export default class program extends Component {
                 }</Col>
             </Row>
             <Form style={{display:'flex', justifyContent:'center', marginTop: '20px', borderTop:'1px solid rgb(204, 204, 204)'}}>
-              <Row style={{width:'90%'}}>
-              {this.state.kids.map((kid) => (
+              <Row style={{marginTop: '20px'}}>
+              {this.state.kids.length === 0?
+              <Col>No kids aviliable</Col>
+              :              
+              this.state.kids.map((kid) => 
+              (
                 <Col key={kid.name} className="mb-3">
                   <Form.Check type='checkbox' id={`${kid.name}`}>
-                    <Form.Check.Input type='checkbox' isValid />
-                    <Form.Check.Label>{`${kid.name}`}</Form.Check.Label>
+                    <Form.Check.Label className='kidSelect'>{`${kid.name}`}
+                      <Form.Check.Input type='checkbox' isValid />
+                    </Form.Check.Label>
                   </Form.Check>
                 </Col>
-              ))}
+              ))
+              }
               </Row>
             </Form>
             <Row style={{display:'flex', justifyContent:'center'}}>
-              <Button style={{border:'none',backgroundColor:'rosybrown', color:'#fff', width:'90%'}}>Register Kid</Button>
+              <Button style={{border:'none',backgroundColor:'rosybrown', color:'#fff', width:'95%'}}>Register Kid</Button>
             </Row>
           </Modal.Body>
         </Modal>
