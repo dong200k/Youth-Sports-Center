@@ -12,11 +12,23 @@ import defaultImg from '../../assets/default-program.jpg'
 import Form from 'react-bootstrap/Form'
 
 export default class program extends Component {
+  constructor(props){
+    super(props)
+    if(props.program.sport_type === 'basketball'){
+      this.state.programImg = basketImg
+    }
+    else if(props.program.sport_type === 'baseball'){
+      this.state.programImg = baseballImg
+    }
+    else if(props.program.sport_type === 'soccer'){
+      this.state.programImg = soccerImg
+    }
+  }
+
   state = {
     showModal: false,
     programImg: defaultImg,
-    kids: [{name: 'Lun', select:false},
-    {name:'Lucky', select:false}]
+    kids: [{name:'Lun'},{name:'ki'}]
   }
 
 
@@ -24,6 +36,7 @@ export default class program extends Component {
   render() {
     return (
       <>
+
         <Card className='programCard' style={{ width: '380px', margin : '10px' }}
           onClick={() => {
             this.setState({
@@ -31,7 +44,7 @@ export default class program extends Component {
             });
         }}
         >
-            <Card.Img variant="top" src={this.state.programImg} />
+            <Card.Img variant="top" style={{width:'100%', height:'250px', objectFit:'cover'}} src={this.state.programImg} />
             <Card.Body>
                 <Card.Title style={{fontWeight:'bolder', borderBottom: '1px solid grey'}}>{this.props.program.program_name}</Card.Title>
                 <Card.Text>
@@ -54,13 +67,13 @@ export default class program extends Component {
                 ~{this.props.program.endtime}
                 </Card.Text>
                 <Card.Text style={{ borderTop:'1px solid grey', color:'grey', justifyContent:'space-between', display:'flex'}}>
-                    <span className={`${this.props.program.weekday == 'Mon' ? 'weekday':''}`}>M</span>
-                    <span className={`${this.props.program.weekday == 'Tue' ? 'weekday':''}`}>T</span>
-                    <span className={`${this.props.program.weekday == 'Wed' ? 'weekday':''}`}>W</span>
-                    <span className={`${this.props.program.weekday == 'Thu' ? 'weekday':''}`}>Th</span>
-                    <span className={`${this.props.program.weekday == 'Fri' ? 'weekday':''}`}>F</span>
-                    <span className={`${this.props.program.weekday == 'Sat' ? 'weekday':''}`}>Sa</span>
-                    <span className={`${this.props.program.weekday == 'Sun' ? 'weekday':''}`}>S</span>      
+                    <span className={`${this.props.program.weekday === 'Mon' ? 'weekday':''}`}>M</span>
+                    <span className={`${this.props.program.weekday === 'Tue' ? 'weekday':''}`}>T</span>
+                    <span className={`${this.props.program.weekday === 'Wed' ? 'weekday':''}`}>W</span>
+                    <span className={`${this.props.program.weekday === 'Thu' ? 'weekday':''}`}>Th</span>
+                    <span className={`${this.props.program.weekday === 'Fri' ? 'weekday':''}`}>F</span>
+                    <span className={`${this.props.program.weekday === 'Sat' ? 'weekday':''}`}>Sa</span>
+                    <span className={`${this.props.program.weekday === 'Sun' ? 'weekday':''}`}>S</span>      
                 </Card.Text>
             </Card.Body>
         </Card>
@@ -112,19 +125,25 @@ export default class program extends Component {
                 }</Col>
             </Row>
             <Form style={{display:'flex', justifyContent:'center', marginTop: '20px', borderTop:'1px solid rgb(204, 204, 204)'}}>
-              <Row style={{width:'90%'}}>
-              {this.state.kids.map((kid) => (
+              <Row style={{marginTop: '20px'}}>
+              {this.state.kids.length === 0?
+              <Col>No kids aviliable</Col>
+              :              
+              this.state.kids.map((kid) => 
+              (
                 <Col key={kid.name} className="mb-3">
                   <Form.Check type='checkbox' id={`${kid.name}`}>
-                    <Form.Check.Input type='checkbox' isValid />
-                    <Form.Check.Label>{`${kid.name}`}</Form.Check.Label>
+                    <Form.Check.Label className='kidSelect'>{`${kid.name}`}
+                      <Form.Check.Input type='checkbox' isValid />
+                    </Form.Check.Label>
                   </Form.Check>
                 </Col>
-              ))}
+              ))
+              }
               </Row>
             </Form>
             <Row style={{display:'flex', justifyContent:'center'}}>
-              <Button style={{border:'none',backgroundColor:'rosybrown', color:'#fff', width:'90%'}}>Register Kid</Button>
+              <Button style={{border:'none',backgroundColor:'rosybrown', color:'#fff', width:'95%'}}>Register Kid</Button>
             </Row>
           </Modal.Body>
         </Modal>
