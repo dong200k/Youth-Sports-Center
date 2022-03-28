@@ -1,29 +1,33 @@
-import axiosInstance from "axios"
+import axios from "axios"
 
 class ProgramService{
     constructor(){
         this.baseURL = "http://localhost:5000/api/v1/youthsportcenter"
     }
     filterProgram(data){
-        return axiosInstance.get(this.baseURL + "/program", data)
+        // if(data)
+            return axios.post(this.baseURL + "/program/filter", data)
+        // else 
+        //     return axios.post(this.baseURL + "/program/filter", {filter:{}})
     }
     createProgram(data){
-        return axiosInstance.post(this.baseURL + "/program", data)
-    }
+        return axios.post(this.baseURL + "/program", data)
+    } 
     updateProgram(data){
-        return axiosInstance.put(this.baseURL + "/program", data)
+        return axios.put(this.baseURL + "/program", data)
     }
     deleteProgram(data){
-        return axiosInstance.delete(this.baseURL + "/program", data)
+        return axios.delete(this.baseURL + "/program", data)
     }
-    getUserProgram(data){//get program based on user_id
-        return axiosInstance.get(this.baseURL + "/program", data)
+    getUserProgram(id){//get program based on user_id
+        // console.log(id+"adjasnasjdsajasn")
+        return axios.get(this.baseURL + "/program/user/"+id)
     }
     enrollKid(data){//enroll kid into program
-        return axiosInstance.post(this.baseURL + "/program/enroll", data)
+        return axios.post(this.baseURL + "/program/enroll", data)
     }
     dropKid(data){//drop kid from program
-        return axiosInstance.put(this.baseURL + "/program/enroll", data)
+        return axios.put(this.baseURL + "/program/enroll", data)
     }
 }
 

@@ -8,6 +8,8 @@ import ProgramDAO from "../dao/programDAO.js";
 export default class ProgramController{
     //program search
     static async getProgram(req, res, next){
+        console.log("get protgram fitler")
+        console.log(req.body)
         const {days, ages, sports, locations, pageNumber, pageSize, program_id} = req.body.filter
         try{
 
@@ -40,7 +42,7 @@ export default class ProgramController{
             }:
             null
 
-            const program_id_filter = program?{
+            const program_id_filter = program_id?{
                 _id: ObjectId(program_id)
             }:
             null
@@ -61,8 +63,7 @@ export default class ProgramController{
                 }}
             else
                 match = {"$match": {}} 
-
-            const pipeline = [
+            const pipeline = [  
                 match,
                 // page info and total programs
                 { '$facet'    : {
@@ -77,9 +78,11 @@ export default class ProgramController{
             if(!programs){
                 throw new Error("filtering program failed!")
             }else{
+                console.log(programs)
                 res.json({status:"success", result: programs})
             }
         }catch(e){
+            console.log(e.message)
             res.status(404).json({error: e.message})
         }
     }
@@ -366,7 +369,7 @@ export default class ProgramController{
 
             //filter out kids to drop from program
             program.kids = program.kids.filter(enrolledKid=>{
-                console.log(enrolledKid)
+                // console.log(enrolledKid)
                 for(const kidToDrop of kids){
                     if(ObjectId(kidToDrop)===ObjectId(enrolledKid))
                         return true
@@ -388,10 +391,10 @@ export default class ProgramController{
         }
     }
     static async getUserProgram(req, res, body){
-        const {user_id} = req.body
+        const {id: user_id} = req.params
         try {
+            // console.log(user_id)
             const user = await User.findById(ObjectId(user_id))
-
             if(!user){
                 throw new Error("invalid user in getUserProgram!")
             }
