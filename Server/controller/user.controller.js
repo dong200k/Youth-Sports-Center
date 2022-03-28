@@ -67,17 +67,17 @@ export default class UserController{
     static async getInstructors(req, res, body){
         const {user_id} = req.body
         try {
-            //filter for instructor
-            const user_filter = {
-                _id: ObjectId(user_id),
-                user_type: "Instructor"
-            }
-            const user = await User.findOne(user_filter)
+            // //filter for instructor
+            // const user_filter = {
+            //     _id: ObjectId(user_id),
+            //     user_type: "Instructor"
+            // }
+            // const user = await User.findOne(user_filter)
 
-            //make sure user is instructor
-            if(!user){
-                throw new Error("Only instructors can access this information!")
-            }
+            // //make sure user is instructor
+            // if(!user){
+            //     throw new Error("Only instructors can access this information!")
+            // }
 
             //filter for all instructors
             const instructor_filter = {

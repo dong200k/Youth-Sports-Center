@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useEffect } from 'react'
 import Topbar from './component/topbar/topbar'
 import Login from "./pages/login/login"
 import MyCalendar from "./component/myCalendar/myCalendar"
@@ -17,8 +17,55 @@ import {
   useNavigate,
 } from "react-router-dom";
 import Mainpage from './component/mainpage.jsx'
-
+import programService from './services/program.service.js'
+import announcementService from './services/announcement.service.js'
 export default function App() {
+  useEffect(()=>{
+    // programService.getUserProgram("621ea5828800f35004a0cbb5")
+    //   .then(res=>{console.log(res)
+    //       console.log("hellOworld!")})
+    //   .catch(err=>console.log(err))
+
+    // const id = "621ea5828800f35004a0cbb5"
+    // announcementService.getUserAnnouncement(id)
+    //   .then(res=>{console.log(res)
+    //     console.log("hellOworld!")})
+    //   .catch(err=>console.log(err))
+    // announcementService.getAllAnnouncement()
+    //   .then(res=>{console.log(res)
+    //     console.log("hellOworld!")})
+    //   .catch(err=>console.log(err))
+
+      const data = {
+        "filter": {
+            "days": [
+                "Wednesday"
+            ],
+            
+            "sports": [
+                "Soccer",
+                "Basketball"
+            ],
+            "locations":["123 test street"],
+            "pageNumber": 1,
+            "pageSize": 2
+        }
+    }
+      // programService.filterProgram(data)
+      // .then(res=>{console.log(res)
+      //   console.log("hellOworld!")})
+      // .catch(err=>console.log(err))
+
+      programService.filterProgram({filter:{pageNumber: 1, pageSize:100}})
+      .then(res=>{console.log(res)
+        console.log("hellOworld!")})
+      .catch(err=>console.log(err))
+
+  },[])
+ 
+  // announcementService.getAllAnnouncement()
+  //   .then(res=>console.log(res))
+  //   .catch(err=>console.log(err))
   // const navigate = useNavigate()
   // render() {
     return (
