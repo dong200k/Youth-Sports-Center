@@ -125,7 +125,7 @@ export default class login extends Component {
                             Hello, stranger!
                             </span>
                         <span className="loginSubContainerContent">
-                            Enter your personal details and start your own portfolio!
+                            Enter your personal details and create your account!
                         </span>
                         <button onClick={() => {
                             this.setState({
