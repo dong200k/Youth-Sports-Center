@@ -20,53 +20,21 @@ import Mainpage from './component/mainpage.jsx'
 import programService from './services/program.service.js'
 import announcementService from './services/announcement.service.js'
 export default function App() {
-  useEffect(()=>{
-    // programService.getUserProgram("621ea5828800f35004a0cbb5")
-    //   .then(res=>{console.log(res)
-    //       console.log("hellOworld!")})
-    //   .catch(err=>console.log(err))
-
-    // const id = "621ea5828800f35004a0cbb5"
-    // announcementService.getUserAnnouncement(id)
-    //   .then(res=>{console.log(res)
-    //     console.log("hellOworld!")})
-    //   .catch(err=>console.log(err))
-    // announcementService.getAllAnnouncement()
-    //   .then(res=>{console.log(res)
-    //     console.log("hellOworld!")})
-    //   .catch(err=>console.log(err))
-
-      const data = {
-        "filter": {
-            "days": [
-                "Wednesday"
-            ],
-            
-            "sports": [
-                "Soccer",
-                "Basketball"
-            ],
-            "locations":["123 test street"],
-            "pageNumber": 1,
-            "pageSize": 2
-        }
+  const data = {
+    filter:{
+      pageNumber: 1,
+      pageSize: 100
     }
-      // programService.filterProgram(data)
-      // .then(res=>{console.log(res)
-      //   console.log("hellOworld!")})
-      // .catch(err=>console.log(err))
-
-      programService.filterProgram({filter:{pageNumber: 1, pageSize:100}})
-      .then(res=>{console.log(res)
-        console.log("hellOworld!")})
-      .catch(err=>console.log(err))
-
-  },[])
- 
-  // announcementService.getAllAnnouncement()
-  //   .then(res=>console.log(res))
-  //   .catch(err=>console.log(err))
-  // const navigate = useNavigate()
+  }
+  // useEffect(()=>{
+  //   programService.filterProgram(data)
+  //   .then(response=>{
+  //     console.log(response)
+  //     })
+  //   .catch(err=>{
+  //     console.log(err)
+  //   })
+  // },[])
   // render() {
     return (
       <div>

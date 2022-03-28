@@ -11,7 +11,7 @@ import locations from "../randomData/randomLocations.js"
 export default class GenerateData{
     static async generatePrograms(req, res, next){
         //generate n random programs
-        const {n} = req.body
+        let {n} = req.body
         if(!n||typeof(n)!==typeof(1123)) n = 5
         let count = 0
         const programs = []
@@ -89,11 +89,22 @@ export default class GenerateData{
             remainingInstructors = filter(remainingInstructors, instructor)
         }
 
+        let dayDict = {}
+        const daysToUSe = []
+        for(const day of randomDays){
+            dayDict[day] = day
+        }
+        for(const day of days){
+            if(dayDict[day]){
+                daysToUSe.push(day)
+            }
+        }
+
         const new_program = {
             program_name: program_name,
             sport_type: sport, 
             location: GenerateData.selectRandom(locations), 
-            days: randomDays,
+            days: daysToUSe,
             ages: ages,
             capacity: Math.floor(Math.random()*31+10), 
             waitlist_capacity: Math.floor(Math.random()*16),  
@@ -131,7 +142,7 @@ export default class GenerateData{
         return instructors
     }
     static async generateAnnouncements(req, res, next){//for 1 program
-        const {program_id, n} = req.body
+        let {program_id, n} = req.body
         if(!n||typeof(n)!==typeof(1123)) n = 5
         let program = await Program.findById(ObjectId(program_id))
         if(!program)
@@ -151,7 +162,7 @@ export default class GenerateData{
         res.json({count:count, announcements: await AnnouncementDao.getProgramAnnouncement(program_id)})
     }
     static async generateInstructors(req, res, next){
-        const {n} = req.body
+        let {n} = req.body
         if(!n||typeof(n)!==typeof(1123)) n = 5
         const emails = ["@gmail.com", "@citymail.cuny.edu", "@yahoo.com", "@hotmail.com"]
         let instructors = new instructors
@@ -185,6 +196,20 @@ export default class GenerateData{
     }   
     static async generateParentsAndKid(req, res, next){
 
+    }
+    static async deletePrograms(req, res, next){
+        try {
+            
+            const query = {
+                program_name:{
+                    "$nin": ["test program", "Program 123", "Program 420"]
+                }
+            }
+            await Program.deleteMany(query)
+            res.json({status:"success"})
+        } catch (error) {
+            res.status(404).json({error:error.message})
+        }
     }
 
 }

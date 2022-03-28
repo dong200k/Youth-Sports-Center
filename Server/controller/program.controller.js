@@ -73,17 +73,41 @@ export default class ProgramController{
             ]
 
             //aggregate pipeline
-            const programs = await ProgramDAO.filterProgram(pipeline)
-
-            if(!programs){
+            const metadata = await ProgramDAO.filterProgram(pipeline)
+            const programs = metadata[0].data
+            if(!metadata){
                 throw new Error("filtering program failed!")
             }else{
-                console.log(programs)
-                res.json({status:"success", result: programs})
+                let instructorNames = await User.find({user_type:"Instructor"}, {first_name: 1})
+                let dict = {}
+                for(const i of instructorNames){
+                    dict[i._id] = i.first_name
+                }
+                for(let i=0;i<programs.length;i++){
+                    let program = programs[i]
+                    if(program.instructors){
+                        programs[i] = await ProgramController.addInstructorName(program, dict)
+                    }
+                }
+                res.json({status:"success", result: metadata})
             }
         }catch(e){
             console.log(e.message)
             res.status(404).json({error: e.message})
+        }
+    }
+    static async addInstructorName(program, dict){
+        try {
+            program.instructors = program.instructors.map(instructor=>{
+                return {
+                    _id: instructor,
+                    first_name: dict[instructor]
+                }
+            })
+            return program
+        } catch (error) {
+            console.log(error.message)
+            throw new Error("error adding instructor names")
         }
     }
     static async postProgram(req, res, next){
