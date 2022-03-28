@@ -47,7 +47,6 @@ router
 router 
     .route("/program/user/:id")
     .get(ProgramController.getUserProgram)
-
 //messages
 
 //kids
@@ -72,5 +71,8 @@ router
 router
     .route("/generate/announcements")
     .post(GenerateData.generateAnnouncements)
+// router
+//     .route("/generate/deleterandom")
+//     .post(GenerateData.deletePrograms)
 export default router
 

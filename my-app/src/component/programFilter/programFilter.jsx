@@ -6,39 +6,41 @@ import Container from 'react-bootstrap/Container'
 import Filter from './filter.jsx'
 import './programFilter.css'
 
-const age_range = [3,4,5,6,7,8,9,10]
+const age_range = [3,4,5,6,7,8,9,10,11]
 const sport_range = ['soccer','basketball','baseball']
 const weekday_range = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
   
 export default class programFilter extends Component {
-  state={
-    ageFilter:'',
-    sportFilter:'',
-    dayFilter:''
+  constructor(props){
+    super(props)
+    this.state = this.props.state.filter
+    console.log("asd")
+    console.log(this.state.ageFilter)
   }
-
+  
   updateFilter = (stateObj) =>{
-    this.setState(stateObj) 
+    // this.setState(stateObj) 
+    this.props.updateAppState(stateObj)
   }
 
   initialFilter = (filterType) => {
     if(filterType == 'ageFilter'){
-      this.setState({ageFilter:''})
+      this.updateFilter({ageFilter:''})
     }
     else if(filterType == 'sportFilter'){
-      this.setState({sportFilter:''})
+      this.updateFilter({sportFilter:''})
     }
     else if(filterType == 'dayFilter'){
-      this.setState({dayFilter:''})
+      this.updateFilter({dayFilter:''})
     }
     
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.ageFilter !== this.state.ageFilter) {
-      console.log('pokemons state has changed.')
-    }
-  }
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (prevState.ageFilter !== this.state.ageFilter) {
+  //     console.log('pokemons state has changed.')
+  //   }
+  // }
 
   
   render() {

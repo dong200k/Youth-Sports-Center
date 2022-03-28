@@ -14,13 +14,13 @@ import Form from 'react-bootstrap/Form'
 export default class program extends Component {
   constructor(props){
     super(props)
-    if(props.program.sport_type === 'basketball'){
+    if(props.program.sport_type === 'Basketball'){
       this.state.programImg = basketImg
     }
-    else if(props.program.sport_type === 'baseball'){
+    else if(props.program.sport_type === 'Baseball'){
       this.state.programImg = baseballImg
     }
-    else if(props.program.sport_type === 'soccer'){
+    else if(props.program.sport_type === 'Soccer'){
       this.state.programImg = soccerImg
     }
   }
@@ -31,6 +31,21 @@ export default class program extends Component {
     kids: [{name:'Lun'},{name:'ki'}]
   }
 
+  getTime = time => {
+    let hour = Math.floor(time/60)
+    let min = Math.floor(time%60)
+
+    if(hour<10)
+      hour = "0"+hour.toString()
+    else
+      hour = hour.toString()
+    if(min<10)
+      min = "0"+min.toString()
+    else
+      min = min.toString()
+
+    return hour+":"+min
+  }
 
 
   render() {
@@ -49,7 +64,7 @@ export default class program extends Component {
                 <Card.Title style={{fontWeight:'bolder', borderBottom: '1px solid grey'}}>{this.props.program.program_name}</Card.Title>
                 <Card.Text>
                 Coach: {this.props.program.instructors.map((i)=>{
-                  return(<span key={i}> {i} </span>)
+                  return(<span key={i._id}> {i.first_name} </span>)
                 })
                 }
                 </Card.Text>
@@ -63,17 +78,18 @@ export default class program extends Component {
                 }
                 </Card.Text>
                 <Card.Text>
-                {this.props.program.weekday}: {this.props.program.starttime}
-                ~{this.props.program.endtime}
+                {this.props.program.days.map(day=><span key={day}> {day.substring(0,2)} </span>)}
+                : {this.getTime(this.props.program.time.start_time)}
+                ~{this.getTime(this.props.program.time.end_time)}
                 </Card.Text>
                 <Card.Text style={{ borderTop:'1px solid grey', color:'grey', justifyContent:'space-between', display:'flex'}}>
-                    <span className={`${this.props.program.weekday === 'Mon' ? 'weekday':''}`}>M</span>
-                    <span className={`${this.props.program.weekday === 'Tue' ? 'weekday':''}`}>T</span>
-                    <span className={`${this.props.program.weekday === 'Wed' ? 'weekday':''}`}>W</span>
-                    <span className={`${this.props.program.weekday === 'Thu' ? 'weekday':''}`}>Th</span>
-                    <span className={`${this.props.program.weekday === 'Fri' ? 'weekday':''}`}>F</span>
-                    <span className={`${this.props.program.weekday === 'Sat' ? 'weekday':''}`}>Sa</span>
-                    <span className={`${this.props.program.weekday === 'Sun' ? 'weekday':''}`}>S</span>      
+                    <span className={`${this.props.program.days.filter(day=>day==='Monday')[0] ? 'weekday':''}`}>M</span>
+                    <span className={`${this.props.program.days.filter(day=>day==='Tuesday')[0] ? 'weekday':''}`}>T</span>
+                    <span className={`${this.props.program.days.filter(day=>day==='Wednesday')[0] ? 'weekday':''}`}>W</span>
+                    <span className={`${this.props.program.days.filter(day=>day==='Thursday')[0] ? 'weekday':''}`}>Th</span>
+                    <span className={`${this.props.program.days.filter(day=>day==='Friday')[0] ? 'weekday':''}`}>F</span>
+                    <span className={`${this.props.program.days.filter(day=>day==='Saturday')[0] ? 'weekday':''}`}>Sa</span>
+                    <span className={`${this.props.program.days.filter(day=>day==='Sunday')[0] ? 'weekday':''}`}>S</span>      
                 </Card.Text>
             </Card.Body>
         </Card>
@@ -102,17 +118,17 @@ export default class program extends Component {
             </Row>
             <Row>
               <Col style={{maxWidth:'130px'}}>Session:</Col>
-              <Col>{this.props.program.session}</Col>
+              <Col>{this.props.program.time.start_date.substring(0,10)}~{this.props.program.time.end_date.substring(0,10)}</Col>
             </Row>
             <Row>
               <Col style={{maxWidth:'130px'}}>Schedule:</Col>
-              <Col>{this.props.program.weekday}| {this.props.program.starttime}
-                ~{this.props.program.endtime}</Col>
+              <Col>{this.props.program.days.map(day=><span key={day}> {day.substring(0,2)} </span>)}| {this.getTime(this.props.program.time.start_time)}
+                ~{this.getTime(this.props.program.time.end_time)}</Col>
             </Row>
             <Row>
               <Col style={{maxWidth:'130px'}}>Coach:</Col>
               <Col>{this.props.program.instructors.map((i)=>{
-                  return(<span key={i}> {i} </span>)
+                  return(<span key={i._id}> {i.first_name} </span>)
                 })
                 }
               </Col>
