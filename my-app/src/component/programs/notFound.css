@@ -1,0 +1,52 @@
+.filterClearButton {
+    margin-left: 230px;
+    margin-top: 30px;
+    width: 230px;
+    transform: translate(-50%, -50%);
+    color: royalblue;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 0.5em 2em;
+    border: 0;
+    background-color: #fff;
+    border-bottom: 2px solid royalblue;
+    transition: 0.02s 0.2s cubic-bezier(0.1, 0, 0.1, 1);
+  }
+
+  .filterClearButton::before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 100%;
+    bottom: 0;
+    background: royalblue;
+    transition: 0.3s 0.2s cubic-bezier(0.1, 0, 0.1, 1), left 0.3s cubic-bezier(0.1, 0, 0.1, 1);
+    z-index: -1;
+  }
+  .filterClearButton::after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: calc(100% - 3em);
+    right: 3em;
+    bottom: 0;
+    background-size: 1.5em;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: right 0.3s cubic-bezier(0.1, 0, 0.1, 1);
+  }
+  .filterClearButton:hover {
+    padding: 0.5em 3.5em 0.5em 0.5em;
+  }
+  .filterClearButton:hover::before {
+    left: calc(100% - 3em);
+    right: 0;
+    transition: 0.3s cubic-bezier(0.1, 0, 0.1, 1), left 0.3s 0.2s cubic-bezier(0.1, 0, 0.1, 1);
+  }
+  .filterClearButton:hover::after {
+    right: 0;
+    transition: right 0.3s 0.2s cubic-bezier(0.1, 0, 0.1, 1);
+  }

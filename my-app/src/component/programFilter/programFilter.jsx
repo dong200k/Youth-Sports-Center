@@ -25,12 +25,15 @@ export default class programFilter extends Component {
     // this.state = this.props.state.filter
     // console.log("asd")
     // console.log(this.state)
-    this.state = {
-      ageFilter:'',
-      sportFilter:'',
-      dayFilter:'',
-      locationFilter:''
-    }
+    this.state = props.filter
+  }
+
+  componentDidUpdate(prevProps){
+    if(this.props.filter != prevProps.filter){
+      this.setState(
+        this.props.filter
+      )
+    } 
   }
   
   updateFilter = (stateObj) =>{
