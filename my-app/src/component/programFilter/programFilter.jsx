@@ -7,19 +7,24 @@ import Filter from './filter.jsx'
 import './programFilter.css'
 
 const age_range = [3,4,5,6,7,8,9,10,11]
-const sport_range = ['soccer','basketball','baseball']
+const sport_range = ['Soccer','Basketball','Baseball']
 const weekday_range = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
   
 export default class programFilter extends Component {
   constructor(props){
     super(props)
-    this.state = this.props.state.filter
-    console.log("asd")
-    console.log(this.state.ageFilter)
+    // this.state = this.props.state.filter
+    // console.log("asd")
+    // console.log(this.state)
+    this.state = {
+      ageFilter:'',
+      sportFilter:'',
+      dayFilter:''
+    }
   }
   
   updateFilter = (stateObj) =>{
-    // this.setState(stateObj) 
+    this.setState(stateObj) 
     this.props.updateAppState(stateObj)
   }
 
