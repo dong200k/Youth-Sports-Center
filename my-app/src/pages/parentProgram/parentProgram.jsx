@@ -22,7 +22,11 @@ export default class parentProgram extends Component {
       }
     }
   }
+
+
+
   updateProgram(filter){
+    
     const data = {
       filter:{
         pageNumber: 1,
@@ -40,7 +44,6 @@ export default class parentProgram extends Component {
     }
 
     //********TODO: add loading here****************
-
     programService.filterProgram(data)
       .then(response=>{
 
@@ -49,10 +52,14 @@ export default class parentProgram extends Component {
         console.log(response.data.result[0].data)
         this.setState({
           programs: response.data.result[0].data,
-          filter: filter
+          filter: filter,
+          isLoad: false
         })
       })
       .catch(err=>{
+        this.setState({
+          isError: err
+        })
         console.log(err)
       })
   }
@@ -78,6 +85,7 @@ export default class parentProgram extends Component {
       dayFilter: stateObj.dayFilter || stateObj.dayFilter===""? stateObj.dayFilter : this.state.filter.dayFilter,
       locationFilter: stateObj.locationFilter || stateObj.locationFilter===""? stateObj.locationFilter : this.state.filter.locationFilter,
     }
+    this.setState({isLoad:true})
     this.updateProgram(filter)
   }
 
@@ -94,15 +102,24 @@ export default class parentProgram extends Component {
     // return false
   // }
 
+  initailFilter = () => {
+    const filter = {
+      ageFilter:'',
+      sportFilter:'',
+      dayFilter:'',
+      locationFilter: '',
+    }
+    this.updateProgram(filter)
+  }
   render() {
     return (
       <div className="page">
         <div className="pageHeader">
           {/* <ProgramFilter updateAppState = {this.updateAppState}/> */}
-          <ProgramFilter updateAppState = {this.updateAppState}/>
+          <ProgramFilter updateAppState = {this.updateAppState} filter = {this.state.filter}/>
         </div>
         <div className="pageBody">
-          <Programs {...this.state}/>
+          <Programs {...this.state} initailFilter={this.initailFilter}/>
         </div>
       </div>
     )
