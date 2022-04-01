@@ -76,6 +76,8 @@ const programSchema = new Schema({
 
 programSchema.methods.generateSchedule = ({days, time}) =>{
     const {start_date, end_date} = time
+    console.log(start_date)
+    console.log(end_date)
     let schedule = []
 
     for(const day of days){
@@ -84,7 +86,9 @@ programSchema.methods.generateSchedule = ({days, time}) =>{
         schedule = schedule.concat(generateDatesForDay(start_date, end_date, day))
     }
 
-    return schedule
+    return schedule.sort((a,b)=>{
+        return a-b
+    })
 }
 
 function generateDatesForDay(start_date, end_date, day){

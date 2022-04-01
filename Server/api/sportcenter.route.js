@@ -4,6 +4,7 @@ import AnnouncementController from "../controller/announcement.controller.js"
 import KidController from "../controller/kid.controller.js"
 import ProgramController from "../controller/program.controller.js"
 import UserController from "../controller/user.controller.js"
+import GenerateData from "../controller/generateData.controller.js"
 const router = express.Router()
 
 router.route("/").get((req,res)=>{
@@ -35,16 +36,17 @@ router
     .route("/program")
     .post(ProgramController.postProgram)
     .put(ProgramController.updateProgram)
-    .get(ProgramController.getProgram)
     .delete(ProgramController.deleteProgram)
+router
+    .route("/program/filter")
+    .post(ProgramController.getProgram)
 router
     .route("/program/enroll")
     .post(ProgramController.enrollKid)
     .put(ProgramController.dropKidsProgram)
 router 
-    .route("/program/user_programs")
+    .route("/program/user/:id")
     .get(ProgramController.getUserProgram)
-
 //messages
 
 //kids
@@ -58,5 +60,19 @@ router
 router
     .route("/instructor")
     .get(UserController.getInstructors)
+
+//generate random data
+router
+    .route("/generate/programs")
+    .post(GenerateData.generatePrograms)
+router
+    .route("/generate/instructors")
+    .post(GenerateData.generatePrograms)
+router
+    .route("/generate/announcements")
+    .post(GenerateData.generateAnnouncements)
+// router
+//     .route("/generate/deleterandom")
+//     .post(GenerateData.deletePrograms)
 export default router
 

@@ -117,6 +117,8 @@ export default class AnnouncementController{
         }
     }
     static async getUserAnnouncement(req, res, next){
+        // console.log("getuserannouncement")
+        console.log(req.params)
         const {id: user_id} = req.params
         try {
             const user = await User.findById(ObjectId(user_id))
@@ -141,7 +143,7 @@ export default class AnnouncementController{
                     res.json({status: "success", announcement: []})
                     return
                 }
-                console.log(programs)
+                // console.log(programs)
                 //get announcement for all the programs in the programs
                 announcement = await AnnouncementDao.getParentAnnouncement(programs)
 

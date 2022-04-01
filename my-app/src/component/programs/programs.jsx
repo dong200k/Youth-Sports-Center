@@ -13,7 +13,7 @@ class programs extends Component {
                     isError !== ''? <h1>{isError}</h1> :
                     programs.map((program)=>{
                     return (
-                        <Program program={program} key={program.id}/>
+                        <Program program={program} key={program._id}/>
                         )
                     })
                 }

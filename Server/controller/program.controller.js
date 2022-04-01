@@ -8,6 +8,8 @@ import ProgramDAO from "../dao/programDAO.js";
 export default class ProgramController{
     //program search
     static async getProgram(req, res, next){
+        console.log("get protgram fitler")
+        console.log(req.body)
         const {days, ages, sports, locations, pageNumber, pageSize, program_id} = req.body.filter
         try{
 
@@ -40,7 +42,7 @@ export default class ProgramController{
             }:
             null
 
-            const program_id_filter = program?{
+            const program_id_filter = program_id?{
                 _id: ObjectId(program_id)
             }:
             null
@@ -61,8 +63,7 @@ export default class ProgramController{
                 }}
             else
                 match = {"$match": {}} 
-
-            const pipeline = [
+            const pipeline = [  
                 match,
                 // page info and total programs
                 { '$facet'    : {
@@ -72,15 +73,41 @@ export default class ProgramController{
             ]
 
             //aggregate pipeline
-            const programs = await ProgramDAO.filterProgram(pipeline)
-
-            if(!programs){
+            const metadata = await ProgramDAO.filterProgram(pipeline)
+            const programs = metadata[0].data
+            if(!metadata){
                 throw new Error("filtering program failed!")
             }else{
-                res.json({status:"success", result: programs})
+                let instructorNames = await User.find({user_type:"Instructor"}, {first_name: 1})
+                let dict = {}
+                for(const i of instructorNames){
+                    dict[i._id] = i.first_name
+                }
+                for(let i=0;i<programs.length;i++){
+                    let program = programs[i]
+                    if(program.instructors){
+                        programs[i] = await ProgramController.addInstructorName(program, dict)
+                    }
+                }
+                res.json({status:"success", result: metadata})
             }
         }catch(e){
+            console.log(e.message)
             res.status(404).json({error: e.message})
+        }
+    }
+    static async addInstructorName(program, dict){
+        try {
+            program.instructors = program.instructors.map(instructor=>{
+                return {
+                    _id: instructor,
+                    first_name: dict[instructor]
+                }
+            })
+            return program
+        } catch (error) {
+            console.log(error.message)
+            throw new Error("error adding instructor names")
         }
     }
     static async postProgram(req, res, next){
@@ -366,7 +393,7 @@ export default class ProgramController{
 
             //filter out kids to drop from program
             program.kids = program.kids.filter(enrolledKid=>{
-                console.log(enrolledKid)
+                // console.log(enrolledKid)
                 for(const kidToDrop of kids){
                     if(ObjectId(kidToDrop)===ObjectId(enrolledKid))
                         return true
@@ -388,10 +415,10 @@ export default class ProgramController{
         }
     }
     static async getUserProgram(req, res, body){
-        const {user_id} = req.body
+        const {id: user_id} = req.params
         try {
+            // console.log(user_id)
             const user = await User.findById(ObjectId(user_id))
-
             if(!user){
                 throw new Error("invalid user in getUserProgram!")
             }

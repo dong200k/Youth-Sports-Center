@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useEffect } from 'react'
 import Topbar from './component/topbar/topbar'
 import Login from "./pages/login/login"
 import MyCalendar from "./component/myCalendar/myCalendar"
@@ -17,10 +17,9 @@ import {
   useNavigate,
 } from "react-router-dom";
 import Mainpage from './component/mainpage.jsx'
-
+import programService from './services/program.service.js'
+import announcementService from './services/announcement.service.js'
 export default function App() {
-  // const navigate = useNavigate()
-  // render() {
     return (
       <div>
         <Routes>
