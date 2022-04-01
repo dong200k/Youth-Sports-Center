@@ -20,22 +20,6 @@ import Mainpage from './component/mainpage.jsx'
 import programService from './services/program.service.js'
 import announcementService from './services/announcement.service.js'
 export default function App() {
-  const data = {
-    filter:{
-      pageNumber: 1,
-      pageSize: 100
-    }
-  }
-  // useEffect(()=>{
-  //   programService.filterProgram(data)
-  //   .then(response=>{
-  //     console.log(response)
-  //     })
-  //   .catch(err=>{
-  //     console.log(err)
-  //   })
-  // },[])
-  // render() {
     return (
       <div>
         <Routes>

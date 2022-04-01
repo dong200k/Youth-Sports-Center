@@ -36,14 +36,20 @@ export default class parentProgram extends Component {
         
       }
     }
+
+    //********TODO: add loading here****************
+
     programService.filterProgram(data)
       .then(response=>{
+
+         //********TODO: stop loading here****************
+         
         console.log(response.data.result[0].data)
         this.setState({
           programs: response.data.result[0].data,
           filter: filter
-        }
-      )})
+        })
+      })
       .catch(err=>{
         console.log(err)
       })
@@ -71,9 +77,9 @@ export default class parentProgram extends Component {
     //   }
     // })) 
     const filter = {
-      ageFilter: stateObj.ageFilter? stateObj.ageFilter : this.state.filter.ageFilter,
-      sportFilter: stateObj.sportFilter? stateObj.sportFilter : this.state.filter.sportFilter,
-      dayFilter: stateObj.dayFilter? stateObj.dayFilter : this.state.filter.dayFilter,
+      ageFilter: stateObj.ageFilter || stateObj.ageFilter===""? stateObj.ageFilter : this.state.filter.ageFilter,
+      sportFilter: stateObj.sportFilter || stateObj.sportFilter===""? stateObj.sportFilter : this.state.filter.sportFilter,
+      dayFilter: stateObj.dayFilter || stateObj.dayFilter===""? stateObj.dayFilter : this.state.filter.dayFilter,
     }
     this.updateProgram(filter)
   }
