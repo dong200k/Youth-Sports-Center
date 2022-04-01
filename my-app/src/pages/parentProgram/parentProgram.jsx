@@ -40,7 +40,9 @@ export default class parentProgram extends Component {
     }
 
     //********TODO: add loading here****************
-
+    this.setState({
+      isLoad: true
+    })
     programService.filterProgram(data)
       .then(response=>{
 
@@ -49,7 +51,8 @@ export default class parentProgram extends Component {
         console.log(response.data.result[0].data)
         this.setState({
           programs: response.data.result[0].data,
-          filter: filter
+          filter: filter,
+          isLoad: false
         })
       })
       .catch(err=>{
