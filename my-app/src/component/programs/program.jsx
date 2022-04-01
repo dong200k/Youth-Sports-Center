@@ -9,6 +9,12 @@ import basketImg from '../../assets/basketball-program.jpg'
 import baseballImg from '../../assets/baseball-program.jpg'
 import soccerImg from '../../assets/soccer-program.jpg'
 import defaultImg from '../../assets/default-program.jpg'
+import footballImg from '../../assets/football-program.jpg'
+import badmintonImg from '../../assets/badminton-program.jpg'
+import handballImg from '../../assets/handball-program.jpg'
+import tennisImg from '../../assets/tennis-program.jpg'
+import volleyballImg from '../../assets/volleyball-program.jpg'
+
 import Form from 'react-bootstrap/Form'
 
 export default class program extends Component {
@@ -22,6 +28,21 @@ export default class program extends Component {
     }
     else if(props.program.sport_type === 'Soccer'){
       this.state.programImg = soccerImg
+    }
+    else if(props.program.sport_type === 'Football'){
+      this.state.programImg = footballImg
+    }
+    else if(props.program.sport_type === 'Badminton'){
+      this.state.programImg = badmintonImg
+    }
+    else if(props.program.sport_type === 'Handball'){
+      this.state.programImg = handballImg
+    }
+    else if(props.program.sport_type === 'Tennis'){
+      this.state.programImg = tennisImg
+    }
+    else if(props.program.sport_type === 'Volleyball'){
+      this.state.programImg = volleyballImg
     }
   }
 
