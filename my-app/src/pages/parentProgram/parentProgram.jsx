@@ -17,7 +17,8 @@ export default class parentProgram extends Component {
       filter:{
         ageFilter:'',
         sportFilter:'',
-        dayFilter:''
+        dayFilter:'',
+        locationFilter: '',
       }
     }
   }
@@ -29,6 +30,7 @@ export default class parentProgram extends Component {
         days: !filter.dayFilter||filter.dayFilter===''?null:[filter.dayFilter],
         ages: !filter.ageFilter||filter.ageFilter===''?null:[parseInt(filter.ageFilter)],
         sports: !filter.sportFilter||filter.sportFilter===''?null:[filter.sportFilter],
+        locations: !filter.locationFilter||filter.locationFilter===''?null:[filter.locationFilter],
         //for future maybe allow multiple selections with array
         // days: [...this.state.dayFilter],
         // ages: [...this.state.ageFilter].map(age=>parseInt(age)),
@@ -63,23 +65,18 @@ export default class parentProgram extends Component {
     const filter = {
       ageFilter:'',
       sportFilter:'',
-      dayFilter:''
+      dayFilter:'',
+      locationFilter: '',
     }
     this.updateProgram(filter)
   }
 
   updateAppState = (stateObj) =>{
-    // this.setState(prev=>({
-    //   filter: {
-    //     ageFilter: stateObj.ageFilter? stateObj.ageFilter : prev.filter.ageFilter,
-    //     sportFilter: stateObj.sportFilter? stateObj.sportFilter : prev.filter.sportFilter,
-    //     dayFilter: stateObj.dayFilter? stateObj.dayFilter : prev.filter.dayFilter,
-    //   }
-    // })) 
     const filter = {
       ageFilter: stateObj.ageFilter || stateObj.ageFilter===""? stateObj.ageFilter : this.state.filter.ageFilter,
       sportFilter: stateObj.sportFilter || stateObj.sportFilter===""? stateObj.sportFilter : this.state.filter.sportFilter,
       dayFilter: stateObj.dayFilter || stateObj.dayFilter===""? stateObj.dayFilter : this.state.filter.dayFilter,
+      locationFilter: stateObj.locationFilter || stateObj.locationFilter===""? stateObj.locationFilter : this.state.filter.locationFilter,
     }
     this.updateProgram(filter)
   }
@@ -102,7 +99,7 @@ export default class parentProgram extends Component {
       <div className="page">
         <div className="pageHeader">
           {/* <ProgramFilter updateAppState = {this.updateAppState}/> */}
-          <ProgramFilter state = {this.state} updateAppState = {this.updateAppState}/>
+          <ProgramFilter updateAppState = {this.updateAppState}/>
         </div>
         <div className="pageBody">
           <Programs {...this.state}/>
