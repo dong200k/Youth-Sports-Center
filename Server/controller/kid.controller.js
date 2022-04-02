@@ -5,7 +5,7 @@ import User from "../models/User.js";
 export default class KidController{
     static async addKid(req, res, next){
         //grab kid info 
-        const {first_name, last_name, birth_date, gender, contacts, medical_issues, programs, parent_id} = req.body
+        const {first_name, last_name, birth_date, gender, medical_issues, parent_id} = req.body
         
         try{
             //check parent exist
@@ -19,9 +19,8 @@ export default class KidController{
                 last_name: last_name,
                 birth_date: new Date(birth_date),
                 gender: gender,
-                contacts: contacts,
                 medical_issues: medical_issues,
-                programs: programs
+                // programs: programs
             }
             
             const kid = new Kid(new_kid)
@@ -68,24 +67,25 @@ export default class KidController{
     }
     static async updateKid(req, res, next){
         //grab kid info 
-        const {first_name, last_name, birth_date, gender, contacts, medical_issues, programs, _id} = req.body
+        const {first_name, last_name, birth_date, gender, medical_issues, _id} = req.body
         
         try{
-            //kid to update
+            //find kid
+            const kid = await Kid.findById(ObjectId(_id))
+
+            if(!kid)
+                throw new Error("Kid not found!")
+
+            //update
             const update = {
                 first_name: first_name, 
                 last_name: last_name,
                 birth_date: new Date(birth_date),
                 gender: gender,
-                contacts: contacts,
                 medical_issues: medical_issues,
                 programs: programs
             }
             
-            const kid = await Kid.findById(ObjectId(_id))
-
-            if(!kid)
-                throw new Error("Kid not found!")
             
             for (const key in update){
                 //if value to update is not null
