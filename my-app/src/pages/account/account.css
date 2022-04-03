@@ -1,6 +1,6 @@
 
 .accountPage{
-    min-height: 100vh;
+    min-height: calc(100vh - 75px);
     min-width: 1000px;
     height: auto;
     background-image: url(../../assets/pink.jpg);
