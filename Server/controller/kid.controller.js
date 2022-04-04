@@ -6,7 +6,6 @@ export default class KidController{
     static async addKid(req, res, next){
         //grab kid info 
         const {first_name, last_name, birth_date, gender, medical_issues, parent_id} = req.body
-        
         try{
             //check parent exist
             let parent = await User.findById({"_id":ObjectId(parent_id), user_type: "Parent"})
@@ -26,16 +25,13 @@ export default class KidController{
             const kid = new Kid(new_kid)
 
             //try to insert kid
-            await kid.save(err=>{
-                if(err)
-                    throw new Error("Error saving kid!")
-            })
+            await kid.save()
+                .catch(()=>{throw new Error("error saving kid in addkid")})
+
             //try to add kid id to parent document
             parent.kids.push(ObjectId(kid._id))
-            await parent.save(err=>{
-                if(err)
-                    throw new Error("Error adding kid id to parent!")
-            })
+            await parent.save()
+                .catch(()=>{throw new Error("error saving parent in addkid")})
             res.json({status:'success', kid: kid, parent: parent})
 
         }catch(e){
@@ -43,7 +39,7 @@ export default class KidController{
         }
     }
     static async getKids(req, res, next){
-        const {parent_id} = req.body
+        const {id: parent_id} = req.params
 
         try{
             //find parent
@@ -66,9 +62,9 @@ export default class KidController{
         
     }
     static async updateKid(req, res, next){
+        console.log("update kid")
         //grab kid info 
         const {first_name, last_name, birth_date, gender, medical_issues, _id} = req.body
-        
         try{
             //find kid
             const kid = await Kid.findById(ObjectId(_id))
@@ -83,32 +79,38 @@ export default class KidController{
                 birth_date: new Date(birth_date),
                 gender: gender,
                 medical_issues: medical_issues,
-                programs: programs
             }
             
             
             for (const key in update){
                 //if value to update is not null
-                if(update[key])
+                if(update[key]!=undefined)
                     kid[key] = update[key]
             }
             
+            console.log(update)
+
             //try to update kid
-            await kid.save(err=>{
-                if(err)
-                    throw new Error("Error saving kid!")
-            })
-            
+            await kid.save()
+                .catch(()=>{throw new Error("error saving kid in updateKid")})
+            console.log(kid)
+            // for(const key in update){
+            //     if(update[key])
+            //         if(kid[key]!==update[key]){
+            //             throw new Error("update failed")
+            //         }
+            // }
+
             res.json({status:'success', kid: kid})
 
         }catch(e){
+            console.log(e.message)
             res.status(404).json({error: e.message})
         }
     }
     static async deleteKid(req, res, next){
         //grab id of kid to delete and their parent
         const {parent_id, kid_id} = req.body
-
         try {
             //find parent
             let filter = {
@@ -131,11 +133,8 @@ export default class KidController{
             parent.kids = parent.kids.filter(kid=>kid.toString()!==kid_id)   
 
             //save parent
-            await parent.save(err=>{
-                if(err)
-                    throw new Error("Issue saving parent!")
-                console.log("parent")
-            })
+            await parent.save()
+                .catch(()=>{throw new Error("error saving parent in deleteKid")})
 
             res.json({status:"success", info: info, parent: parent, kid_id: kid_id})
 

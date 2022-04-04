@@ -21,10 +21,32 @@ class UserCards extends Component {
       },
       edit:{
   
-      }
+      },
     };
     this.handleInput = this.handleInput.bind(this)
+    this.updateKid = this.updateKid.bind(this)
+    this.deleteKid = this.deleteKid.bind(this)
   };
+
+  async updateKid(e){
+    e.preventDefault()
+    let success = await this.props.updateKid(this.state.kid)
+    if(success){
+      this.setState({
+        isEdit: false,
+      })
+    }
+  }
+
+  async deleteKid(e){
+    e.preventDefault()
+    let success = await this.props.deleteKid(this.state.kid)
+    if(success){
+      this.setState({
+        isEdit: false,
+      })
+    }
+  }
 
   handleInput(key){
     return (e) =>{
@@ -60,13 +82,13 @@ class UserCards extends Component {
           <div className="leftContainer">
             <div className="content">
               <label className="contentLabel">KID</label>
-              <span className="contentSpan">{this.props.first_name + " " + this.state.kid.last_name}</span>
+              <span className="contentSpan">{this.props.first_name + " " + this.props.last_name}</span>
             </div>
             <div className="content">
-              <label className="contentLabel">Gender</label> <span className="contentSpan">{this.state.kid.gender}</span>
+              <label className="contentLabel">Gender</label> <span className="contentSpan">{this.props.gender}</span>
             </div>
             <div className="content">
-              <label className="contentLabel">Birthday</label> <span className="contentSpan">{this.state.kid.birth_date}</span>
+              <label className="contentLabel">Birthday</label> <span className="contentSpan">{this.props.birth_date}</span>
             </div>
           </div>
 
@@ -80,8 +102,8 @@ class UserCards extends Component {
 
           <div className="rightContainer">
             <div className="content">
-              <label className="contentLabel">Contact</label> 
-              <span className="contentSpan">{this.state.kid.contacts[0]}</span>
+              <label className="contentLabel">Medical</label> 
+              <span className="contentSpan">{this.state.kid.medical_issues}</span>
             </div>
 
             {/* {Object.keys(this.state.kid.medical_issues).map(type => (
@@ -108,12 +130,12 @@ class UserCards extends Component {
             <i className="fa-solid fa-xmark"></i>
           </button>
           <button className="kidEditbtn movedown"
-            onClick={() => this.props.deleteKid()}
+            onClick={this.deleteKid}
           >
             <i className="fa-solid fa-user-slash"></i>
           </button>
-
-          <form action="" className="inputForm">
+          {/* onSubmit={this.updateKid(this.state.kid)} */}
+          <form action="" className="inputForm" onSubmit={this.updateKid}>
             <div className="inputTitle">
                 Provide Your kid's Information
             </div>

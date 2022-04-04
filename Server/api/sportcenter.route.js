@@ -53,9 +53,11 @@ router
 router
     .route("/kid")
     .post(KidController.addKid)
-    .get(KidController.getKids)
     .put(KidController.updateKid)
     .delete(KidController.deleteKid)
+router
+    .route("/kid/:id")
+    .get(KidController.getKids)
 //instructors
 router
     .route("/instructor")
