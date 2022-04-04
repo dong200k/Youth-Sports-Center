@@ -6,11 +6,14 @@ import AddKid from "../../component/addKid/addKid.jsx"
 import "./account.css"
 import KidService from "../../services/kid.service.js"
 import kidService from "../../services/kid.service.js"
+import userService from "../../services/user.service.js"
 
 export default function AccountKids(){
+    let user_id = "621ea7a3580a8a3fd5cbdd2c"
 
     let [kids, setKids] = useState([])
-    let user_id = "621ea7a3580a8a3fd5cbdd2c"
+    let [user, setUser] = useState({})
+
 
     let getBirthDate = (d)=>{
         let date = new Date(d)
@@ -22,7 +25,7 @@ export default function AccountKids(){
         return dd + "/" + mm + "/"+ yyyy
     }
 
-    //component did mount
+    //Fetch kids from database for user
     useEffect(()=>{
         //get kid
         KidService.getKids(user_id)
@@ -40,7 +43,68 @@ export default function AccountKids(){
                 console.log("error fetching kids")
             })
     }, [])
+
+    useEffect(()=>console.log(user), [user])
+
+    //fetch user info from database
+    useEffect(()=>{
+        //get user from mongodb
+        userService.getUser(user_id)
+            .then(res=>{
+                if(res.data.status==="success"){
+                    console.log(res.data)
+                    let user = res.data.user
+                    if(user_id!==res.data.user._id.toString()){
+                        console.log("error, user_id is different/another user's id, after updating user info")
+                        return 
+                    }
+                    let newUser = {
+                        _id: user_id,
+                        "first name": user.first_name,
+                        "last name": user.last_name,
+                        email: user.email,
+                        phone: user.contacts[0],
+                    }
+                    setUser(newUser)
+                }
+            })
+            .catch(err=>console.log(err))
+    }, [])
     
+    function isDifferent(obj1, obj2){
+        // for(const key in obj1){
+        //     if(key!=="_id")
+        //         if(obj1[key]!==obj2[key]){
+        //             return true
+        //         }
+        // }
+        // return false
+        return true
+    }
+
+    async function updateUser(newUser){
+        if(isDifferent(user, newUser)){
+            let update = {
+                first_name: newUser["first name"],
+                last_name: newUser["last name"],
+                email: newUser.email,
+                contacts: [newUser.phone],
+                _id: user_id
+            }
+            return userService.updateUser(update)
+                .then(res=>{
+                    if(res.data.status==="success"){
+                        setUser(update)
+                        return true
+                    }else
+                        return false
+                })
+                .catch(err=>false)
+        }
+        else
+            return true
+    }
+
     async function addKid(kid){
         let data = {}
         for(const key in kid){
@@ -65,7 +129,6 @@ export default function AccountKids(){
                     setKids(kids=>{
                         const newKids = [...kids] 
                         for(const i in newKids){
-                            console.log(newKids[i]._id)
                             if(newKids[i]._id===kid._id){
                                 newKids[i] = kid
                             }
@@ -110,7 +173,10 @@ export default function AccountKids(){
     return (    
         <div className="accountPage">
             <div className="accountMainbox">
-                <Profile/>
+                <Profile
+                    key={user._id}
+                    updateUser={updateUser}
+                    user={user}/>
                 {getCards()}
                 <AddKid addKid = {addKid}/>
             </div>

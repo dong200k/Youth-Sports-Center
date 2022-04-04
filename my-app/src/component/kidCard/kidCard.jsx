@@ -41,11 +41,6 @@ class UserCards extends Component {
   async deleteKid(e){
     e.preventDefault()
     let success = await this.props.deleteKid(this.state.kid)
-    if(success){
-      this.setState({
-        isEdit: false,
-      })
-    }
   }
 
   handleInput(key){

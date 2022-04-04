@@ -67,6 +67,9 @@ router
 router 
     .route("/user")
     .put(UserController.updateUser)
+router
+    .route("/user/:id")
+    .get(UserController.getUser)
 //generate random data
 router
     .route("/generate/programs")
