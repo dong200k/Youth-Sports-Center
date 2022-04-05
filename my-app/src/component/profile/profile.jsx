@@ -2,17 +2,47 @@ import React, { Component } from 'react'
 import "./profile.css"
 
 export default class profile extends Component {
-    state = {
-        isEdit: false,
-        User: {
-            image: "",
-            name: "Lun Qu",
-            email: "123456@gmail.com",
-            address:"54-45th Street",
-            phone: "454-4568-1564",
-            kids: {}
+    constructor(props){
+        super(props)
+        this.handleInput = this.handleInput.bind(this)
+        this.state = {
+            isEdit: false,
+            User: {
+                image: "",
+                "first name": this.props.user["first name"],
+                "last name": this.props.user["last name"],
+                email: this.props.user.email,
+                // address:"54-45th Street",
+                phone: this.props.user.phone,
+                // kids: {}
+            }
+        };
+        this.updateUser = this.updateUser.bind(this)
+    }
+
+    handleInput(key){
+        return (e) =>{
+          let user = {}
+          for(const key in this.state.User){
+            user[key] = this.state.User[key]
+          }
+          user[key] = e.target.value
+          this.setState({
+              User: user
+          })
         }
-    };
+    }
+
+    async updateUser(e){
+        e.preventDefault()
+        let success = await this.props.updateUser(this.state.User)
+        if(success){
+            this.setState({
+                isEdit: false
+            })
+        }
+    }
+    
 
     render() {
         return (
@@ -48,19 +78,21 @@ export default class profile extends Component {
                         </ul>
                     </div>
                     <div className= {`profileContent ${this.state.isEdit ? 'hidden' : ''}`}>
-                        {Object.keys(this.state.User).map(k => (k === "kids" || k === "image") ? null : ( 
-                            <div className="profileText" key={this.state.User[k]} >
-                                <label>{k}</label> <span>{this.state.User[k]}</span>
+                        {Object.keys(this.props.user).map(k => (k === "_id") ? null : ( 
+                            <div className="profileText" key={this.props.user[k]} >
+                                <label>{k}</label> <span>{this.props.user[k]}</span>
                             </div>
                         ))}
                     </div>
-                    <form action="" className={`profileEdit ${!this.state.isEdit ? 'hidden' : ''}`}>
+                    <form onSubmit={this.updateUser} action="" className={`profileEdit ${!this.state.isEdit ? 'hidden' : ''}`}>
                         {Object.keys(this.state.User).map(k => (k === "kids" || k === "image") ? null : ( 
                             <div className="profileFormItem" key={k}>
                                 <label htmlFor="fileInput">
                                     {k}
                                 </label>
-                                <input className="profileInput" type={k} id={k} >
+                                <input className="profileInput" type={k} id={k} 
+                                    value={this.state.User[k]}
+                                    onChange={this.handleInput(k)}>
                                 </input>
                             </div>
                         ))}

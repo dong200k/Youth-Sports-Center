@@ -11,6 +11,7 @@
 
   .kidCard:hover {
     box-shadow: 0 0 12px 3px rgba(0, 0, 0, 0.5);
+    transition: 0.5s;
 }
 
 
@@ -84,6 +85,7 @@
   }
 
   .kidCard:hover .kidImg {
+    transition: 0.5s;
     border-color: rgb(231, 102, 171);
 }
 
@@ -103,6 +105,7 @@
   }
 
   .kidEditbtn:hover i{
+    transition: 0.5s;
     color:red;
   }
 

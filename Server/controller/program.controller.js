@@ -163,6 +163,7 @@ export default class ProgramController{
                 else   
                     res.json({status:"success", program: program})
             })
+            .catch(()=>{throw new Error("error saving program in post program")})
         }catch(e){
             res.status(404).json({error: e.message})
         }
@@ -235,6 +236,7 @@ export default class ProgramController{
                 else
                     res.json({status:"success", program: program})
             })
+            .catch(()=>{throw new Error("error saving program in update program")})
         }catch(e){
             res.status(404).json({error: e.message})
         }
@@ -350,6 +352,7 @@ export default class ProgramController{
                     return
                 }
             })
+            .catch(()=>{throw new Error("error saving program in enrollkid")})
         }catch(e){
             res.status(404).json({error: e.message})
         }
@@ -409,6 +412,7 @@ export default class ProgramController{
                 else
                     res.json({status:"success", program: program})
             })
+            .catch(()=>{throw new Error("error saving program in dropkids")})
 
         } catch (error) {
             res.status(404).json({error: error.message})
