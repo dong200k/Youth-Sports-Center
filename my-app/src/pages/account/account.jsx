@@ -8,8 +8,8 @@ import KidService from "../../services/kid.service.js"
 import kidService from "../../services/kid.service.js"
 import userService from "../../services/user.service.js"
 
-export default function AccountKids(){
-    let user_id = "621ea7a3580a8a3fd5cbdd2c"
+export default function AccountKids(props){
+    let user_id = props.user_id
 
     let [kids, setKids] = useState([])
     let [user, setUser] = useState({})

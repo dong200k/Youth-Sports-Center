@@ -96,7 +96,6 @@ export default class UserController{
         }
     }
     static async updateUser(req, res, next){
-        console.log(req.body)
         const {first_name, last_name, email, _id, contacts} = req.body
         try {
             //validate parent
@@ -128,14 +127,11 @@ export default class UserController{
         }
     }
     static async getUser(req, res, next){
-        console.log("geting user")
         const {id: _id} = req.params
         try {
             let user = await User.findById(ObjectId(_id), {password: 0})
-            console.log(user)
             if(!user)
                 throw new Error("user not found")
-            console.log(user)
             res.json({status:"success", user:user})
         } catch (e) {
             res.status(404).json({error: e.message})
