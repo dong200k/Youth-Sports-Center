@@ -38,6 +38,7 @@ export default class login extends Component {
                     throw(new Error("Login Error"))
                 }
                 console.log(response.data)
+                this.props.loginUser(response.data.user._id)
                 // this.props.navigate("/")
             })
             .catch((e)=>{
