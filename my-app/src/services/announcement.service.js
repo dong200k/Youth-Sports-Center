@@ -20,6 +20,7 @@ class AnnouncementService{
     //     return axiosInstance.delete(this.baseURL + "/announcement", data)
     // } 
     getAllAnnouncement(){
+        console.log("getting all announcements")
         return axios.get(this.baseURL + "/announcement")
     } 
 }

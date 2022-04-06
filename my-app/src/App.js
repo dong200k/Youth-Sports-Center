@@ -39,7 +39,7 @@ export default function App() {
             <Route path="message" element = {<Message/>}/>
             <Route path="account" element = {<Account user_id={user_id}/>}/>
             <Route path="program" element = {<ParentProgram/>}/>
-            <Route path="announcement" element = {<Announcement/>}/>
+            <Route path="announcement" element = {<Announcement user_id={user_id}/>}/>
           </Route>
         </Routes>
       </div>
