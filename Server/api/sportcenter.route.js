@@ -53,14 +53,23 @@ router
 router
     .route("/kid")
     .post(KidController.addKid)
-    .get(KidController.getKids)
     .put(KidController.updateKid)
     .delete(KidController.deleteKid)
+router
+    .route("/kid/:id")
+    .get(KidController.getKids)
 //instructors
 router
     .route("/instructor")
     .get(UserController.getInstructors)
 
+//users
+router 
+    .route("/user")
+    .put(UserController.updateUser)
+router
+    .route("/user/:id")
+    .get(UserController.getUser)
 //generate random data
 router
     .route("/generate/programs")

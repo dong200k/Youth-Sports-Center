@@ -1,66 +1,121 @@
-import { useState } from "react"
-import Create_Button from "./instructor_announcements/create_button"
-import Instructor_Announcements from "./instructor_announcements/instructor_announcements"
+import { useEffect, useState } from "react"
+import CreateButton from "./instructor_announcements/create_button"
+import InstructorAnnouncements from "./instructor_announcements/instructor_announcements"
 import FilterButton from "./parents_announcement/filter_button";
 import { useCallback } from "react";
+import announcementService from "../services/announcement.service.js";
 
-export default function Announcement(){
-    const [announcementInfo, setAnnouncementInfo] = useState([
-        {
-            id: "1", 
-            programId: "1",
-            programName: "Soccer 5U", 
-            title: "Welcome", 
-            message: "Hi, Thank you for joining this class", 
-            senderId: "1", 
-            date: "3/20/22"
-        },
-        {
-            id: "2", 
-            programId: "1", 
-            programName: "Soccer 5U",
-            title: "Class Cancelled", 
-            message: "The first session of this class is cancelled", 
-            senderId: "1", 
-            date: "3/20/22"
-        },
-        {
-            id: "3", 
-            programId: "2", 
-            programName: "Soccer 5U",
-            title: "Welcome to Basketball 5U", 
-            message: "Thank you for enrolling in the basketball program", 
-            senderId: "1", 
-            date: "3/20/22"
-        },
-    ]);
-   
-    const [filteredAnnouncements, setFilteredAnnouncements] = useState(announcementInfo)
+export default function Announcement(props){
+    let resetFilter = "reset"
+    const [announcementInfo, setAnnouncementInfo] = useState([]);
+    const [filteredAnnouncements, setFilteredAnnouncements] = useState([])
+    const user_id = "621ea64b2c7c2e38975d3041"//hard coded user_id for now/easy testing
+    // const user_id = props.user_id
+
+    //programNames for the filter button
+    const[programNames, setProgramNames] = useState([])
+    function getProgramNames(announcements){
+        //make dictionary of program names to filter duplicates
+        let dict = {}
+        for(const announcement of announcements){
+            dict[announcement.program_name] = announcement
+        }
+        //push program names into the name arr
+        let names = []
+        for(const key in dict){
+            names.push({program_name: key, program_id: dict[key].program_id})
+        }
+        names.push({program_name: resetFilter,program_id: "resetid"})
+        return names
+    }
+    // when we mount this component
+    useEffect(()=>{
+        // fetch announcements from database for user_id,
+        announcementService.getUserAnnouncement(user_id)
+            .then(res=>{
+                if(res.data.status==="success"){
+                    //set announcements to the ones we fetched
+                    setAnnouncementInfo(res.data.announcements)
+                    //update filter button with program names
+                    setProgramNames(getProgramNames(res.data.announcements))
+                }
+            })
+            .catch(err=>{
+                console.log("error fetching user announcements!")
+                console.log(err)
+            })
+    },[])
     
-    /*const filterAnnouncements = useCallback(
+    //obj, {}, filter for filtering program names 
+    const [filter, setFilter] = useState({})//using state obj, {}
+    const filterAnnouncements = useCallback(
        (e) => {
-            e.preventDefault();
-            const filteredAnnouncements = announcementInfo.map( announcement => announcement.programName != "Soccer 5U" ? null : {
-            return: {...announcement}}) 
+            if(e)
+                e.preventDefault();
+            let filteredAnnouncements 
+            filteredAnnouncements = announcementInfo.filter(announcement=>{
+                //for every key in filter(each key=>val, doesnt work when val is arr or obj but can be changed)
+                for(const key in filter){
+                    //if announcement doesnt contain the key such as program_name
+                    //or if the val in announcement is not the same as filter we dont keep it
+                    if(!announcement[key]||announcement[key]!==filter[key])
+                        return false
+                }
+                return true
+            })
+            //update our filteredAnnouncements state with filtered data
+            setFilteredAnnouncements(filteredAnnouncements)
        },
-       setFilteredAnnouncements(filteredAnnouncements)
+       [filter, announcementInfo]
     )
-*/
+
+    //to handle user clicks for the filter button
+    //function that returns a function
+    const onChangeFilter= (val) =>{
+        return (e)=>{
+            e.preventDefault()
+            console.log(val)
+            if(val===resetFilter)
+                setFilter({})
+            else
+                setFilter({program_name:val})
+        }
+    }
+
+    //when announcementInfo changes aka after we add announcements or when we load it
+    //update filteredAnnouncements
+    useEffect(()=>{
+        filterAnnouncements()
+    }, [announcementInfo, filter])
+
     const onCreateAnnouncement = useCallback(
-      (e) => {
-        e.preventDefault();
-        const newAnnouncement = {id: 5, programId: 4, programName: "Ping Pong", title: "Welcome Class", message: "Hello World", senderId: 6, date: "3/21/22"}
-        setAnnouncementInfo([newAnnouncement, ...announcementInfo])
-      },
-      [announcementInfo]
+        (announcement) => {
+            const newAnnouncement = {
+                program_id: announcement.program_id, 
+                title: announcement.title, 
+                message: announcement.message, 
+                sender_id: user_id,
+            }
+            if(newAnnouncement.program_id===""||announcement.program_name==="")
+                return
+            // setAnnouncementInfo([newAnnouncement, ...announcementInfo])
+            announcementService.postAnnouncement(newAnnouncement)
+                .then(res=>{
+                    if(res.data.status==="success"){
+                        setAnnouncementInfo(prevAnnouncementInfo=>[res.data.announcement, ...prevAnnouncementInfo])
+                    }
+                })
+                .catch(err=>console.log(err))
+            //reset filter so we can see the new announcements 
+            setFilter({})
+        }
+        ,[]
     )
 
     const user_type = "Instructor";
     return <div>
-    {
-    user_type == "Instructor" && <Create_Button onCreateAnnouncement={onCreateAnnouncement}/>
-    }
-        <FilterButton/>
-        <Instructor_Announcements announcementInfo={announcementInfo}/>
+        {user_type == "Instructor" && <CreateButton programNames={programNames} onCreateAnnouncement={onCreateAnnouncement}/>}
+        <FilterButton programNames = {programNames} onChangeFilter={onChangeFilter}/>
+        <InstructorAnnouncements announcementInfo={filteredAnnouncements}/>
     </div>
 }

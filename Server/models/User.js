@@ -44,7 +44,7 @@ const userSchema = new Schema({
         type: [ObjectId],
         default: undefined,
     },
-    
+    contacts: [Schema.Types.Mixed],
 })
 userSchema.methods.validatePassword = async (password, encryptedPassword)=>{
     return await bcrypt.compare(password, encryptedPassword)

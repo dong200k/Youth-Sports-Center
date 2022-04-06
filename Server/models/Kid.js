@@ -25,9 +25,12 @@ const KidSchema = new Schema({
         type: String, 
         enum: ["Male","Female","N/A"]
     },
-    contacts: [Schema.Types.Mixed],
-    medical_issues: [Schema.Types.Mixed],
-    programs: [ObjectId]
+    // medical_issues: [Schema.Types.Mixed],
+    programs: [ObjectId],
+    medical_issues: {
+        type: String,
+        maxlength: 100
+    }
 })
 
 KidSchema.methods.getConflictingProgram = async (kid_id, {time, days, _id}) =>{

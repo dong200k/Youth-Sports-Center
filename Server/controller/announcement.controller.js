@@ -38,7 +38,8 @@ export default class AnnouncementController{
         }
     }
     static async postAnnouncement(req, res, next){//returns {status: "success"} on success
-        let {user_id, program_id, message, title} = req.body
+        let {sender_id: user_id, program_id, message, title} = req.body
+        
         try{
             if(!user_id||!program_id||!message||!title)
                 throw new Error("All fields required")
@@ -64,12 +65,13 @@ export default class AnnouncementController{
                 throw new Error("invalid program to post announcement")
             }
 
-            let {error} = await AnnouncementDao.createAnnouncement(user_id, program_id, message, title)
-            if(error){
+            let result = await AnnouncementDao.createAnnouncement(user_id, program_id, message, title)
+            if(result.error){
                 res.status(400).json({error})
                 return
             }
-            res.json({status: "success"})
+            let announcement = await AnnouncementDao.findById(result.insertedId)
+            res.json({status: "success", announcement: announcement[0]})
         }catch (e) {
             res.status(500).json({ error: e.message })
         }
@@ -88,7 +90,11 @@ export default class AnnouncementController{
         try{
             //get announcements for the program
             let announcements = await AnnouncementDao.getProgramAnnouncement(program_id)
-            res.json({announcements: announcements})
+            let result = await AnnouncementController.addNameToAnnouncement(announcements)
+            if(result)
+                res.json({announcements: announcements})
+            else
+                throw new Error("failed to add instructor names in get Program announcements")
         }catch(e){
             console.log("unable to get announcement!")
             //error return empty array of announcements
@@ -109,7 +115,9 @@ export default class AnnouncementController{
             // }
             //get all announcements
             let announcements = await AnnouncementDao.getAllAnnouncement()
-            res.json({announcements: announcements})
+            let result = await AnnouncementController.addNameToAnnouncement(announcements)
+            if(result)
+                res.json({status:"success", announcements: announcements})
         }catch(e){
             console.log("unable to get all announcement!")
             //error return empty array of announcements
@@ -118,7 +126,7 @@ export default class AnnouncementController{
     }
     static async getUserAnnouncement(req, res, next){
         // console.log("getuserannouncement")
-        console.log(req.params)
+        // console.log(req.params)
         const {id: user_id} = req.params
         try {
             const user = await User.findById(ObjectId(user_id))
@@ -151,10 +159,53 @@ export default class AnnouncementController{
                 //get announcements instructor sent
                 announcement = await AnnouncementDao.getInstructorAnnouncement(user._id)
             }
-
-            res.json({status:"success", announcement: announcement})
+            let result = await AnnouncementController.addNameToAnnouncement(announcement)
+            if(result)
+                res.json({status:"success", announcements: announcement})
         } catch (e) {
             res.status(404).json({error: e.message, annoucement: []})
+        }
+    }
+    static async addNameToAnnouncement(announcements){//add instructor and program name to announcements
+        try {
+            //filter for all instructors
+            const instructor_filter = {
+                user_type: "Instructor"
+            }
+            //take only the _id and names
+            const projection = {
+                first_name: 1
+            }
+            const instructors = await User.find(instructor_filter, projection)
+            //make dict _id, instructor name
+            let dict = {}
+            for(const i of instructors){
+                dict[i._id] = i.first_name
+            }
+            //add instructor name to announcement
+            for(let i=0;i<announcements.length;i++){
+                let announcement = announcements[i]
+                announcement.first_name = dict[announcement.sender_id]
+            }
+
+            //take only the _id and program names
+            const programs = await Program.find({}, {program_name: 1})
+            //make dict _id, program name
+            let dictProgram = {}
+            for(const i of programs){
+                dictProgram[i._id] = i.program_name
+            }
+            //add program name to announcement
+            for(let i=0;i<announcements.length;i++){
+                let announcement = announcements[i]
+                announcement.program_name = dictProgram[announcement.program_id]
+            }
+
+            return true
+        } catch (error) {
+            console.log("error in add name to announcement")
+            console.log(error)
+            return false
         }
     }
 }

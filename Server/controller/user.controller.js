@@ -95,4 +95,46 @@ export default class UserController{
             res.status(404).json({error: e.message})
         }
     }
+    static async updateUser(req, res, next){
+        const {first_name, last_name, email, _id, contacts} = req.body
+        try {
+            //validate parent
+            let user = await User.findById(ObjectId(_id))
+            if(!user)
+                throw new Error("No such user")
+            
+            //info to update
+            const info = {
+                first_name: first_name,
+                last_name: last_name,
+                email: email,
+                contacts: contacts
+            }
+
+            //update if not empty
+            for(const key in info){
+                if(info[key])
+                    user[key] = info[key]
+            }
+
+            //attempt to save
+            await user.save()
+                .catch(()=>{throw new Error("error updating user")})
+            res.json({status:"success", user: user})
+        } catch (e) {
+            console.log(e.message)
+            res.status(404).json({error: e.message})
+        }
+    }
+    static async getUser(req, res, next){
+        const {id: _id} = req.params
+        try {
+            let user = await User.findById(ObjectId(_id), {password: 0})
+            if(!user)
+                throw new Error("user not found")
+            res.json({status:"success", user:user})
+        } catch (e) {
+            res.status(404).json({error: e.message})
+        }
+    }
 }
