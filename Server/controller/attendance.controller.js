@@ -45,14 +45,18 @@ export default class AttendanceController{
             const attendance = Attendance(doc)
 
             //attempt to enroll
-            attendance.save(err=>{
-                if(err){
-                    throw new Error("error posting attendance!")
-                }else{
-                    res.json({status:"success", attendance: attendance})
-                    return
-                }
-            })
+            // attendance.save(err=>{
+            //     if(err){
+            //         throw new Error("error posting attendance!")
+            //     }else{
+            //         res.json({status:"success", attendance: attendance})
+            //         return
+            //     }
+            // })
+            // .catch(()=>{throw new Error("error saving attendance in post attendance")})
+            attendance.save()
+            .catch(()=>{throw new Error("error saving attendance in post attendance")})
+            res.json({status:"success", attendance: attendance})
 
         }catch(e){
             res.status(404).json({error: e.message})

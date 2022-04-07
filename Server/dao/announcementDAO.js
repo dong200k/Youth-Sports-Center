@@ -125,4 +125,15 @@ export default class AnnouncementDao{
             return []
         }
     }
-}
+    static async findById(_id){
+        try {
+            //get announcement by id
+            let cursor = await announcement.find({_id: ObjectId(_id)})
+            return await cursor.toArray()
+
+        } catch (e) {
+            console.error(`unable to get announcements for instructor ${e}`)
+            return []
+        }
+    }
+}  
