@@ -52,9 +52,14 @@ export default class AnnouncementDao{
     static async getProgramAnnouncement(program_id){// returns array of announcements/empty
         try{
             let query = {program_id: ObjectId(program_id)}
-            let cursor = await announcement.find(query)
+            let cursor = await announcement.find(query).sort()
             //returns array of announcements
-            return await cursor.toArray()
+            let arr = await cursor.toArray()
+            arr.sort((a,b)=>{
+                //sort from latest to oldest
+                return new Date(b.date).getTime() - new Date(a.date).getTime()
+            })
+            return arr
         }catch(e){
             console.error(`Unable to find announcement: ${e}`)
             //return empty array
@@ -66,11 +71,69 @@ export default class AnnouncementDao{
             let query = {}
             let cursor = await announcement.find(query)
             //returns array of announcements
-            return await cursor.toArray()
+            let arr = await cursor.toArray()
+            arr.sort((a,b)=>{
+                //sort from latest to oldest
+                return new Date(b.date).getTime() - new Date(a.date).getTime()
+            })
+            return arr
         }catch(e){
             console.error(`Unable to find announcement: ${e}`)
             //return empty array
             return []
         }
     }   
-}
+    static async getParentAnnouncement(program_ids){// returns array
+        try{
+            let query = {
+                program_id: {
+                    "$in": program_ids.map(id=>ObjectId(id))
+                }
+            }
+            let cursor = await announcement.find(query)
+            //returns array of announcements
+            let arr = await cursor.toArray()
+            arr.sort((a,b)=>{
+                //sort from latest to oldest
+                return new Date(b.date).getTime() - new Date(a.date).getTime()
+            })
+            return arr
+        }catch(e){
+            console.error(`Unable to find parent announcement: ${e}`)
+            //return empty array
+            return []
+        }
+    }   
+    static async getInstructorAnnouncement(user_id){
+        try {
+            //get announcement based on sender_id/instructor id
+            const filter = {
+                sender_id: ObjectId(user_id)
+            }
+
+            //returns array of announcements
+            let cursor = await announcement.find(filter)
+            let arr = await cursor.toArray()
+            arr.sort((a,b)=>{
+                //sort from latest to oldest
+                return new Date(b.date).getTime() - new Date(a.date).getTime()
+            })
+            return arr
+
+        } catch (e) {
+            console.error(`unable to get announcements for instructor ${e}`)
+            return []
+        }
+    }
+    static async findById(_id){
+        try {
+            //get announcement by id
+            let cursor = await announcement.find({_id: ObjectId(_id)})
+            return await cursor.toArray()
+
+        } catch (e) {
+            console.error(`unable to get announcements for instructor ${e}`)
+            return []
+        }
+    }
+}  

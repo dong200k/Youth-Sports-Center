@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import "./login.css"
-import football from "../../assets/football.jpg"
-import basketball from "../../assets/kidbasket.jpg"
-import AuthService from '../../services/services.js'
+import football from "../../assets/signup-bg.jpg"
+import basketball from "../../assets/signup-bg.jpg"
+import AuthService from '../../services/auth.service.js'
 export default class login extends Component {
     state = {
         isNewUser: true,
@@ -38,6 +38,7 @@ export default class login extends Component {
                     throw(new Error("Login Error"))
                 }
                 console.log(response.data)
+                this.props.loginUser(response.data.user._id)
                 // this.props.navigate("/")
             })
             .catch((e)=>{
@@ -125,7 +126,7 @@ export default class login extends Component {
                             Hello, stranger!
                             </span>
                         <span className="loginSubContainerContent">
-                            Enter your personal details and start your own portfolio!
+                            Enter your personal details and create your account!
                         </span>
                         <button onClick={() => {
                             this.setState({

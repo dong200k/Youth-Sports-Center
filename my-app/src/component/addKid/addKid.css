@@ -1,0 +1,163 @@
+.buttonContainer{
+    margin-top: 10px;
+    width: 1000px;
+    height: 250px;
+    position: relative;
+    border: solid 1px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+    background-color: rgb(255, 251, 251, 0.5);
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+}
+
+
+
+.buttonIcon {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    font-size: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.buttonContainer:hover {
+    box-shadow: 0 0 12px 3px rgba(0, 0, 0, 0.5);
+    transition: 0.5s;
+}
+
+.buttonContainer:hover .buttonIcon{
+    color:rgb(241, 8, 8);
+}
+
+
+.inputContainer{
+    display: flex;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+}
+
+
+.inputForm{
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+    width: 88%;
+    height: 90%;
+    font-size: 24px;
+    border-radius: 5px;
+    font-family: 'Quicksand';
+    overflow: scroll;
+    position: relative;
+    }
+
+    .inputForm::-webkit-scrollbar {
+    width : 10px;  
+    height: 1px;
+    }
+    .inputForm::-webkit-scrollbar-thumb {
+   
+    border-radius: 10px;
+    box-shadow   : inset 0 0 5px rgba(0, 0, 0, 0.2);
+    background   : rosybrown;
+    }
+    .inputForm::-webkit-scrollbar-track {
+ 
+    box-shadow   : inset 0 0 5px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    background   : #ededed;
+}
+
+
+.inputTitle{
+    display: flex;
+    padding: 5px;
+    width: 100%;
+    border-bottom: 1px solid black;
+    margin-bottom: 10px;
+}
+
+.inputRow{
+    display: flex;
+    padding: 5px;
+    width: 100%;
+}
+
+.inputLabel > input{
+    margin-left: 10px;
+}
+
+.backIcon{
+    padding: 5px;
+    position: absolute;
+    display: flex;
+    left: 90%;
+    font-size: 80px;
+    border: 0;
+    background-color: transparent;
+    margin-left: 5px;
+    width: 10%;
+}
+
+.backIcon:hover {
+    color:rgb(241, 8, 8);
+    /* transition: 0.5s; */
+
+}
+
+.submitButton {
+    width: 300px;
+    margin-left:160px;
+    margin-top: 20px;
+    transform: translate(-50%, -50%);
+    color: rosybrown;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 0.5em 2em;
+    border: 2px solid rosybrown;
+    transition: 0.02s 0.2s cubic-bezier(0.1, 0, 0.1, 1);
+  }
+
+  .submitButton::before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 100%;
+    bottom: 0;
+    background: rosybrown;
+    transition: 0.3s 0.2s cubic-bezier(0.1, 0, 0.1, 1), left 0.3s cubic-bezier(0.1, 0, 0.1, 1);
+    z-index: -1;
+  }
+  .submitButton::after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: calc(100% - 3em);
+    right: 3em;
+    bottom: 0;
+    background-size: 1.5em;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: right 0.3s cubic-bezier(0.1, 0, 0.1, 1);
+  }
+  .submitButton:hover {
+    padding: 0.5em 3.5em 0.5em 0.5em;
+  }
+  .submitButton:hover::before {
+    left: calc(100% - 3em);
+    right: 0;
+    transition: 0.3s cubic-bezier(0.1, 0, 0.1, 1), left 0.3s 0.2s cubic-bezier(0.1, 0, 0.1, 1);
+  }
+  .submitButton:hover::after {
+    right: 0;
+    transition: right 0.3s 0.2s cubic-bezier(0.1, 0, 0.1, 1);
+  }

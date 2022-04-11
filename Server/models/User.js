@@ -44,11 +44,11 @@ const userSchema = new Schema({
         type: [ObjectId],
         default: undefined,
     },
-    
+    contacts: [Schema.Types.Mixed],
 })
 userSchema.methods.validatePassword = async (password, encryptedPassword)=>{
     return await bcrypt.compare(password, encryptedPassword)
 }
 
-const User = mongoose.model("users", userSchema, process.env.USER_COLLECTION)
+const User = mongoose.model("users", userSchema, process.env.USER_COLLECTION||"users")
 export default User
