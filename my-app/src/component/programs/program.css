@@ -1,8 +1,21 @@
+@keyframes fadein {
+    0% {opacity: 0;}
+    50% {opacity: 1;}
+    100% {opacity: 1;}
+}
+
+@keyframes fadeout {
+    0% {opacity: 1;}
+    50% {opacity: 0.5;}
+    100% {opacity: 0;}
+}
+
 .programCard{
     font-family: 'Quicksand';
     font-weight: bold;
     text-align: start;
     color: rgb(77, 77, 77);
+    animation: fadein 1s ease; 
     }
     .programCard:hover{
     box-shadow: 0 0 12px 3px rgba(0, 0, 0, 0.5);
@@ -20,6 +33,6 @@
     text-align: center;
 }
 
-.nihao{
-    background-color: red;
-}
+
+
+

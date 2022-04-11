@@ -9,21 +9,70 @@ import basketImg from '../../assets/basketball-program.jpg'
 import baseballImg from '../../assets/baseball-program.jpg'
 import soccerImg from '../../assets/soccer-program.jpg'
 import defaultImg from '../../assets/default-program.jpg'
+import footballImg from '../../assets/football-program.jpg'
+import badmintonImg from '../../assets/badminton-program.jpg'
+import handballImg from '../../assets/handball-program.jpg'
+import tennisImg from '../../assets/tennis-program.jpg'
+import volleyballImg from '../../assets/volleyball-program.jpg'
+
 import Form from 'react-bootstrap/Form'
 
 export default class program extends Component {
+  constructor(props){
+    super(props)
+    if(props.program.sport_type === 'Basketball'){
+      this.state.programImg = basketImg
+    }
+    else if(props.program.sport_type === 'Baseball'){
+      this.state.programImg = baseballImg
+    }
+    else if(props.program.sport_type === 'Soccer'){
+      this.state.programImg = soccerImg
+    }
+    else if(props.program.sport_type === 'Football'){
+      this.state.programImg = footballImg
+    }
+    else if(props.program.sport_type === 'Badminton'){
+      this.state.programImg = badmintonImg
+    }
+    else if(props.program.sport_type === 'Handball'){
+      this.state.programImg = handballImg
+    }
+    else if(props.program.sport_type === 'Tennis'){
+      this.state.programImg = tennisImg
+    }
+    else if(props.program.sport_type === 'Volleyball'){
+      this.state.programImg = volleyballImg
+    }
+  }
+
   state = {
     showModal: false,
     programImg: defaultImg,
-    kids: [{name: 'Lun', select:false},
-    {name:'Lucky', select:false}]
+    kids: [{name:'Lun'},{name:'ki'}]
   }
 
+  getTime = time => {
+    let hour = Math.floor(time/60)
+    let min = Math.floor(time%60)
+
+    if(hour<10)
+      hour = "0"+hour.toString()
+    else
+      hour = hour.toString()
+    if(min<10)
+      min = "0"+min.toString()
+    else
+      min = min.toString()
+
+    return hour+":"+min
+  }
 
 
   render() {
     return (
       <>
+
         <Card className='programCard' style={{ width: '380px', margin : '10px' }}
           onClick={() => {
             this.setState({
@@ -31,12 +80,12 @@ export default class program extends Component {
             });
         }}
         >
-            <Card.Img variant="top" src={this.state.programImg} />
+            <Card.Img variant="top" style={{width:'100%', height:'250px', objectFit:'cover'}} src={this.state.programImg} />
             <Card.Body>
                 <Card.Title style={{fontWeight:'bolder', borderBottom: '1px solid grey'}}>{this.props.program.program_name}</Card.Title>
                 <Card.Text>
                 Coach: {this.props.program.instructors.map((i)=>{
-                  return(<span key={i}> {i} </span>)
+                  return(<span key={i._id}> {i.first_name} </span>)
                 })
                 }
                 </Card.Text>
@@ -50,17 +99,18 @@ export default class program extends Component {
                 }
                 </Card.Text>
                 <Card.Text>
-                {this.props.program.weekday}: {this.props.program.starttime}
-                ~{this.props.program.endtime}
+                {this.props.program.days.map(day=><span key={day}> {day.substring(0,2)} </span>)}
+                : {this.getTime(this.props.program.time.start_time)}
+                ~{this.getTime(this.props.program.time.end_time)}
                 </Card.Text>
                 <Card.Text style={{ borderTop:'1px solid grey', color:'grey', justifyContent:'space-between', display:'flex'}}>
-                    <span className={`${this.props.program.weekday == 'Mon' ? 'weekday':''}`}>M</span>
-                    <span className={`${this.props.program.weekday == 'Tue' ? 'weekday':''}`}>T</span>
-                    <span className={`${this.props.program.weekday == 'Wed' ? 'weekday':''}`}>W</span>
-                    <span className={`${this.props.program.weekday == 'Thu' ? 'weekday':''}`}>Th</span>
-                    <span className={`${this.props.program.weekday == 'Fri' ? 'weekday':''}`}>F</span>
-                    <span className={`${this.props.program.weekday == 'Sat' ? 'weekday':''}`}>Sa</span>
-                    <span className={`${this.props.program.weekday == 'Sun' ? 'weekday':''}`}>S</span>      
+                    <span className={`${this.props.program.days.filter(day=>day==='Monday')[0] ? 'weekday':''}`}>M</span>
+                    <span className={`${this.props.program.days.filter(day=>day==='Tuesday')[0] ? 'weekday':''}`}>T</span>
+                    <span className={`${this.props.program.days.filter(day=>day==='Wednesday')[0] ? 'weekday':''}`}>W</span>
+                    <span className={`${this.props.program.days.filter(day=>day==='Thursday')[0] ? 'weekday':''}`}>Th</span>
+                    <span className={`${this.props.program.days.filter(day=>day==='Friday')[0] ? 'weekday':''}`}>F</span>
+                    <span className={`${this.props.program.days.filter(day=>day==='Saturday')[0] ? 'weekday':''}`}>Sa</span>
+                    <span className={`${this.props.program.days.filter(day=>day==='Sunday')[0] ? 'weekday':''}`}>S</span>      
                 </Card.Text>
             </Card.Body>
         </Card>
@@ -89,17 +139,17 @@ export default class program extends Component {
             </Row>
             <Row>
               <Col style={{maxWidth:'130px'}}>Session:</Col>
-              <Col>{this.props.program.session}</Col>
+              <Col>{this.props.program.time.start_date.substring(0,10)}~{this.props.program.time.end_date.substring(0,10)}</Col>
             </Row>
             <Row>
               <Col style={{maxWidth:'130px'}}>Schedule:</Col>
-              <Col>{this.props.program.weekday}| {this.props.program.starttime}
-                ~{this.props.program.endtime}</Col>
+              <Col>{this.props.program.days.map(day=><span key={day}> {day.substring(0,2)} </span>)}| {this.getTime(this.props.program.time.start_time)}
+                ~{this.getTime(this.props.program.time.end_time)}</Col>
             </Row>
             <Row>
               <Col style={{maxWidth:'130px'}}>Coach:</Col>
               <Col>{this.props.program.instructors.map((i)=>{
-                  return(<span key={i}> {i} </span>)
+                  return(<span key={i._id}> {i.first_name} </span>)
                 })
                 }
               </Col>
@@ -112,19 +162,25 @@ export default class program extends Component {
                 }</Col>
             </Row>
             <Form style={{display:'flex', justifyContent:'center', marginTop: '20px', borderTop:'1px solid rgb(204, 204, 204)'}}>
-              <Row style={{width:'90%'}}>
-              {this.state.kids.map((kid) => (
+              <Row style={{marginTop: '20px'}}>
+              {this.state.kids.length === 0?
+              <Col>No kids aviliable</Col>
+              :              
+              this.state.kids.map((kid) => 
+              (
                 <Col key={kid.name} className="mb-3">
                   <Form.Check type='checkbox' id={`${kid.name}`}>
-                    <Form.Check.Input type='checkbox' isValid />
-                    <Form.Check.Label>{`${kid.name}`}</Form.Check.Label>
+                    <Form.Check.Label className='kidSelect'>{`${kid.name}`}
+                      <Form.Check.Input type='checkbox' isValid />
+                    </Form.Check.Label>
                   </Form.Check>
                 </Col>
-              ))}
+              ))
+              }
               </Row>
             </Form>
             <Row style={{display:'flex', justifyContent:'center'}}>
-              <Button style={{border:'none',backgroundColor:'rosybrown', color:'#fff', width:'90%'}}>Register Kid</Button>
+              <Button style={{border:'none',backgroundColor:'rosybrown', color:'#fff', width:'95%'}}>Register Kid</Button>
             </Row>
           </Modal.Body>
         </Modal>

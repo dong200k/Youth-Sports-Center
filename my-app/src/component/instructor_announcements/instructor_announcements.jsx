@@ -8,12 +8,12 @@ const Instructor_Announcements = (props) => {
     const renderAnnouncement = (card, index) => {
         return (
             <Card className="Card" key={index} >
-                <Card.Header>{card.programName}</Card.Header>
+                <Card.Header>{card.program_name}</Card.Header>
                 <Card.Body>
                     <Card.Title>{card.title}</Card.Title>
                     <Card.Text>{card.message}</Card.Text>
                 </Card.Body>
-                <Card.Footer className="text-muted">{card.date}</Card.Footer>
+                <Card.Footer className="text-muted">From Coach {card.first_name}, {card.date.substring(0,10)}</Card.Footer>
             </Card>
         );
     };

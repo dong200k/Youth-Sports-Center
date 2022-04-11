@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Topbar from '../../component/topbar/topbar'
 import Mycalendar from '../../component/myCalendar/myCalendar'
 import runningtracks from "../../assets/runningtracks.jpg"
+import ParentAnnoucement from '../../component/parents_announcement/announcement.jsx'
 import "./home.css"
 
 export default class home extends Component {
@@ -11,12 +12,16 @@ export default class home extends Component {
         <div className="homeHeader">
           <img className='homeHeaderImg' src={runningtracks} alt="track"/>
         </div>
-      
-        {/* <Topbar/> */}
-          
+        <div className="homeBody">
           <div className="homeCalendar">
-            <Mycalendar/>
-          </div>
+              <Mycalendar/>
+            </div>
+            <div className="homeAnnocement">
+              <ParentAnnoucement />
+            </div>
+        </div>
+
+
 
       </div>
     )
