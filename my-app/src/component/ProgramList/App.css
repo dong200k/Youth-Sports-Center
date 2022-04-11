@@ -43,7 +43,7 @@
   
   .program-input {
     padding: 14px 32px 14px 16px;
-    border-radius: 10px 0 0 10px;
+    border-radius: 10px 10px 10px 10px;
     border: 2px solid #000000;
     outline: none;
     width: 320px;
@@ -58,7 +58,7 @@
   .program-button {
     padding: 16px;
     border: none;
-    border-radius: 0 10px 10px 0;
+    border-radius: 10px 10px 10px 10px;
     cursor: pointer;
     outline: none;
     background: linear-gradient(

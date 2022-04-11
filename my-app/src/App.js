@@ -15,6 +15,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 import Mainpage from './component/mainpage.jsx'
+import Attendace from './component/attendance'
 
 
 export default function App() {
@@ -30,6 +31,7 @@ export default function App() {
             <Route path="account" element = {<Account/>}/>
             <Route path="program" element = {<Program/>}/>
             <Route path="announcement" element = {<Announcement/>}/>
+            <Route path="attendance" element = {<Attendace/>}/>
           </Route>
         </Routes>
       </div>
