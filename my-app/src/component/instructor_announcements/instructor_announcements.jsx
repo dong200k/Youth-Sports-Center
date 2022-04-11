@@ -10,7 +10,7 @@ const Instructor_Announcements = (props) => {
             <Card className="Card" key={index} >
                 <Card.Header>{card.programName}</Card.Header>
                 <Card.Body>
-                    <Card.Title>{card.programTitle}</Card.Title>
+                    <Card.Title>{card.title}</Card.Title>
                     <Card.Text>{card.message}</Card.Text>
                 </Card.Body>
                 <Card.Footer className="text-muted">{card.date}</Card.Footer>

@@ -14,7 +14,7 @@ class AnnouncementService{
         return axiosInstance.post(this.baseURL + "/announcement/id/" + id)
     } 
     getUserAnnouncement(id){
-        return axiosInstance.post(this.baseURL + "/announcement/user/id/" + id)
+        return axiosInstance.get(this.baseURL + "/announcement/user/id/" + id)
     } 
     // deleteAnnouncement(data){
     //     return axiosInstance.delete(this.baseURL + "/announcement", data)
