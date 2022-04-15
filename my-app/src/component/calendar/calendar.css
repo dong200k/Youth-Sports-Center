@@ -1,0 +1,97 @@
+.calendar{
+    width: 1000px;
+    margin-left: calc(50% - 500px);
+    font-family: 'Quicksand';
+    font-weight: 600;
+    color: coral;
+}
+
+.calendar-body{
+    display: flex;
+    flex-direction: row;
+}
+
+.time-label{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color:#fff;
+    width: 80px;
+    height: 60px;
+    border: 1px solid #f8f8f8;
+}
+
+.time-icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    font-size: 25px;
+    color: coral;
+}
+
+.weekday-label{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    width: 120px;
+    height: 60px;
+    border: 1px solid #f8f8f8;
+    background-color: #f8f8f8;
+    color: coral;
+}
+
+/* Css for header */
+.cheader{
+    font-size: 22px;
+    width: 1000px;
+}
+
+.cheaderSwitch{
+    display: flex;
+    flex-direction: row;
+}
+
+.cheaderbtn{
+    cursor: pointer;
+    padding: 0 10px;
+    border-radius: 25%;
+    background-color: #f8f8f8;
+    color: rosybrown;
+}
+
+.cheaderContent{
+    background-color: #f8f8f8;
+    border-radius: 5%;
+    padding: 0 10px;
+}
+
+/* Css for body */
+
+.calendar-col{
+    position: relative;
+}
+
+.calendar-grid{
+    width: 120px;
+    height: 60px;
+    border: 1px solid #f8f8f8;
+}
+
+.calendar-grid-shown{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color:rosybrown;
+    color: #fff;
+    width: 120px;
+    height: 60px;
+    border-radius: 10px;
+}
+
+.isCurrent{
+    background-color: rgb(252, 180, 154);
+    color: #fff;
+}

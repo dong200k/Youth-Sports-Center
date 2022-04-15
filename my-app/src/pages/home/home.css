@@ -29,13 +29,16 @@
 
 .homeCalendar{  
     position: absolute;
-    left: 15%;
-
+    left: 5%;
 }
 
 .homeAnnocement{
-    display: flex;
     position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    height: 600px;
     width: 500px;
-    left: 55%;
+    left: 70%;
 }
