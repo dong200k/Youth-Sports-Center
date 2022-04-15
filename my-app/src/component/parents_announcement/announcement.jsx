@@ -67,7 +67,7 @@ const Announcements = () => {
     };
 
   return (
-    <div className="AnnouncementBox">
+    <div className="pAnnouncementBox">
         {announcementInfo.map(renderAnnouncement)}
     </div>
   );

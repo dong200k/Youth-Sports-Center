@@ -4,6 +4,7 @@ import Mycalendar from '../../component/myCalendar/myCalendar'
 import runningtracks from "../../assets/runningtracks.jpg"
 import ParentAnnoucement from '../../component/parents_announcement/announcement.jsx'
 import "./home.css"
+import Calendar from '../../component/calendar/Calendar'
 
 export default class home extends Component {
   render() {
@@ -14,15 +15,12 @@ export default class home extends Component {
         </div>
         <div className="homeBody">
           <div className="homeCalendar">
-              <Mycalendar/>
+              <Calendar/>
             </div>
             <div className="homeAnnocement">
               <ParentAnnoucement />
             </div>
         </div>
-
-
-
       </div>
     )
   }

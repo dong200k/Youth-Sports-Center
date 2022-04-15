@@ -23,8 +23,6 @@ export default class parentProgram extends Component {
     }
   }
 
-
-
   updateProgram(filter){
     
     const data = {
