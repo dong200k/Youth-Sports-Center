@@ -1,0 +1,37 @@
+[
+    {
+        "id": 1,
+        "name": "Bob",
+        "present": false
+    },
+    {
+        "id": 2,
+        "name": "Clark",
+        "present": false
+    },
+    {
+        "id": 3,
+        "name": "Andrea",
+        "present": false
+    },
+    {
+        "id": 4,
+        "name": "Tori",
+        "present": false
+    },
+    {
+        "id": 5,
+        "name": "Diana",
+        "present": false
+    },
+    {
+        "id": 6,
+        "name": "Juan",
+        "present": false
+    },
+    {
+        "id": 7,
+        "name": "Martin",
+        "present": false
+    }
+]

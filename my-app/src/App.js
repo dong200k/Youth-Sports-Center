@@ -17,6 +17,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 import Mainpage from './component/mainpage.jsx'
+import Attendace from './component/attendance'
 import programService from './services/program.service.js'
 import announcementService from './services/announcement.service.js'
 export default function App() {
