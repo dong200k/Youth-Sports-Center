@@ -56,6 +56,7 @@ export default class CalendarCol extends Component {
     return (
       <div className="calendar-col" >
         <div className={this.props.date.cYMD === this.props.currentDate? "weekday-label isCurrent": "weekday-label"}>
+            {this.props.date.cYMD.substring(5)} <br/>
             {this.props.weekday}
         </div>
         {this.props.hourList.map((hour)=>{

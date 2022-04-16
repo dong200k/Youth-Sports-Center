@@ -46,7 +46,7 @@ class attendanceApp extends React.Component {
 
               {/* Redirect to summary page */}
               <Link to="/summary">
-                <button className="btn" onClick={this.gotoSummary}>Submit</button>
+                <button className="abtn" onClick={this.gotoSummary}>Submit</button>
               </Link>
             </React.Fragment>
           )} />

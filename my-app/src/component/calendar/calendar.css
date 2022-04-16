@@ -4,6 +4,10 @@
     font-family: 'Quicksand';
     font-weight: 600;
     color: coral;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 0 10px white;
+    outline: dashed 10px #009688;
 }
 
 .calendar-body{
@@ -44,17 +48,21 @@
 }
 
 /* Css for header */
-.cheader{
+.calendar-header{
+    position: relative;
+    width: 100%;
     font-size: 22px;
-    width: 1000px;
+    margin-bottom: 15px;
 }
 
-.cheaderSwitch{
+.calendar-header-switch{
+    position: relative;
     display: flex;
     flex-direction: row;
+    
 }
 
-.cheaderbtn{
+.calendar-header-btn{
     cursor: pointer;
     padding: 0 10px;
     border-radius: 25%;
@@ -62,7 +70,7 @@
     color: rosybrown;
 }
 
-.cheaderContent{
+.calendar-header-content{
     background-color: #f8f8f8;
     border-radius: 5%;
     padding: 0 10px;

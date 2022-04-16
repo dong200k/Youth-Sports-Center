@@ -3,12 +3,11 @@
     flex-direction: column;
     position: relative;
     align-items: center;
-    width: 500px;
-    overflow:auto;
     margin: 0;
 }
 
 .Card{
+    border-top: 0;
     width: 25rem;
     margin-bottom: 10px !important;
 }

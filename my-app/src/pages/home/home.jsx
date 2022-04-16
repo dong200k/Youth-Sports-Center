@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import Topbar from '../../component/topbar/topbar'
-import Mycalendar from '../../component/myCalendar/myCalendar'
 import runningtracks from "../../assets/runningtracks.jpg"
 import ParentAnnoucement from '../../component/parents_announcement/announcement.jsx'
 import "./home.css"
