@@ -1,5 +1,11 @@
 .login{
+    width: 100vw;
+    height: 100vh;
+    min-width: 1000px;
+    min-height: 600px;
     display: flex;
+    position: relative;
+    font-family: 'Quicksand';
 }
 
 .loginColorBlock{
@@ -8,8 +14,6 @@
     width: 30%;
     height: 100%;
     transition: transform 1s ease;
-    /* border-left: 50px solid transparent;
-    border-bottom: 50px solid transparent; */
 }
 
 .left{
@@ -41,13 +45,13 @@
     visibility: hidden;
 }
 
-.fadeIn{
+/* .fadeIn{
     animation: fadein 1s ease; 
 }
 
 .fadeOut{
-    animation: fadeout 1s ease; 
-}
+    animation: fadeout 0s ease; 
+} */
 
 .moveLeft{
     transform: translateX(-100%);
@@ -58,12 +62,9 @@
 }
 
 .loginSubBox{
-    height: 100%;
     display: flex;
     position: absolute;
-    transition: all .8s ease-in-out;
     width: 30%;
-    font-family: 'Quicksand';
     flex-direction: column;
     align-items: center;
 }
@@ -75,10 +76,8 @@
     align-items: center;
     color: white;
     width: 60%;
-    height: 50%;
     text-align: center;
-    font-size: 2vw;
-
+    font-size: 40px;
 }
 
 .loginSubContainerTitle{
@@ -89,7 +88,6 @@
 .loginSubContainerContent{
     margin-top: 10%;
     font-size: 35%;
-    font-family: 'Quicksand', sans-serif;
 }
 
 .loginSubContainerButton{
@@ -98,7 +96,6 @@
     background-color: #986060;
     color: white;
     width: 80%;
-    height: 8%;
     border-radius: 30px;
     font-size: 50%;
     cursor: pointer;
@@ -107,11 +104,9 @@
 .loginMainBox{
     position: absolute;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100%;
-    z-index: 2;
     width: 70%;
     transition: all .8s ease-in-out;
 }
@@ -130,7 +125,6 @@
 }
 
 .loginImg{
-    position: absolute;
     width: 100%;
     height: 100%;
     object-fit:cover;
@@ -146,17 +140,13 @@
 
 
 .loginMainBoxTitle{
-    display: block;
     color: #986060;
-    font-weight: bold;
     font-size: 30px;
-    font-family: 'Quicksand';
-    font-weight: Bold;
+    font-weight: bold;
 }
 
 .loginMainBoxForm{
-    transform: translateX(0%);
-    margin-top: 3%;
+    margin-top: 15px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -189,7 +179,7 @@
     border: solid 2px white;
     width: 50%;
     height: 40px;
-    border-radius: 15px;
+    border-radius: 10px;
     font-size: 18px;
     cursor: pointer;
 }
@@ -199,6 +189,9 @@
 }
 
 .loginSelectBox{
+    cursor: pointer;
+    width: 180px;
+    margin-top: 10px;
     outline:0; 
     background:#fff;
     border:none;
