@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { v4 as uuidv4 } from "uuid"
+import { Modal, Row, Col, Form, Button } from 'react-bootstrap'
 
-const iu = '100px'
-const totalHeight = 350
 export default class CalendarCol extends Component {
     state ={
         bgcolorList:[
@@ -13,7 +12,7 @@ export default class CalendarCol extends Component {
             "#FF99C5",
             "#AEACFA",
         ],
-        programsList:[]
+        programsList:[],
     }
     constructor(props){
         super(props) 
@@ -76,6 +75,25 @@ export default class CalendarCol extends Component {
                 </div>
             )
         })}
+
+    <Modal
+          show={this.state.showModal}
+          onHide={() => {
+            this.setState({
+              showModal: false
+            });
+          }}
+          dialogClassName="modalSize"
+        >
+          <Modal.Header style={{marginLeft:'2.5%', width:'95%'}} closeButton>
+            <Modal.Title style={{position:'absolute', left:'50%', width:'140px', marginLeft:'-70px', textAlign:'center'}}>
+              Class Details
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body style={{fontFamily:'Quicksand',fontWeight:'500', fontSize:'20px'}}>
+  
+          </Modal.Body>
+        </Modal>
       </div>
     )
   }

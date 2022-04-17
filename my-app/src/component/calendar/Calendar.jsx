@@ -27,8 +27,8 @@ export default class Calendar extends Component {
                         start_date:'2022-04-04',
                         end_date:'2022-04-18',
                         days:['Monday','Wesdnesday'],
-                        start_time:60,
-                        end_time:80
+                        start_time:55,
+                        end_time:70
                     }
                 ]
             }
@@ -122,6 +122,7 @@ export default class Calendar extends Component {
         }
     }
   render() {
+    let changeTime = true;
     return (
       <div className="calendar">
         <CalendarHeader currentList={this.state.currentList} nextClick={this.nextClick} prevClick={this.prevClick}/>
@@ -130,12 +131,16 @@ export default class Calendar extends Component {
                 <div className="time-icon">
                     <i className="fa-solid fa-clock"></i>
                 </div>
-                {hourList.map((hour)=>{
+                { 
+                hourList.map((hour)=>{
+                    changeTime = !changeTime
                     return(
-                        <div className="time-label" key={uuidv4()}>
+                        <div className={changeTime?"time-label":"time-label changecolor"}
+                         key={uuidv4()}>
                             {hour}
                         </div>    
                     )
+
                 })}
             </div>
             {weekdayLabel.map((weekday, index)=>{
