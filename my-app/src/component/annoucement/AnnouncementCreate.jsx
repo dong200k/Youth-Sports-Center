@@ -1,10 +1,9 @@
 import {Button} from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import './instructor_announcements.css'
 import { useCallback, useState } from 'react'
-import CreateAnnouncementForm from './create_announcement_form'
+import AnnouncementForm from './AnnouncementForm'
 
-const Create_Button = (props) => {
+const AnnouncementCreate = (props) => {
     const[show, setShow] = useState(false)
     const handleSubmit = useCallback(
       (announcement)=>{
@@ -20,10 +19,10 @@ const Create_Button = (props) => {
     <div>
         <Button className="Button" variant="primary" onClick= {() => setShow(!show)}>Create Announcement</Button>{' '}
         {
-            show? <CreateAnnouncementForm programNames={props.programNames} onCreateAnnouncement={handleSubmit}/> : null
+            show? <AnnouncementForm programNames={props.programNames} onCreateAnnouncement={handleSubmit}/> : null
         }
     </div>
   )
 }
 
-export default Create_Button
+export default AnnouncementCreate

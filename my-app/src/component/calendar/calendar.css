@@ -1,14 +1,48 @@
+/* .calendar{
+    width: 1000px;
+    margin-left: calc(50% - 500px);
+    font-family: 'Quicksand';
+    font-weight: 600;
+    color: teal;
+    background-color: peachpuff;
+    padding: 20px;
+    outline: dashed 10px tomato;
+    box-shadow:inset 0 -5px 0 0 rgba(0,0,0,.2);
+} */
+
 .calendar{
     width: 1000px;
     margin-left: calc(50% - 500px);
     font-family: 'Quicksand';
     font-weight: 600;
-    color: coral;
-    background-color: #fff;
+    color: teal;
+    background-color: peachpuff;
     padding: 20px;
-    box-shadow: 0 0 0 10px white;
-    outline: dashed 10px #009688;
+    border:none;
+    padding:2em 4em;
+    transition:all .3s ease-out; 
+    box-shadow:inset 0 -8px 0 0 rgba(0,0,0,.2),
+        1px 1px 0 0 #d98e20,
+        2px 2px 0 0 #d98e20,
+        3px 3px 0 0 #d98e20,
+        4px 4px 0 0 #d98e20,
+        5px 5px 0 0 #d98e20,
+        6px 6px 0 0 #d98e20,
+        7px 7px 0 0 #d98e20;
+
 }
+
+.calendar:hover{
+    box-shadow:inset 0 -4px 0 0 rgba(0,0,0,.2),
+      1px 1px 0 0 #d98e20,
+      2px 2px 0 0 #d98e20,
+      3px 3px 0 0 #d98e20,
+      4px 4px 0 0 #d98e20,
+      5px 5px 0 0 #d98e20;
+  }
+
+
+
 
 .calendar-body{
     display: flex;
@@ -19,7 +53,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color:#fff;
+    background-color:papayawhip;
     width: 80px;
     height: 60px;
     border: 1px solid #f8f8f8;
@@ -31,7 +65,10 @@
     align-items: center;
     height: 60px;
     font-size: 25px;
-    color: coral;
+    color: teal;
+    background-color: papayawhip;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
 }
 
 .weekday-label{
@@ -43,8 +80,8 @@
     width: 120px;
     height: 60px;
     border: 1px solid #f8f8f8;
-    background-color: #f8f8f8;
-    color: coral;
+    background-color: papayawhip;
+    color: teal;
 }
 
 /* Css for header */
@@ -71,9 +108,9 @@
 }
 
 .calendar-header-content{
-    background-color: #f8f8f8;
     border-radius: 5%;
     padding: 0 10px;
+    text-decoration: underline;
 }
 
 /* Css for body */
@@ -89,17 +126,45 @@
 }
 
 .calendar-grid-shown{
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color:rosybrown;
+    background-color: #7AD673;
     color: #fff;
     width: 120px;
-    height: 60px;
-    border-radius: 10px;
+
 }
 
+.calendar-grid-shown:before, .calendar-grid-shown:after {
+    content: ' ';
+    width: 0;
+    height: 100%;
+    /* 绝对定位进行偏移 */
+    position: absolute;
+    top: 0;
+}
+
+.calendar-grid-shown:before {
+    /* 圆点型的border */
+    border-right: 5px dotted peachpuff;
+    /* 偏移一个半径，让圆点的一半覆盖div */
+    left: -2.5px;
+}
+
+.calendar-grid-shown:after {
+    /* 圆点型的border */
+    border-left: 5px dotted peachpuff;
+    /* 偏移一个半径，让圆点的一半覆盖div */
+    right: -2.5px;
+}
+
+
 .isCurrent{
-    background-color: rgb(252, 180, 154);
+    background-color: teal;
     color: #fff;
+}
+
+.changecolor{
+    background-color: tan;
 }

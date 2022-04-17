@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap'
 import {Dropdown} from "react-bootstrap"
 import {DropdownButton} from "react-bootstrap"
 
-const Create_Announcement_Form = (props) => {
+const AnnouncementForm = (props) => {
     const something = (e) => {
         e.preventDefault()
         console.log(props)
@@ -65,4 +65,4 @@ const Create_Announcement_Form = (props) => {
   )
 }
 
-export default Create_Announcement_Form
+export default AnnouncementForm

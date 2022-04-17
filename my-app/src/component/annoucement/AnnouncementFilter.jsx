@@ -2,7 +2,7 @@ import {Dropdown} from "react-bootstrap"
 import {DropdownButton} from "react-bootstrap"
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-const FilterButton = (props) => {
+const AnnouncementFilter = (props) => {
     return (
     <div>
         <DropdownButton className= "Button" id="dropdown-basic-button" title="Filter" >
@@ -12,4 +12,4 @@ const FilterButton = (props) => {
   )
 }
 
-export default FilterButton
+export default AnnouncementFilter

@@ -5,7 +5,7 @@
     position: relative;
     width: 100%;
     height: 100%;
-    background: linear-gradient(#fdfbfb, #ebedee);
+
 }
 
 .homeHeader{
@@ -22,13 +22,13 @@
 }
 
 .homeBody{
-    margin-top: 10px;
     position: relative;
     width: 100%;
-    min-height: 650px;
+    min-height: 93vh;
     display: flex;
     flex-direction: row;
     justify-content: center;
+    align-items: center;
     flex-wrap:wrap;
 }   
 
@@ -39,12 +39,15 @@
 }
 
 .homeAnnocement{
-    top:0;
+    margin-top: 20px;
+    margin-left: 50px;
     position: relative;
     flex-direction: column;
     justify-content: start;
     align-items: start;
-    height: 600px;
-    width: 500px;
+    height: 565px;
+    width: 495px;
     overflow-y: auto;
+    background-color: #fff;
+    
 }

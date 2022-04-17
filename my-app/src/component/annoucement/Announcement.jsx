@@ -1,13 +1,61 @@
 import { useEffect, useState } from "react"
-import CreateButton from "./instructor_announcements/create_button"
-import InstructorAnnouncements from "./instructor_announcements/instructor_announcements"
-import FilterButton from "./parents_announcement/filter_button";
+import CreateButton from "./AnnouncementCreate"
+import FilterButton from "./AnnouncementFilter";
 import { useCallback } from "react";
-import announcementService from "../services/announcement.service.js";
+import announcementService from "../../services/announcement.service.js";
+import AnnouncementList from "./AnnouncementList";
 
 export default function Announcement(props){
-    let resetFilter = "reset"
-    const [announcementInfo, setAnnouncementInfo] = useState([]);
+    let resetFilter = "reset";
+
+    const [announcementInfo, setAnnouncementInfo] = useState([
+        {
+            id: "1", 
+            programId: "1", 
+            programName: "Soccer 5U",
+            title: "Welcome", 
+            message: "Hi, Thank you for joining this class", 
+            senderId: "1", 
+            date: "3/20/22"
+        },
+        {
+            id: "2", 
+            programId: "1", 
+            programName: "Soccer 5U",
+            title: "Class Cancelled", 
+            message: "The first session of this class is cancelled", 
+            senderId: "1", 
+            date: "3/20/22"
+        },
+        {
+            id: "3", 
+            programId: "2", 
+            programName: "Basketball 5U",
+            title: "Welcome to Basketball 5U", 
+            message: "Thank you for enrolling in the basketball program", 
+            senderId: "4", 
+            date: "3/20/22"
+        },
+        {
+            id: "4", 
+            programId: "2", 
+            programName: "Basketball 5U",
+            title: "Welcome to Basketball 5U", 
+            message: "Thank you for enrolling in the basketball program", 
+            senderId: "4", 
+            date: "3/20/22"
+        },
+        {
+            id: "5", 
+            programId: "2", 
+            programName: "Basketball 5U",
+            title: "Welcome to Basketball 5U", 
+            message: "Thank you for enrolling in the basketball program", 
+            senderId: "4", 
+            date: "3/20/22"
+        },
+    ]);
+
     const [filteredAnnouncements, setFilteredAnnouncements] = useState([])
     const user_id = "621ea64b2c7c2e38975d3041"//hard coded user_id for now/easy testing
     // const user_id = props.user_id
@@ -28,23 +76,24 @@ export default function Announcement(props){
         names.push({program_name: resetFilter,program_id: "resetid"})
         return names
     }
+
     // when we mount this component
-    useEffect(()=>{
-        // fetch announcements from database for user_id,
-        announcementService.getUserAnnouncement(user_id)
-            .then(res=>{
-                if(res.data.status==="success"){
-                    //set announcements to the ones we fetched
-                    setAnnouncementInfo(res.data.announcements)
-                    //update filter button with program names
-                    setProgramNames(getProgramNames(res.data.announcements))
-                }
-            })
-            .catch(err=>{
-                console.log("error fetching user announcements!")
-                console.log(err)
-            })
-    },[])
+    // useEffect(()=>{
+    //     // fetch announcements from database for user_id,
+    //     announcementService.getUserAnnouncement(user_id)
+    //         .then(res=>{
+    //             if(res.data.status==="success"){
+    //                 //set announcements to the ones we fetched
+    //                 setAnnouncementInfo(res.data.announcements)
+    //                 //update filter button with program names
+    //                 setProgramNames(getProgramNames(res.data.announcements))
+    //             }
+    //         })
+    //         .catch(err=>{
+    //             console.log("error fetching user announcements!")
+    //             console.log(err)
+    //         })
+    // },[])
     
     //obj, {}, filter for filtering program names 
     const [filter, setFilter] = useState({})//using state obj, {}
@@ -116,6 +165,6 @@ export default function Announcement(props){
     return <div>
         {user_type == "Instructor" && <CreateButton programNames={programNames} onCreateAnnouncement={onCreateAnnouncement}/>}
         <FilterButton programNames = {programNames} onChangeFilter={onChangeFilter}/>
-        <InstructorAnnouncements announcementInfo={filteredAnnouncements}/>
+        <AnnouncementList announcementInfo={announcementInfo}/>
     </div>
 }

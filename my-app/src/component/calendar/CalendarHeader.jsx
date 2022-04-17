@@ -15,6 +15,7 @@ export default class CalendarHeader extends Component {
                 <i className="fa-solid fa-angle-right"></i>
             </div>
           </div>
+          <div className="componentName">Weekly Schedule</div>
       </div>
     )
   }
