@@ -16,12 +16,21 @@ const AnnouncementCreate = (props) => {
       }
       ,[props])
   return (
-    <div>
-        <Button className="Button" variant="primary" onClick= {() => setShow(!show)}>Create Announcement</Button>{' '}
-        {
-            show? <AnnouncementForm programNames={props.programNames} onCreateAnnouncement={handleSubmit}/> : null
-        }
+    <div className={show?"accouncementCreate formshow":"accouncementCreate"}>
+      <button className="accouncementCreate-btn" onClick= {() => setShow(!show)}>
+        {!show&&<i className="fa-solid fa-angle-down"></i>}
+        {show&&<i className="fa-solid fa-angle-up"></i>}
+        <span>Create Annoucement</span>
+          {/* <Button className="Button" variant="primary" onClick= {() => setShow(!show)}>Create Announcement</Button>{' '}
+          {
+              show? <AnnouncementForm programNames={props.programNames} onCreateAnnouncement={handleSubmit}/> : null
+          } */}
+      </button>
+      {
+        show? <AnnouncementForm programNames={props.programNames} onCreateAnnouncement={handleSubmit}/> : null
+      }
     </div>
+
   )
 }
 

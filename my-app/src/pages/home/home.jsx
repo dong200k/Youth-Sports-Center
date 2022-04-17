@@ -14,8 +14,8 @@ export default class home extends Component {
           <div className="homeCalendar">
               <Calendar/>
             </div>
-            <div className="homeAnnocement">
-              <Announcement />
+            <div className="homeAnnouncement">
+              <Announcement user_type="Parent"/>
             </div>
         </div>
       </div>

@@ -33,21 +33,19 @@
 }   
 
 .homeCalendar{  
-    position: relative;
-    margin-top: 20px;
     margin-bottom: 20px;
+    position: relative;
+    width: 1000px;
+    height: 600px;
+    background-color: red;
 }
 
-.homeAnnocement{
-    margin-top: 20px;
+.homeAnnouncement{
+    margin-bottom: 20px;
     margin-left: 50px;
     position: relative;
-    flex-direction: column;
-    justify-content: start;
-    align-items: start;
-    height: 565px;
-    width: 495px;
-    overflow-y: auto;
-    background-color: #fff;
-    
+    display: flex;
+    height: 600px;
+    width: 600px;
+    background-color: transparent;
 }

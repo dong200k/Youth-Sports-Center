@@ -4,6 +4,7 @@ import FilterButton from "./AnnouncementFilter";
 import { useCallback } from "react";
 import announcementService from "../../services/announcement.service.js";
 import AnnouncementList from "./AnnouncementList";
+import "./announcement.css"
 
 export default function Announcement(props){
     let resetFilter = "reset";
@@ -38,6 +39,24 @@ export default function Announcement(props){
         },
         {
             id: "4", 
+            programId: "2", 
+            programName: "Basketball 5U",
+            title: "Welcome to Basketball 5U", 
+            message: "Thank you for enrolling in the basketball program", 
+            senderId: "4", 
+            date: "3/20/22"
+        },
+        {
+            id: "5", 
+            programId: "2", 
+            programName: "Basketball 5U",
+            title: "Welcome to Basketball 5U", 
+            message: "Thank you for enrolling in the basketball program", 
+            senderId: "4", 
+            date: "3/20/22"
+        },
+        {
+            id: "5", 
             programId: "2", 
             programName: "Basketball 5U",
             title: "Welcome to Basketball 5U", 
@@ -161,10 +180,13 @@ export default function Announcement(props){
         ,[]
     )
 
-    const user_type = "Instructor";
-    return <div>
+    const user_type = props.user_type;
+    return <div className="announcement">
         {user_type == "Instructor" && <CreateButton programNames={programNames} onCreateAnnouncement={onCreateAnnouncement}/>}
-        <FilterButton programNames = {programNames} onChangeFilter={onChangeFilter}/>
-        <AnnouncementList announcementInfo={announcementInfo}/>
+        <div className="announcementHeader"> Announcement </div>
+        <div className="announcementBody">
+            <FilterButton programNames = {programNames} onChangeFilter={onChangeFilter}/>
+            <AnnouncementList announcementInfo={announcementInfo}/>
+        </div>
     </div>
 }

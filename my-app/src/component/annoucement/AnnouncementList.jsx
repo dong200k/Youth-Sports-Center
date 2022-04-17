@@ -12,7 +12,7 @@ const AnnouncementList = (props) => {
     };
 
   return (
-    <div className="AnnouncementBox">
+    <div className="announcementList">
         {props.announcementInfo.map(renderAnnouncement)}
     </div>
   );
