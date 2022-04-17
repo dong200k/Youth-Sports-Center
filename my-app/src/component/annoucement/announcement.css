@@ -1,0 +1,141 @@
+.announcement{
+    padding: 20px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    background-color: rgb(255, 251, 251, 0.5);
+}
+
+.announcement:hover {
+    box-shadow: 0 0 12px 3px rgba(0, 0, 0, 0.5);
+    transition: 0.5s;
+}
+
+.announcementHeader{
+    margin-top: 1%;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.announcementBody{
+    width: 95%;
+    height: 95%;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    margin-top: 1%;
+}
+
+/* -------------------------------------------------------------------- */
+/* Filter Css */
+.announcementFilterBox{
+    width: 15%;
+    margin-right: 1%;
+    position:relative;
+    height: 100%;    
+}
+
+.announcementFilter{
+    width: 100%;
+    margin-right: 1%;
+    position:absolute;
+    height: 100%;    
+}
+
+
+.announcementFilter-item{
+    width: 100%;
+    overflow: hidden;
+}
+
+.announcementFilter-item:hover{
+    cursor: pointer;
+    background-color: rgb(255, 251, 251, 1);
+    transition: all 0.5s;
+}
+
+.select{
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+/* -------------------------------------------------------------------- */
+/* Announcement List Css */
+.announcementList{
+    width: 85%;
+    height: 100%;
+    overflow-y: scroll;
+}
+
+.announcementList::-webkit-scrollbar {
+    width : 2px;  
+    height: 1px;
+    }
+    .announcementList::-webkit-scrollbar-thumb {
+   
+    border-radius: 10px;
+    box-shadow   : inset 0 0 5px rgba(0, 0, 0, 0.2);
+    background   : rgba(0, 0, 0, 0.2);
+    }
+    .announcementList::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+
+/* -------------------------------------------------------------------- */
+/* Single Announcement Css */
+.announcementItem{
+    color: black;
+    border-top: 1px solid black;
+    padding: 20px;
+}
+
+.announcementItem-header{
+    display: flex;
+    justify-content: space-between;
+}
+
+.announcementItem-title{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: bolder;
+    text-align: start;
+}
+
+.announcementItem-content{
+    text-align: start;
+}
+
+/* -------------------------------------------------------------------- */
+/* Create Announcement Btn Css */
+
+.accouncementCreate{
+    width: 95%;
+    position: relative;
+    transition: all 1s;
+    height: 50px;
+    transition: height 0.5s ease-out;
+    overflow: hidden;
+    background-color: rgb(255, 251, 251, 0.5);
+}
+
+.formshow{
+    height: 400px;
+    transition: height 0.5s ease-in;
+
+}
+
+.accouncementCreate-btn{
+    position: relative;
+    width: 100%;
+    height: 50px;
+    font-size: 20px;
+    background-color: rgb(255, 251, 251, 0.5);
+}
+
+.accouncementCreate-btn>i{
+    margin-right: 10px;
+}

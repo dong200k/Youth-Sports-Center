@@ -17,6 +17,7 @@ import Mainpage from './pages/mainpage/mainpage.jsx'
 import Attendace from './component/attendance'
 import programService from './services/program.service.js'
 import announcementService from './services/announcement.service.js'
+import "./css/app.css"
 export default function App() {
     let [user_id, setUserId] = useState(null) 
     let navigate = useNavigate()

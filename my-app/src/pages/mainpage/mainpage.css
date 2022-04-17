@@ -20,4 +20,5 @@
     background-repeat: repeat;
     background-size: contain;
     min-height: 93vh;
+    background-attachment: fixed;
 }
