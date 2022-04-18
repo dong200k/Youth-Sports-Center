@@ -131,32 +131,28 @@
     align-items: center;
     background-color: #7AD673;
     color: #fff;
-    width: 120px;
-
+    width: 110px;
+    margin-left: 5px;
+    border-radius: 5px;
 }
 
-.calendar-grid-shown:before, .calendar-grid-shown:after {
+/* .calendar-grid-shown:before, .calendar-grid-shown:after {
     content: ' ';
     width: 0;
     height: 100%;
-    /* 绝对定位进行偏移 */
     position: absolute;
     top: 0;
 }
 
 .calendar-grid-shown:before {
-    /* 圆点型的border */
     border-right: 5px dotted peachpuff;
-    /* 偏移一个半径，让圆点的一半覆盖div */
     left: -2.5px;
 }
 
 .calendar-grid-shown:after {
-    /* 圆点型的border */
     border-left: 5px dotted peachpuff;
-    /* 偏移一个半径，让圆点的一半覆盖div */
     right: -2.5px;
-}
+} */
 
 
 .isCurrent{

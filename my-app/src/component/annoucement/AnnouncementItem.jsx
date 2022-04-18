@@ -13,7 +13,7 @@ export default function AnnouncementItem(props) {
     // </Card>
     <div className="announcementItem">
         <div className="announcementItem-header">
-            <span> {props.announcement.programName} </span>
+            <span> {props.announcement.program_name} </span>
             <span> {props.announcement.date.substring(0,10)} </span>
         </div>
         <div className="announcementItem-content">

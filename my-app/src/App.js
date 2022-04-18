@@ -14,7 +14,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 import Mainpage from './pages/mainpage/mainpage.jsx'
-import Attendace from './component/attendance'
+import Attendace from './component/attendance/attendanceApp'
 import programService from './services/program.service.js'
 import announcementService from './services/announcement.service.js'
 import "./css/app.css"
@@ -39,6 +39,7 @@ export default function App() {
             <Route path="account" element = {<Account user_id={user_id}/>}/>
             <Route path="program" element = {<ParentProgram/>}/>
             <Route path="announcement" element = {<Announcement user_id={user_id}/>}/>
+            <Route path="Attendace" element = {<Attendace user_id={user_id}/>}/>
           </Route>
         </Routes>
       </div>

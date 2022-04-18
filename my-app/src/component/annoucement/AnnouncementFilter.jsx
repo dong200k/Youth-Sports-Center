@@ -3,37 +3,31 @@ import {DropdownButton} from "react-bootstrap"
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { useEffect, useState } from "react"
 import { v4 as uuidv4 } from "uuid"
+import filter from "../programFilter/filter"
 
 const AnnouncementFilter = (props) => {
 
-    const [filters, setFilters] = useState([
-        "All"
-    ].concat(props.programNames)
-    );
+    // useEffect(()=>{
+    //     props.programNames.map((p)=>{
+    //         setFilters(
+    //             filters
+    //         .push(p.program_name)
+    //         )
+    //     })
+    //     console.log(filters)
+    // }, [props])
 
-    const [currentFilter, setCurrentFilter] = useState(
-        "All"
-    );
-
-    useEffect(()=>{
-
-        setFilters([
-            "All","Basketball"
-        ].concat(props.programNames)
-        )
-    }, [props])
-
-    const renderFilters = (filter) => {
-        console.log(currentFilter===filter)
-        return (
-            <div className={currentFilter===filter?"announcementFilter-item select":"announcementFilter-item "}
-            key={uuidv4()} onClick={()=>{
-                setCurrentFilter(filter)
-            }}>
-                {filter}
-            </div>
-        );
-    };
+    // const renderFilters = (filter) => {
+    //     console.log(currentFilter===filter)
+    //     return (
+    //         <div className={currentFilter===filter?"announcementFilter-item select":"announcementFilter-item "}
+    //         key={uuidv4()} onClick={()=>{
+    //             setCurrentFilter(filter)
+    //         }}>
+    //             {filter}
+    //         </div>
+    //     );
+    // };
 
     return (
     <div className="announcementFilterBox">
@@ -42,7 +36,14 @@ const AnnouncementFilter = (props) => {
          </DropdownButton> */}
         {/* {props.announcementInfo.map(renderAnnouncement)} */}
         <div className="announcementFilter">
-            {filters.map(renderFilters)}
+            {props.programNames.map((program)=>{
+                return(
+                <div onClick={props.onChangeFilter(program.program_name)}
+                className={props.currentFilter.program_name===program.program_name?"announcementFilter-item select":"announcementFilter-item "}
+                key={uuidv4()}>
+                    {program.program_name}
+                </div>)
+            })}
         </div>
     </div>
   )
