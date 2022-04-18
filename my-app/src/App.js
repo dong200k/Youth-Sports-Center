@@ -14,35 +14,31 @@ import {
   useNavigate,
 } from "react-router-dom";
 import Mainpage from './pages/mainpage/mainpage.jsx'
-import Attendace from './component/attendance/attendanceApp'
+import Attendance from './component/attendance/attendanceApp'
 import programService from './services/program.service.js'
 import announcementService from './services/announcement.service.js'
 import "./css/app.css"
+import useUser from './hooks/useUser.jsx'
+import { UserContext, UserProvider } from './context/UserContext.jsx'
 export default function App() {
-    let [user_id, setUserId] = useState(null) 
     let navigate = useNavigate()
 
-    function loginUser(user_id){
-      setUserId(user_id)
-      navigate("/home")
-    }
-
-    useEffect(()=>console.log(user_id), [user_id])
+    // useEffect(()=>logout(), )
 
     return (
-      <div>
+      <UserProvider navigate={navigate}>
         <Routes>
-          <Route path="/" element={<Login loginUser={loginUser}/>} />
-          <Route path="/home" element={<Mainpage user_id={user_id}/>}>
+          <Route path="/" element={<Login />} />
+          <Route path="/home" element={<Mainpage/>}>
             <Route index element={<Home/>}/>
             <Route path="message" element = {<Message/>}/>
-            <Route path="account" element = {<Account user_id={user_id}/>}/>
+            <Route path="account" element = {<Account/>}/>
             <Route path="program" element = {<ParentProgram/>}/>
-            <Route path="announcement" element = {<Announcement user_id={user_id}/>}/>
-            <Route path="Attendace" element = {<Attendace user_id={user_id}/>}/>
+            <Route path="announcement" element = {<Announcement/>}/>
+            <Route path="Attendace" element = {<Attendance/>}/>
           </Route>
         </Routes>
-      </div>
+      </UserProvider>
     )
   // }
 }

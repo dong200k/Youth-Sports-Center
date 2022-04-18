@@ -23,6 +23,8 @@ export default class login extends Component {
         this.handleLogin = this.handleLogin.bind(this)
         this.handleRegister = this.handleRegister.bind(this)
     };
+
+    
     
     handleLogin(event){
         event.preventDefault();
@@ -38,7 +40,7 @@ export default class login extends Component {
                     throw(new Error("Login Error"))
                 }
                 console.log(response.data)
-                this.props.loginUser(response.data.user._id)
+                this.context.login(response.data.user)
                 // this.props.navigate("/")
             })
             .catch((e)=>{

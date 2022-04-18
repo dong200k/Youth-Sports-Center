@@ -1,19 +1,20 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import CreateButton from "./AnnouncementCreate"
 import FilterButton from "./AnnouncementFilter";
 import { useCallback } from "react";
 import announcementService from "../../services/announcement.service.js";
 import AnnouncementList from "./AnnouncementList";
 import "./announcement.css"
+import { GetUserContext, UserContext } from "../../context/UserContext.jsx";
 
 export default function Announcement(props){
     let resetFilter = "All";
+    const user_id = GetUserContext().user._id
+    const user_type = props.user_type||GetUserContext().user.user_type
 
     const [announcementInfo, setAnnouncementInfo] = useState([]);
 
     const [filteredAnnouncements, setFilteredAnnouncements] = useState([])
-    const user_id = "621ea64b2c7c2e38975d3041"//hard coded user_id for now/easy testing
-    // const user_id = props.user_id
 
     //programNames for the filter button
     const[programNames, setProgramNames] = useState([])
@@ -118,7 +119,6 @@ export default function Announcement(props){
         ,[]
     )
 
-    const user_type = props.user_type;
     return <div className="announcement">
         {user_type == "Instructor" && <CreateButton programNames={programNames} onCreateAnnouncement={onCreateAnnouncement}/>}
         <div className="announcementHeader"> Announcement </div>

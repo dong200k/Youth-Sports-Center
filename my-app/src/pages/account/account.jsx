@@ -7,10 +7,11 @@ import "./account.css"
 import KidService from "../../services/kid.service.js"
 import kidService from "../../services/kid.service.js"
 import userService from "../../services/user.service.js"
+import { GetUserContext } from "../../context/UserContext.jsx"
 
 export default function AccountKids(props){
-    let user_id = props.user_id
-
+    let user_id = GetUserContext().user._id
+    
     let [kids, setKids] = useState([])
     let [user, setUser] = useState({})
 
