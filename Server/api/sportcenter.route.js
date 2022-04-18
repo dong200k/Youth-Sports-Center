@@ -5,6 +5,8 @@ import KidController from "../controller/kid.controller.js"
 import ProgramController from "../controller/program.controller.js"
 import UserController from "../controller/user.controller.js"
 import GenerateData from "../controller/generateData.controller.js"
+import GroupController from "../controller/group.controller.js"
+import MessageController from "../controller/message.controller.js"
 const router = express.Router()
 
 router.route("/").get((req,res)=>{
@@ -47,8 +49,20 @@ router
 router 
     .route("/program/user/:id")
     .get(ProgramController.getUserProgram)
+//group chats
+router
+    .route("/group/:id")
+    .get(GroupController.getGroups)
+router.
+    route("/group/create")
+    .post(GroupController.createGroup)
 //messages
-
+router
+    .route("/message/post")
+    .post(MessageController.postMessage)
+router
+    .route("/message/:id")
+    .get(MessageController.getMessages)
 //kids
 router
     .route("/kid")
