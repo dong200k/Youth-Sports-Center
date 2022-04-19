@@ -3,7 +3,10 @@ import "./login.css"
 import football from "../../assets/signup-bg.jpg"
 import basketball from "../../assets/signup-bg.jpg"
 import AuthService from '../../services/auth.service.js'
+import { UserContext } from '../../context/UserContext.jsx'
 export default class login extends Component {
+    static contextType = UserContext
+    
     state = {
         isNewUser: true,
         role: "Parent",
@@ -22,9 +25,13 @@ export default class login extends Component {
         super(props)
         this.handleLogin = this.handleLogin.bind(this)
         this.handleRegister = this.handleRegister.bind(this)
+        console.log(this.context)
     };
 
-    
+    componentDidMount(){
+        console.log(this.context)
+        console.log(this.props)
+    }
     
     handleLogin(event){
         event.preventDefault();
