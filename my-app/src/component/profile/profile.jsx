@@ -5,6 +5,7 @@ export default class profile extends Component {
     constructor(props){
         super(props)
         this.handleInput = this.handleInput.bind(this)
+        // console.log(this.context)
         this.state = {
             isEdit: false,
             User: {
