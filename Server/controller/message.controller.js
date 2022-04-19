@@ -36,7 +36,7 @@ export default class MessageController{
             await 
                 new Message(message).save()
                     .then(()=>{
-                        res.json({status:"success"})
+                        res.json({status:"success", message: message})
                     })
                     .catch(err=>{
                         throw new Error("error posting message!")
