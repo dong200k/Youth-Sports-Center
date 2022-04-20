@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
-import './parentProgram.css'
+import './instructorProgram.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ProgramFilter from '../../component/programFilter/programFilter.jsx'
 import Programs from '../../component/programs/programs.jsx'
-import Loading from '../../component/loading/loading'
 import programService from '../../services/program.service.js';
-import filter from '../../component/programFilter/filter.jsx';
 
 export default class parentProgram extends Component {
   constructor(props){
@@ -24,7 +22,6 @@ export default class parentProgram extends Component {
   }
 
   updateProgram(filter){
-    
     const data = {
       filter:{
         pageNumber: 1,
@@ -111,12 +108,15 @@ export default class parentProgram extends Component {
   }
   render() {
     return (
-      <div className="parentProgram">
-        <div className="parentProgram-filter">
+      <div className="instructorProgram">
+        <div className="instructorProgram-create">
+            Create New program
+        </div>  
+        <div className="instructorProgram-filter">
           {/* <ProgramFilter updateAppState = {this.updateAppState}/> */}
           <ProgramFilter updateAppState = {this.updateAppState} filter = {this.state.filter}/>
         </div>
-        <div className="parentProgram-body">
+        <div className="instructorProgram-body">
           <Programs {...this.state} initailFilter={this.initailFilter}/>
         </div>
       </div>

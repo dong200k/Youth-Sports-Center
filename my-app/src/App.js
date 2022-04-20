@@ -4,6 +4,7 @@ import Home from './pages/home/home'
 import Message from './pages/messenger/Messenger.jsx'
 import Announcement from './pages/instructorAnnouncement/InstructorAnnouncement.jsx'
 import Account from './pages/account/account.jsx'
+import InstructorProgram from './pages/instructorProgram/InstructorProgram'
 // import Program from './component/ProgramList/programApp.jsx'
 import ParentProgram from './pages/parentProgram/parentProgram.jsx'
 import {
@@ -27,6 +28,7 @@ export default function App() {
             <Route path="program" element = {<ParentProgram/>}/>
             <Route path="announcement" element = {<Announcement/>}/>
             <Route path="Attendance" element = {<Attendance/>}/>
+            <Route path="InstructorProgram" element = {<InstructorProgram/>}/>
           </Route>
         </Routes>
       </UserProvider>
