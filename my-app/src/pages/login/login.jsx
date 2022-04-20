@@ -25,13 +25,7 @@ export default class login extends Component {
         super(props)
         this.handleLogin = this.handleLogin.bind(this)
         this.handleRegister = this.handleRegister.bind(this)
-        console.log(this.context)
     };
-
-    componentDidMount(){
-        console.log(this.context)
-        console.log(this.props)
-    }
     
     handleLogin(event){
         event.preventDefault();
@@ -43,10 +37,8 @@ export default class login extends Component {
         AuthService.login(user)
             .then(response=>{
                 if(response.data.status!=="success"){
-                    console.log(response.data.error)
                     throw(new Error("Login Error"))
                 }
-                console.log(response.data)
                 this.context.login(response.data.user)
                 // this.props.navigate("/")
             })
@@ -64,14 +56,12 @@ export default class login extends Component {
             password: this.state.signUpForm.password,
             user_type: this.state.role
         }
-        console.log(newUser)
         AuthService.register(newUser)
             .then(response=>{
                 if(response.data.status!=="success"){
                     console.log(response.data.error)
                     throw(new Error("Registration Error"))
                 }
-                console.log(response)
                 // this.props.navigate("/")
             })
             .catch(e=>{
@@ -97,7 +87,6 @@ export default class login extends Component {
     }
 
     setRole(event){
-        console.log(event.target.value)
         this.setState({role: event.target.value});
     }
     

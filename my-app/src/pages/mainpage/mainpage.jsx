@@ -5,7 +5,6 @@ import "./mainpage.css"
 
 export default function Mainpage(props){
     let location = useLocation();
-    console.log(location.pathname)
 
     return <div className="mainpage" >
         
