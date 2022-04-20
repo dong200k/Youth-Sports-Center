@@ -7,7 +7,6 @@ import {DropdownButton} from "react-bootstrap"
 const AnnouncementForm = (props) => {
     const something = (e) => {
         e.preventDefault()
-        console.log(props)
     }
     const [announcement, setAnnouncement] = useState({
         title: "",
@@ -18,7 +17,6 @@ const AnnouncementForm = (props) => {
     function handleChange(input, program){
         return (e)=>{
             e.preventDefault()
-            console.log(e.target.value)
             setAnnouncement(old=>{
                 let newAnnouncement = {
                     title: old.title,
@@ -36,7 +34,7 @@ const AnnouncementForm = (props) => {
             })
         }
     }
-    useEffect(()=>console.log(announcement), [announcement])
+    
   return (
     <div className='FormBox'>
         <Form className="AnnouncementForm" onSubmit={props.onCreateAnnouncement(announcement)}>
