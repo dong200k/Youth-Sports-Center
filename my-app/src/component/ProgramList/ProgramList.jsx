@@ -14,7 +14,6 @@ function ProgramList() {
         const newPrograms = [program, ...programs];
 
         setPrograms(newPrograms);
-        console.log(...programs);
     };
 
     const updateProgram = (programId, newValue) => {

@@ -47,7 +47,6 @@ export default class parentProgram extends Component {
 
          //********TODO: stop loading here****************
          
-        console.log(response.data.result[0].data)
         this.setState({
           programs: response.data.result[0].data,
           filter: filter,

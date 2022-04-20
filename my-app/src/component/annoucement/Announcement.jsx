@@ -79,7 +79,6 @@ export default function Announcement(props){
     const onChangeFilter= (val) =>{
         return (e)=>{
             e.preventDefault()
-            console.log(val)
             if(val===resetFilter)
                 setFilter({})
             else
