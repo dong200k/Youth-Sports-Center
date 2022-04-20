@@ -13,7 +13,7 @@ class AnnouncementService{
         return axios.get(this.baseURL + "/announcement/id/"+id)
     } 
     getUserAnnouncement(id){
-        console.log("userid"+id)
+        console.log("userid "+id)
         return axios.get(this.baseURL + "/announcement/user/"+id)
     } 
     // deleteAnnouncement(data){

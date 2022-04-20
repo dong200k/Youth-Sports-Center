@@ -1,28 +1,23 @@
 import React, { Component } from 'react'
-import Topbar from '../../component/topbar/topbar'
-import Mycalendar from '../../component/myCalendar/myCalendar'
-import runningtracks from "../../assets/runningtracks.jpg"
-import ParentAnnoucement from '../../component/parents_announcement/announcement.jsx'
+import Announcement from '../../component/annoucement/Announcement'
 import "./home.css"
+import Calendar from '../../component/calendar/Calendar'
 
 export default class home extends Component {
   render() {
     return (
       <div className="home">
-        <div className="homeHeader">
+        {/* <div className="homeHeader">
           <img className='homeHeaderImg' src={runningtracks} alt="track"/>
-        </div>
+        </div> */}
         <div className="homeBody">
           <div className="homeCalendar">
-              <Mycalendar/>
+              <Calendar/>
             </div>
-            <div className="homeAnnocement">
-              <ParentAnnoucement />
+            <div className="homeAnnouncement">
+              <Announcement user_type="Parent"/>
             </div>
         </div>
-
-
-
       </div>
     )
   }

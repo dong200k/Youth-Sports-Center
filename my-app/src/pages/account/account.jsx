@@ -7,10 +7,11 @@ import "./account.css"
 import KidService from "../../services/kid.service.js"
 import kidService from "../../services/kid.service.js"
 import userService from "../../services/user.service.js"
+import { GetUserContext } from "../../context/UserContext.jsx"
 
 export default function AccountKids(props){
-    let user_id = props.user_id
-
+    let user_id = GetUserContext().user._id
+    
     let [kids, setKids] = useState([])
     let [user, setUser] = useState({})
 
@@ -44,15 +45,12 @@ export default function AccountKids(props){
             })
     }, [])
 
-    useEffect(()=>console.log(user), [user])
-
     //fetch user info from database
     useEffect(()=>{
         //get user from mongodb
         userService.getUser(user_id)
             .then(res=>{
                 if(res.data.status==="success"){
-                    console.log(res.data)
                     let user = res.data.user
                     if(user_id!==res.data.user._id.toString()){
                         console.log("error, user_id is different/another user's id, after updating user info")
