@@ -1,18 +1,60 @@
-import React, { Component, useEffect, useState } from 'react'
+import React, { Component, useCallback, useEffect, useRef, useState } from 'react'
 import Conversation from '../../component/conversation/Conversation'
 import Message from '../../component/message/Message'
 import { GetUserContext } from '../../context/UserContext.jsx'
 import MessengerService from '../../services/messenger.service.js'
 import './messenger.css'
+import {io} from "socket.io-client"
 
 export default function Messenger(){
   
+  const connection = "ws://localhost:8900"
   let user = GetUserContext().user
-
   const [groups, setGroups] = useState([])
   const [currentGroup, setCurrentGroup] = useState(null)
   const [messages, setMessages] = useState([])
   const [message, setMessage] = useState("")
+  const socket = useRef()
+  const scrollRef = useRef()
+
+  //connect to socket backend
+  useEffect(()=>{
+    if(!user._id)
+      return
+    socket.current = io(connection)
+
+    console.log("add user")
+    //add user to socket server
+    socket.current.emit("add user", user._id)
+    
+    return ()=>socket.current.close()
+  }, [user._id])
+
+  // useEffect(()=>{
+  //   GetUserContext().logout()
+  // }, [])
+
+  //listen for messages from socket server
+  useEffect(()=>{
+    console.log(currentGroup)
+    if(!currentGroup)
+      return
+    socket.current.on("get message", (message)=>{
+      console.log("received message")
+      console.log(message)
+      if(currentGroup._id===message.group_id){
+        message.date = new Date().getTime()
+        setMessages(messages=>{
+          console.log(messages)
+          return [...messages, message]
+        })
+      }
+    })
+  }, [currentGroup])
+
+  const sendMessageToSocket = useCallback((message)=>{
+    socket.current.emit("send message", {members: currentGroup.members, group: currentGroup._id, message: message.content})
+  }, [currentGroup])
 
   //fetch groups from backend after load
   useEffect(()=>{
@@ -25,7 +67,7 @@ export default function Messenger(){
       .catch(err=>console.log(err))
   }, [])
 
-  //fetch messages form backend on click group
+  //fetch messages from backend on click group
   useEffect(()=>{
     if(!currentGroup)
       return
@@ -55,10 +97,17 @@ export default function Messenger(){
       .then(res=>{
         if(res.data.status==="success"){
           setMessages(message=>[...message, res.data.message])
+          //send to socket
+          sendMessageToSocket(res.data.message)
         }
       })
       .catch(err=>console.log(err))
   }
+
+  //scroll to newest message
+  useEffect(()=>{
+    scrollRef?.current?.scrollIntoView({behavior: "smooth"})
+  }, [messages])
 
   return (  
     <div className="messenger">
@@ -78,9 +127,10 @@ export default function Messenger(){
               {currentGroup?
                 <div className="chatBoxTop">
                     {messages.map(message=>
-                      <Message key={message._id} own = {message.sender_id===user._id} message={message}/>
+                      <div ref={scrollRef}>
+                        <Message key={message._id} own = {message.sender_id===user._id} message={message}/>
+                      </div>
                     )}
-                    
                 </div>
                 :
                 <h1>Please Select a Group Chat</h1>

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useUser from "../hooks/useUser.jsx";
 
 export const UserContext = React.createContext();
@@ -12,25 +12,30 @@ export const GetUserContext = ()=>{
 }
 
 export const UserProvider = (props)=>{
+    let location = useLocation()
+
     //initializes user to localStorage user
     let [user, setUser] = useUser() 
-    
+    let navigate = useNavigate()
     //store user in local storage when user changes
     useEffect(()=>{
-      if(user){
-        localStorage.setItem("user", JSON.stringify(user))
-        props.navigate("/home")
-      }
-      if(!user){
-        localStorage.removeItem("user")
-        props.navigate("/")
+      //if user redirect to home
+      if(user&&location.pathname==="/"){
+        navigate("/home")
       }
     }, [user])
 
     const value = {
         user: user, 
-        login : user=> setUser(user),
-        logout : ()=> setUser(null)
+        login : user=> {
+          setUser(user)
+          localStorage.setItem("user", JSON.stringify(user))
+        },
+        logout : ()=> {
+          setUser(null)
+          localStorage.removeItem("user")
+          props.navigate("/")
+        }
     }
 
     return (

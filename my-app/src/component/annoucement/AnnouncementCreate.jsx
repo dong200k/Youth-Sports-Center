@@ -8,7 +8,6 @@ const AnnouncementCreate = (props) => {
     const handleSubmit = useCallback(
       (announcement)=>{
         return (e) => {
-          console.log("cretebutton handle submit")
           e.preventDefault()
           props.onCreateAnnouncement(announcement)
           setShow(prevShow=>!prevShow)
