@@ -1,9 +1,5 @@
 import React, { Component } from 'react'
 import Card from 'react-bootstrap/Card'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Modal from 'react-bootstrap/Modal'
-import Button from 'react-bootstrap/Button'
 import './program.css'
 import basketImg from '../../assets/basketball-program.jpg'
 import baseballImg from '../../assets/baseball-program.jpg'
@@ -14,8 +10,8 @@ import badmintonImg from '../../assets/badminton-program.jpg'
 import handballImg from '../../assets/handball-program.jpg'
 import tennisImg from '../../assets/tennis-program.jpg'
 import volleyballImg from '../../assets/volleyball-program.jpg'
-
-import Form from 'react-bootstrap/Form'
+import ParentModal from './modal/ParentModal'
+import InstructorModal from './modal/InstructorModal'
 
 export default class program extends Component {
   constructor(props){
@@ -47,15 +43,13 @@ export default class program extends Component {
   }
 
   state = {
-    showModal: false,
     programImg: defaultImg,
-    kids: [{name:'Lun'},{name:'ki'}]
+    showModal:false,
   }
 
   getTime = time => {
     let hour = Math.floor(time/60)
     let min = Math.floor(time%60)
-
     if(hour<10)
       hour = "0"+hour.toString()
     else
@@ -64,15 +58,14 @@ export default class program extends Component {
       min = "0"+min.toString()
     else
       min = min.toString()
-
     return hour+":"+min
   }
 
 
   render() {
+    const user_type = "Instructor"
     return (
       <>
-
         <Card className='programCard' style={{ width: '380px', margin : '10px' }}
           onClick={() => {
             this.setState({
@@ -187,6 +180,14 @@ export default class program extends Component {
             </Row>
           </Modal.Body>
         </Modal>
+        {/* Check the user type, if it is parent, then show the class detail and Register
+        if it is instructor, then show attendence and program setting(such as delete, schedule change...) */}
+        {
+          user_type === "Parent"?
+          <ParentModal {...this.props} showModal={this.state.showModal} setModal={()=>{this.setState({showModal: false})}} getTime = {this.getTime}/>
+          :
+          <InstructorModal {...this.props}  showModal={this.state.showModal} setModal={()=>{this.setState({showModal: false})}} getTime = {this.getTime}/>
+        }
       </>
     )
   }
