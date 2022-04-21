@@ -182,6 +182,9 @@ export default class program extends Component {
             <Row style={{display:'flex', justifyContent:'center'}}>
               <Button style={{border:'none',backgroundColor:'rosybrown', color:'#fff', width:'95%'}}>Register Kid</Button>
             </Row>
+            <Row style={{display:'flex', justifyContent:'center'}}>
+              <Button style ={{border:'none', backgroundColor:'red', color:'#fff', width:'95%'}}>Remove Program</Button>
+            </Row>
           </Modal.Body>
         </Modal>
       </>

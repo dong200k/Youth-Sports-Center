@@ -1,8 +1,13 @@
 import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom';
 import "./topbar.css"
+import { UserContext } from '../../context/UserContext';
 
 export default class topbar1 extends Component {
+    static contextType = UserContext;
+    constructor(props){
+        super(props)
+    }
     state = {
         isUnfold: true,
         open: false,
@@ -48,7 +53,7 @@ export default class topbar1 extends Component {
                     {this.state.open && (
                     <div className='dropDown'>
                         <ul>
-                            <li>Log Out</li>
+                            <li onClick={this.context.logout}>Log Out</li>
                         </ul>
                     </div>
                     )}
