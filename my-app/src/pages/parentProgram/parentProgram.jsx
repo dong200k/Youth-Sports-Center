@@ -23,8 +23,6 @@ export default class parentProgram extends Component {
     }
   }
 
-
-
   updateProgram(filter){
     
     const data = {
@@ -49,7 +47,6 @@ export default class parentProgram extends Component {
 
          //********TODO: stop loading here****************
          
-        console.log(response.data.result[0].data)
         this.setState({
           programs: response.data.result[0].data,
           filter: filter,
@@ -113,12 +110,12 @@ export default class parentProgram extends Component {
   }
   render() {
     return (
-      <div className="page">
-        <div className="pageHeader">
+      <div className="parentProgram">
+        <div className="parentProgram-filter">
           {/* <ProgramFilter updateAppState = {this.updateAppState}/> */}
           <ProgramFilter updateAppState = {this.updateAppState} filter = {this.state.filter}/>
         </div>
-        <div className="pageBody">
+        <div className="parentProgram-body">
           <Programs {...this.state} initailFilter={this.initailFilter}/>
         </div>
       </div>

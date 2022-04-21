@@ -1,0 +1,28 @@
+.instructorProgram{
+    width: 100%;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.instructorProgram-create{
+    display: flex;
+    width: 80%;
+    height: 200px;
+    background-color: #fff;
+}
+
+.instructorProgram-filter{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.instructorProgram-body{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

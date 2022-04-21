@@ -128,7 +128,7 @@
     width: 20%;
   }
   
-  .btn {
+  .abtn {
     background-color: #82A7DC;
     border: none;
     border-radius: 5px;
@@ -139,6 +139,6 @@
     cursor: pointer;
   }
   
-  .btn:hover {
+  .abtn:hover {
     background-color: #A5C5F4;
   }

@@ -1,10 +1,23 @@
 import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom';
 import "./topbar.css"
+import { UserContext } from '../../context/UserContext';
 
 export default class topbar1 extends Component {
+    static contextType = UserContext;
+    constructor(props){
+        super(props)
+    }
     state = {
         isUnfold: true,
+        open: false,
+    };
+    onImageClick = () => {
+        this.setState((state) =>{
+            return {
+                open: !state.open
+            };
+        });
     };
     render() {
         return (
@@ -20,10 +33,10 @@ export default class topbar1 extends Component {
                         <NavLink to=""><li className="topListItem"><span>Home</span></li></NavLink>
                         <NavLink to="program">
                             <li className="topListItem"><span>Programs</span>
-                                <ul className= "topSubList">
+                                {/* <ul className= "topSubList">
                                     <li className= "topSubListItem">Available Program</li>
                                     <li className= "topSubListItem">My Program</li>
-                                </ul>
+                                </ul> */}
                             </li>
                         </NavLink>
                         <NavLink to="account"><li className="topListItem"><span>Account/Kids</span></li></NavLink>
@@ -35,8 +48,15 @@ export default class topbar1 extends Component {
                 </div>
                 <div className="topProfile">
                 {
-                    <img className="topImg" src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt=""></img>
+                    <img className="topImg" src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="" onClick={this.onImageClick}></img>
                 }
+                    {this.state.open && (
+                    <div className='dropDown'>
+                        <ul>
+                            <li onClick={this.context.logout}>Log Out</li>
+                        </ul>
+                    </div>
+                    )}
                 </div>
             </div>
         )

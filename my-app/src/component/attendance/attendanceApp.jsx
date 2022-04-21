@@ -37,16 +37,16 @@ class attendanceApp extends React.Component {
             <React.Fragment>
               <table>
                 <tr>
-                    <th>Student ID</th>
-                    <th className="nameCol">Student Name</th>
-                    <th className="switchCol">Attendance</th>
+                  <th>Student ID</th>
+                  <th className="nameCol">Student Name</th>
+                  <th className="switchCol">Attendance</th>
                 </tr>
               </table>
               <Class students={this.state.students} studentPresent={this.studentPresent} />
 
               {/* Redirect to summary page */}
               <Link to="/summary">
-                <button className="btn" onClick={this.gotoSummary}>Submit</button>
+                <button className="abtn" onClick={this.gotoSummary}>Submit</button>
               </Link>
             </React.Fragment>
           )} />
