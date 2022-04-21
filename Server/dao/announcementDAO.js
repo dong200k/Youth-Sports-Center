@@ -12,7 +12,7 @@ export default class AnnouncementDao{
             return
         try{
             //wait for mongodb then grab announcement collection
-            announcement = await conn.db().collection(process.env.ANNOUNCEMENT_COLLECTION)
+            announcement = await conn.db().collection(process.env.ANNOUNCEMENT_COLLECTION || "Announcement")
             console.log("AnnouncementDao injectDB success!")
         }catch(e){
             console.log("Error connecting to collection in AnnouncementDao")
