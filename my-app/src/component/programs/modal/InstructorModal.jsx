@@ -16,7 +16,7 @@ export default class InstructorModal extends Component {
             </Modal.Title>
         </Modal.Header>
         <Modal.Body style={{fontFamily:'Quicksand',fontWeight:'500', fontSize:'20px'}}>
-            <Attendance />
+            <Attendance program={this.props.program}/>
         </Modal.Body>
     </Modal>
     )
