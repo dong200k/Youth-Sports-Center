@@ -344,15 +344,15 @@ export default class ProgramController{
             program.enrolled = program.kids.length
 
             //attempt to save
-            program.save(err=>{
-                if(err){
-                    throw new Error("enrollment error")
-                }else{
-                    res.json({status:"success", program: program})
-                    return
-                }
+            program.save()
+            .then(()=>{
+                res.json({status:"success", program: program})
+                return
             })
-            .catch(()=>{throw new Error("error saving program in enrollkid")})
+            .catch((err)=>{
+                console.log(err)
+                throw new Error("error saving program in enrollkid")}
+            )
         }catch(e){
             res.status(404).json({error: e.message})
         }
@@ -398,21 +398,22 @@ export default class ProgramController{
             program.kids = program.kids.filter(enrolledKid=>{
                 // console.log(enrolledKid)
                 for(const kidToDrop of kids){
-                    if(ObjectId(kidToDrop)===ObjectId(enrolledKid))
-                        return true
+                    if(kidToDrop===enrolledKid.toString())
+                        return false
                 }
-                return false
+                return true
             })
 
             program.enrolled = program.kids.length
 
-            program.save(err=>{
-                if(err)
-                    throw new Error(err.message)
-                else
-                    res.json({status:"success", program: program})
+            program.save()
+            .then(()=>{
+                res.json({status:"success", program: program})
             })
-            .catch(()=>{throw new Error("error saving program in dropkids")})
+            .catch((err)=>{
+                console.log(err)
+                throw new Error("error saving program in dropkids")}
+            )
 
         } catch (error) {
             res.status(404).json({error: error.message})
