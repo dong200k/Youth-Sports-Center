@@ -37,9 +37,9 @@ class attendanceApp extends React.Component {
             <React.Fragment>
               <table>
                 <tr>
-                  <th>Student ID</th>
-                  <th className="nameCol">Student Name</th>
-                  <th className="switchCol">Attendance</th>
+                    <th>Student ID</th>
+                    <th className="nameCol">Student Name</th>
+                    <th className="switchCol">Attendance</th>
                 </tr>
               </table>
               <Class students={this.state.students} studentPresent={this.studentPresent} />

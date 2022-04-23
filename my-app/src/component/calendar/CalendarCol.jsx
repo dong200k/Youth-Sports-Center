@@ -13,6 +13,7 @@ export default class CalendarCol extends Component {
             "#AEACFA",
         ],
         programsList:[],
+        showModal:false,
     }
     constructor(props){
         super(props) 
@@ -36,7 +37,8 @@ export default class CalendarCol extends Component {
             for (let y = 0; y < kidList[i].programs.length; y++){
                 if(currentDate.localeCompare(kidList[i].programs[y].start_date) >= 0 &&
                 currentDate.localeCompare(kidList[i].programs[y].end_date) <= 0 &&
-                kidList[i].programs[y].days.includes(currentWeekday)){
+                kidList[i].programs[y].days.includes(currentWeekday)&&
+                kidList[i].name == this.props.filter ){
                     let program = {
                         kidName : kidList[i].name,
                         programName: kidList[i].programs[y].name,
@@ -70,8 +72,9 @@ export default class CalendarCol extends Component {
             let height = p.height + 'px'
             return(
                 <div className="calendar-grid-shown" key={uuidv4()}
-                 style={{position:'absolute', top:topDistance, height:height}}>
-                     {p.programName} for {p.kidName}
+                 style={{position:'absolute', top:topDistance, height:height}}
+                 onClick={()=>{this.setState({showModal:true})}}>
+                     {p.programName}
                 </div>
             )
         })}

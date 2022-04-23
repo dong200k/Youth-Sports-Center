@@ -6,7 +6,7 @@ import "./attendance.css"
 export default class Attendance extends Component {
     constructor(props){
         super(props);
-        this._onScrollEvent = this._onScrollEvent.bind(this);  //保证被组件调用时，对象的唯一性
+        // this._onScrollEvent = this._onScrollEvent.bind(this);
     }
 
     state = {
@@ -37,13 +37,16 @@ export default class Attendance extends Component {
         this.initDate();
     }
 
-    _onScrollEvent() {
-        console.log('chuxian')
-        console.log(this._container.scrollHeight)
-        if(this.state.filter_date === this.state.date){
-            this._container.scrollTop = this._container.scrollHeight
-        }
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this._onScrollEvent, false);
     }
+
+
+    // _onScrollEvent() {
+    //     if(this.state.filter_date === this.state.date){
+    //         this._container.scrollTop = this._container.scrollHeight
+    //     }
+    // }
 
     format = (num) =>{
         var f = num < 10 ? '0' + num : num;
@@ -57,7 +60,6 @@ export default class Attendance extends Component {
         let cDate = this.format(date.getDate())
         let currentDay = date.getDay()
         let cYMD = `${cYear}-${cMonth}-${cDate}`
-
         this.setState({date:cYMD,filter_date:cYMD})
     }
     
@@ -79,8 +81,12 @@ export default class Attendance extends Component {
         }
     }
 
-    handleClick(e){
+    showFilter(e){
         this.setState({showFilter:!this.state.showFilter})
+    }
+
+    resetFilter(e){
+        this.setState({filter_date:this.state.date})
     }
 
     handleAttended(record){
@@ -96,12 +102,12 @@ export default class Attendance extends Component {
     return (
       <div className="attendance">
           <div className="attendance-title">
-              Attdendance
+              Attdendance Check
           </div>
           <div className="attendance-header">
-              <div> Date: {this.state.date}</div>
-              <div onClick={()=>this.handleClick()}> {this.state.filter_date} </div>
-              <div className={this.state.showFilter?"attendance-filter":"attendance-filter hidden"}>
+              <div className="attendance-filter-box">
+                <div className="attendance-filter-btn" onClick={()=>this.showFilter()}> Date: {this.state.filter_date} </div>
+                <div className={this.state.showFilter?"attendance-filter":"attendance-filter hidden"}>
                   <ul ref={c => this._container = c}>
                     {this.state.schedule.map(date => (date.localeCompare(this.state.date) >= 0)? null:
                         (<li onClick={()=>{this.setState({filter_date:date,scrollTop:this._container.scrollTop,showFilter:false})}} className="attendance-filter-item" key={uuidv4()}>
@@ -109,9 +115,17 @@ export default class Attendance extends Component {
                         </li>)
                     )}
                   </ul>
+                </div>
               </div>
+              <div className="attendance-filter-btn" onClick={()=>this.resetFilter()}>Go Back to Today</div>
+
           </div>
           <div className="attendance-body">
+            {this.state.attendance.length === 0 && 
+                 <div style={{display:'flex',justifyContent:'center',alignItems:'center', flexDirection:'column',height:'50vh', fontFamily:'Quicksand'}}>
+                   <i className="fa-solid fa-ban" style={{fontSize:'150px'}}></i>
+                    <h4 style={{marginTop:'20px'}}> No Schedule Today </h4>
+                 </div>}
             {this.state.attendance.map((record)=>{
                 return(
                 <div className="attendance-record" key={uuidv4()}>
