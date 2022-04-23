@@ -54,8 +54,8 @@ export default class addKid extends Component {
     
     render() {
         return (
-        <div className={`buttonContainer ${this.state.isAdding ? 'unfold' : ''}`}>
-            <div className={`buttonIcon ${this.state.isAdding ? 'hidden' : ''}`}
+        <div className={`addKid ${this.state.isAdding ? 'unfold' : ''}`}>
+            <div className={`addKid-addbtn ${this.state.isAdding ? 'unshow' : ''}`}
                 onClick={() => {
                     this.setState({
                         isAdding: true
@@ -64,59 +64,67 @@ export default class addKid extends Component {
             >
                 <i className="fa-solid fa-plus" />
             </div>
-            <div className={`inputContainer ${!this.state.isAdding ? 'hidden' : ''}`}>
-                <form action="" className="inputForm" onSubmit={this.addKid}>
+            <div className={`addKid-main ${!this.state.isAdding ? 'unshow' : 'show'}`}>
+                <form action="" className="addKid-form" onSubmit={this.addKid}>
                     <div className="inputTitle">
                         Provide Your kid's Information
+                    <div className="backIcon"
+                        onClick={() => {
+                            this.setState({
+                                isAdding: false
+                            });
+                        }}
+                    >
+                    <i className="fa-solid fa-arrow-left"></i>
+                </div>
                     </div>
                     <div className="inputRow">
                         <label className="inputLabel">
                             First Name: 
-                            <input
-                                className="loginMainBoxInput"
-                                type="text"
-                                placeholder="Name"
-                                value={this.state.kid.first_name}
-                                onChange={this.handleInput("first_name")}
-                            />
                         </label>
-                    </div>
-                    <div className="inputRow">
-                        <label className="inputLabel">
-                            Last Name: 
+                        <input
+                            className="loginMainBoxInput"
+                            type="text"
+                            placeholder="Name"
+                            value={this.state.kid.first_name}
+                            onChange={this.handleInput("first_name")}
+                        />
+
+                        <label className="inputLabel" style={{marginLeft:'30px'}}>
+                                Last Name: 
+                            </label>
                             <input
                                 className="loginMainBoxInput"
                                 type="text"
                                 value={this.state.kid.last_name}
                                 placeholder="Name"
                                 onChange={this.handleInput("last_name")}
-                            />
-                        </label>
+                        />
+
                     </div>
                     <div className="inputRow">
                         <label className="inputLabel">
                             Gender: 
-                            <input
-                                className="loginMainBoxInput"
-                                type="text"
-                                placeholder="Gender"
-                                value={this.state.kid.gender}
-                                onChange={this.handleInput("gender")}
-                            />
                         </label>
-                    </div>
-                    <div className="inputRow">
-                        <label className="inputLabel">
+                        <input
+                            className="loginMainBoxInput"
+                            type="text"
+                            placeholder="Gender"
+                            value={this.state.kid.gender}
+                            onChange={this.handleInput("gender")}
+                        />
+
+                        <label className="inputLabel" style={{marginLeft:'30px'}}>
                             Birthday: 
-                            <input
-                                className="loginMainBoxInput"
-                                type="text"
-                                placeholder="DOB"
-                                value={this.state.kid.birth_date}
-                                onChange={this.handleInput("birth_date")}
-                            />
                         </label>
-                    </div>  
+                        <input
+                            className="loginMainBoxInput"
+                            type="text"
+                            placeholder="DOB"
+                            value={this.state.kid.birth_date}
+                            onChange={this.handleInput("birth_date")}
+                        />
+                    </div>
                     {/* <div className="inputRow">
                         <label className="inputLabel">
                             Phone: 
@@ -131,29 +139,21 @@ export default class addKid extends Component {
                     <div className="inputRow">
                         <label className="inputLabel">
                             Medical Issue: 
-                            <input
-                                className="loginMainBoxInput"
-                                type="text"
-                                placeholder="Attention"
-                                value={this.state.kid.medical_issues}
-                                onChange={this.handleInput("medical_issues")}
-                            />
+
                         </label>
+                        <input
+                            className="loginMainBoxInput"
+                            type="text"
+                            placeholder="Allergy etc.."
+                            value={this.state.kid.medical_issues}
+                            onChange={this.handleInput("medical_issues")}
+                        />
                     </div>
                     <button
                         className="submitButton">
                         Link A New Kid
                     </button>                                                       
                 </form>
-                <div className="backIcon"
-                    onClick={() => {
-                        this.setState({
-                            isAdding: false
-                        });
-                    }}
-                >
-                    <i className="fa-solid fa-arrow-left"></i>
-                </div>
             </div>
 
         </div>
