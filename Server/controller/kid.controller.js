@@ -1,6 +1,7 @@
 import { ObjectId } from "mongodb";
 import Kid from "../models/Kid.js";
 import User from "../models/User.js";
+import Program from "../models/Program.js";
 
 export default class KidController{
     static async addKid(req, res, next){

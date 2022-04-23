@@ -85,15 +85,15 @@ router
     .route("/user/:id")
     .get(UserController.getUser)
 //generate random data
-router
-    .route("/generate/programs")
-    .post(GenerateData.generatePrograms)
-router
-    .route("/generate/instructors")
-    .post(GenerateData.generatePrograms)
-router
-    .route("/generate/announcements")
-    .post(GenerateData.generateAnnouncements)
+// router
+//     .route("/generate/programs")
+//     .post(GenerateData.generatePrograms)
+// router
+//     .route("/generate/instructors")
+//     .post(GenerateData.generatePrograms)
+// router
+//     .route("/generate/announcements")
+//     .post(GenerateData.generateAnnouncements)
 // router
 //     .route("/generate/deleterandom")
 //     .post(GenerateData.deletePrograms)
