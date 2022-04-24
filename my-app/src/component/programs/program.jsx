@@ -12,8 +12,12 @@ import tennisImg from '../../assets/tennis-program.jpg'
 import volleyballImg from '../../assets/volleyball-program.jpg'
 import ParentModal from './modal/ParentModal'
 import InstructorModal from './modal/InstructorModal'
+import { GetUserContext, UserContext } from '../../context/UserContext';
 
 export default class program extends Component {
+
+  static contextType = UserContext;
+
   constructor(props){
     super(props)
     if(props.program.sport_type === 'Basketball'){
@@ -63,7 +67,6 @@ export default class program extends Component {
 
 
   render() {
-    const user_type = "Instructor"
     return (
       <>
         <Card className='programCard' style={{ width: '380px', margin : '10px' }}
@@ -110,7 +113,7 @@ export default class program extends Component {
         {/* Check the user type, if it is parent, then show the class detail and Register
         if it is instructor, then show attendence and program setting(such as delete, schedule change...) */}
         {
-          user_type === "Parent"?
+          this.context.user.user_type === "Parent"?
           <ParentModal {...this.props} showModal={this.state.showModal} setModal={()=>{this.setState({showModal: false})}} getTime = {this.getTime}/>
           :
           <InstructorModal {...this.props}  showModal={this.state.showModal} setModal={()=>{this.setState({showModal: false})}} getTime = {this.getTime}/>
