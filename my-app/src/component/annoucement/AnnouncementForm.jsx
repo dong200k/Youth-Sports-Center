@@ -3,11 +3,25 @@ import {Form} from 'react-bootstrap'
 import { Button } from 'react-bootstrap'
 import {Dropdown} from "react-bootstrap"
 import {DropdownButton} from "react-bootstrap"
+import { GetUserContext } from '../../context/UserContext.jsx'
+import programService from '../../services/program.service.js'
 
 const AnnouncementForm = (props) => {
-    const something = (e) => {
-        e.preventDefault()
-    }
+    const [programNames, setProgramNames] = useState([])
+    const user = GetUserContext().user
+
+    //grab all programs names instructor teach
+    useEffect(()=>{
+      if(user.user_type!=="Instructor")
+        return
+      programService.getUserProgram(user._id)
+        .then(res=>{
+          if(res.data.status==="success"){
+            setProgramNames(res.data.programs)
+          }
+        })
+        .catch((e)=>console.log(e))
+    }, [user])
     const [announcement, setAnnouncement] = useState({
         title: "",
         message:"",
@@ -26,12 +40,13 @@ const AnnouncementForm = (props) => {
                 }
                 if(input==="program_name"){
                     newAnnouncement.program_name = program.program_name
-                    newAnnouncement.program_id = program.program_id
+                    newAnnouncement.program_id = program._id
+                    console.log(newAnnouncement)
                 }
                 else
                     newAnnouncement[input] = e.target.value
                 return newAnnouncement
-            })
+            })  
         }
     }
     
@@ -44,7 +59,7 @@ const AnnouncementForm = (props) => {
                  <DropdownButton className= "Button" 
                                 id="dropdown-basic-button" 
                                 title={announcement.program_name===""?"Select Program":announcement.program_name}>
-                    {props.programNames.map((program,index)=>
+                    {programNames.map((program,index)=>
                         <Dropdown.Item key={index}
                                 onClick={handleChange("program_name", program)}>{program.program_name}</Dropdown.Item>)}
                 </DropdownButton>

@@ -12,14 +12,19 @@ import tennisImg from '../../assets/tennis-program.jpg'
 import volleyballImg from '../../assets/volleyball-program.jpg'
 import ParentModal from './modal/ParentModal'
 import InstructorModal from './modal/InstructorModal'
-import { GetUserContext, UserContext } from '../../context/UserContext';
+import {UserContext} from '../../context/UserContext.jsx'
+import programService from '../../services/program.service.js'
 
 export default class program extends Component {
-
-  static contextType = UserContext;
-
+  static contextType = UserContext
+  
   constructor(props){
     super(props)
+    this.state = {
+      programImg: defaultImg,
+      showModal:false,
+    }
+    this.handleRegister = this.handleRegister.bind(this)
     if(props.program.sport_type === 'Basketball'){
       this.state.programImg = basketImg
     }
@@ -44,11 +49,32 @@ export default class program extends Component {
     else if(props.program.sport_type === 'Volleyball'){
       this.state.programImg = volleyballImg
     }
-  }
+  } 
 
-  state = {
-    programImg: defaultImg,
-    showModal:false,
+  handleRegister(kids){
+    if(!this.state||!this.state.showModal||this.currentProgram==="")
+      return
+    const user = this.context.user
+    const kidsToEnroll = []
+    //kids is object with key(kid_id)
+    for(const kid in kids){
+      kidsToEnroll.push(kid)
+    }
+    if(kidsToEnroll.length===0)
+      return
+    let data = {
+      kids: kidsToEnroll,
+      parent_id: user._id,
+      program_id: this.props.program._id
+    }
+    programService.enrollKid(data)
+      .then(res=>{
+        if(res.data.status==="success"){
+          console.log("Enrolled Kids!")
+          console.log(res.data)
+        }
+      })
+      .catch(err=>console.log(err))
   }
 
   getTime = time => {
@@ -67,6 +93,7 @@ export default class program extends Component {
 
 
   render() {
+    const user_type = this.context.user.user_type
     return (
       <>
         <Card className='programCard' style={{ width: '380px', margin : '10px' }}
@@ -113,8 +140,12 @@ export default class program extends Component {
         {/* Check the user type, if it is parent, then show the class detail and Register
         if it is instructor, then show attendence and program setting(such as delete, schedule change...) */}
         {
-          this.context.user.user_type === "Parent"?
-          <ParentModal {...this.props} showModal={this.state.showModal} setModal={()=>{this.setState({showModal: false})}} getTime = {this.getTime}/>
+          user_type === "Parent"?
+          <ParentModal {...this.props} 
+            showModal={this.state.showModal} 
+            setModal={()=>{this.setState({showModal: false})}} 
+            getTime = {this.getTime}
+            registerKid = {this.handleRegister}/>
           :
           <InstructorModal {...this.props}  showModal={this.state.showModal} setModal={()=>{this.setState({showModal: false})}} getTime = {this.getTime}/>
         }

@@ -96,7 +96,10 @@ export default function Messenger(){
     MessengerService.sendMessage(data)
       .then(res=>{
         if(res.data.status==="success"){
+          //update messages
           setMessages(message=>[...message, res.data.message])
+          //set input text to empty string
+          setMessage("")
           //send to socket
           sendMessageToSocket(res.data.message)
         }

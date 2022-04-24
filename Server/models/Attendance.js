@@ -1,15 +1,12 @@
 import mongoose from "mongoose"
 import { ObjectId } from "mongodb"
 import dotenv from "dotenv"
+import AttendanceForOneDay from "./attendanceForOneDay.js"
 dotenv.config()
 
 const {Schema} = mongoose
 
 const AttendanceSchema = new Schema({
-    kid_id:{
-        type: ObjectId,
-        required: [true, "kid id required!"]
-    },
     program_id:{
         type: ObjectId,
         required: [true, "program id required!"]
@@ -18,13 +15,9 @@ const AttendanceSchema = new Schema({
         type: Date,
         required: [true, "date required!"]
     },
-    attended:{
-        type: Boolean,
-        default: false
-    },
-    notes: {
-        type: String,
-        default: ""
+    attendance:{
+        type: [AttendanceForOneDay],
+        default: []
     }
 })
 
