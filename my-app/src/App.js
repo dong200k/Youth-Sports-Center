@@ -4,6 +4,7 @@ import Home from './pages/home/home'
 import Message from './pages/messenger/Messenger.jsx'
 import Announcement from './pages/instructorAnnouncement/InstructorAnnouncement.jsx'
 import Account from './pages/account/account.jsx'
+import InstructorProgram from './pages/instructorProgram/InstructorProgram'
 // import Program from './component/ProgramList/programApp.jsx'
 import ParentProgram from './pages/parentProgram/parentProgram.jsx'
 import {
@@ -16,6 +17,7 @@ import Attendance from './component/attendance/attendanceApp'
 import "./css/app.css"
 import {UserProvider } from './context/UserContext.jsx'
 import CreateProgram from "./component/createProgramForm/createProgram"
+import MyAlert from "./component/myAlert/MyAlert"
 export default function App() {
     return (
       <UserProvider navigate={useNavigate()}>
@@ -28,7 +30,8 @@ export default function App() {
             <Route path="program" element = {<ParentProgram/>}/>
             <Route path="announcement" element = {<Announcement/>}/>
             <Route path="Attendance" element = {<Attendance/>}/>
-            <Route path="Demo" element ={<CreateProgram/>}/>
+            <Route path="Demo" element ={<MyAlert/>}/>
+            <Route path="InstructorProgram" element = {<InstructorProgram/>}/>
           </Route>
         </Routes>
       </UserProvider>

@@ -37,15 +37,14 @@
     position: relative;
     width: 1000px;
     height: 600px;
-    background-color: red;
+    margin-top: 100px;
 }
 
 .homeAnnouncement{
     margin-bottom: 20px;
-    margin-left: 50px;
     position: relative;
     display: flex;
     height: 600px;
-    width: 600px;
+    width: 1000px;
     background-color: transparent;
 }

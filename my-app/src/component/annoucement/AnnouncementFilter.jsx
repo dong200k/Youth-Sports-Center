@@ -39,7 +39,7 @@ const AnnouncementFilter = (props) => {
             {props.programNames.map((program)=>{
                 return(
                 <div onClick={props.onChangeFilter(program.program_name)}
-                className={props.currentFilter.program_name===program.program_name?"announcementFilter-item select":"announcementFilter-item "}
+                className={(props.currentFilter.program_name===program.program_name)||((program.program_name==="All")&&!props.currentFilter.program_name)?"announcementFilter-item select":"announcementFilter-item "}
                 key={uuidv4()}>
                     {program.program_name}
                 </div>)

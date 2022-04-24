@@ -1,0 +1,130 @@
+.attendance{
+    position: relative;
+    width: 100%;
+    font-family: 'Quicksand';
+}
+
+.attendance-title{
+    width: 100%;
+    font-size: 30px;
+    font-weight: bolder;
+    text-align: start;
+    border-bottom: 1px solid black;
+}
+
+.attendance-filter-box{
+    
+}
+
+.attendance-header{
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.attendance-filter {
+    box-shadow: 0 0.5vw 2vw -5px rgba(0, 0, 0, .2);
+    border-radius: 15px;
+    position: absolute;
+    font-size: 20px;
+    font-weight: bolder;
+    z-index: 1;
+    top: 30px;
+    left: 60px;
+    background-color: #fff;
+}
+.attendance-filter:before, .attendance-filter:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 1.5em;
+    left: 0;
+    z-index: 2;
+}
+.attendance-filter:before {
+    top: 0;
+    background: linear-gradient(white, rgba(255, 255, 255, .7));
+}
+.attendance-filter:after {
+    bottom: 0;
+    background: linear-gradient(rgba(255, 255, 255, .7), white);
+}
+
+.attendance-filter>ul {
+    margin-top: 0;
+    margin-bottom: 0;
+    max-height: 4.5em;
+    overflow-y: scroll;
+    margin-right: 1em;
+    scroll-snap-type: y mandatory;
+    list-style: none;
+    padding-bottom: 1.5em;
+    padding-top: 1.5em;
+}
+
+.attendance-filter>ul::-webkit-scrollbar {
+    display: none;
+}
+.attendance-filter>ul > li {
+    cursor: pointer;
+    scroll-snap-align: center;
+    height: 1.5em;
+}
+.attendance-filter>ul {
+    padding-right: 0.5em;
+}
+
+
+.attendance-body{
+    
+}
+
+.attendance-record{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    margin: 10px;
+    height: 40px;
+    justify-content: center;
+}
+
+.attendance-record-gray{
+    background-color: bisque;
+}
+
+.attendence-name{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    width: 150px;
+}
+
+.attendence-check-btn > input{
+    display: none;
+}
+
+.attendence-check-btn{
+    cursor: pointer;
+    width: 180px;
+    outline:0; 
+    background:#fff;
+    border:none;
+    padding:6px 40px;
+    border-radius: 2px;
+    transition:all .3s ease-out; 
+    font-family: 'Quicksand';
+    box-shadow:inset 0 -5px 0 0 rgba(0,0,0,.2);
+}
+
+.isChecked{
+    background: #986060;
+    color: white;
+    transition: 0.5s;
+}
+
+.notChecked{
+    background-color: none;
+    transition: 0.5s;
+}

@@ -7,6 +7,7 @@ import UserController from "../controller/user.controller.js"
 import GenerateData from "../controller/generateData.controller.js"
 import GroupController from "../controller/group.controller.js"
 import MessageController from "../controller/message.controller.js"
+import AttendanceController from "../controller/attendance.controller.js"
 const router = express.Router()
 
 router.route("/").get((req,res)=>{
@@ -84,16 +85,21 @@ router
 router
     .route("/user/:id")
     .get(UserController.getUser)
+//attendance
+router
+    .route("/attendance")
+    .get(AttendanceController.getAttendance)
+    .post(AttendanceController.upsertAttendance)
 //generate random data
-router
-    .route("/generate/programs")
-    .post(GenerateData.generatePrograms)
-router
-    .route("/generate/instructors")
-    .post(GenerateData.generatePrograms)
-router
-    .route("/generate/announcements")
-    .post(GenerateData.generateAnnouncements)
+// router
+//     .route("/generate/programs")
+//     .post(GenerateData.generatePrograms)
+// router
+//     .route("/generate/instructors")
+//     .post(GenerateData.generatePrograms)
+// router
+//     .route("/generate/announcements")
+//     .post(GenerateData.generateAnnouncements)
 // router
 //     .route("/generate/deleterandom")
 //     .post(GenerateData.deletePrograms)
