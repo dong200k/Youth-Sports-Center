@@ -1,6 +1,6 @@
 import {Button} from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import AnnouncementForm from './AnnouncementForm'
 
 const AnnouncementCreate = (props) => {
@@ -26,7 +26,7 @@ const AnnouncementCreate = (props) => {
           } */}
       </button>
       {
-        show? <AnnouncementForm programNames={props.programNames} onCreateAnnouncement={handleSubmit}/> : null
+        show? <AnnouncementForm onCreateAnnouncement={handleSubmit}/> : null
       }
     </div>
 

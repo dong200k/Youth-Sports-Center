@@ -4,14 +4,52 @@ import Col from 'react-bootstrap/Col'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
+import { UserContext } from '../../../context/UserContext.jsx'
+import kidService from '../../../services/kid.service.js'
 
-export default class ParentModal extends Component {3
+export default class ParentModal extends Component {
+    static contextType = UserContext
     constructor(props){
         super(props)
+        this.state = {
+          kids: [],
+          enrolledKids: {}
+        }
+        this.handleClick = this.handleClick.bind(this)
+        this.handleRegister = this.handleRegister.bind(this)
     }
 
-    state = {
-        kids: [{name:'Lun'},{name:'ki'}]
+    componentDidMount(){
+      const user = this.context.user
+      if(user.user_type!=="Parent")
+        return
+      kidService.getKids(user._id)
+        .then(res=>{
+          if(res.data.status==="success"){
+            this.setState({
+              kids: res.data.kids
+            })
+          }
+        })
+        .catch(err=>console.log(err))
+    }
+
+    handleClick(e){
+      this.setState(prev=>{
+        const enrolledKids = {...prev.enrolledKids}
+        const id = e.target.id
+        if(enrolledKids[id])
+          delete enrolledKids[id]
+        else
+          enrolledKids[id] = 1
+        return {
+          enrolledKids: enrolledKids
+        }
+      })
+    }
+
+    handleRegister(){
+      this.props.registerKid(this.state.enrolledKids)
     }
 
   render() {
@@ -62,10 +100,10 @@ export default class ParentModal extends Component {3
             :              
             this.state.kids.map((kid) => 
             (
-              <Col key={kid.name} className="mb-3">
-                <Form.Check type='checkbox' id={`${kid.name}`}>
-                  <Form.Check.Label className='kidSelect'>{`${kid.name}`}
-                    <Form.Check.Input type='checkbox' isValid />
+              <Col key={kid._id} className="mb-3">
+                <Form.Check type='checkbox' id={`${kid._id}`}>
+                  <Form.Check.Label className='kidSelect'>{`${kid.first_name+" "+kid.last_name}`}
+                    <Form.Check.Input type='checkbox' isValid onClick={this.handleClick}/>
                   </Form.Check.Label>
                 </Form.Check>
               </Col>
@@ -74,7 +112,7 @@ export default class ParentModal extends Component {3
             </Row>
           </Form>
           <Row style={{display:'flex', justifyContent:'center'}}>
-            <Button style={{border:'none',backgroundColor:'rosybrown', color:'#fff', width:'95%'}}>Register Kid</Button>
+            <Button onClick = {this.handleRegister} style={{border:'none',backgroundColor:'rosybrown', color:'#fff', width:'95%'}}>Register Kid</Button>
           </Row>
         </Modal.Body>
     </Modal>

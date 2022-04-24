@@ -43,7 +43,7 @@ KidSchema.methods.getConflictingProgram = async (kid_id, {time, days, _id}) =>{
     for(const program of programs){
         if(ObjectId(program._id)===ObjectId(_id))
             return program.name
-        console.log(program.program_name)
+        
         let {start_time, end_time, start_date, end_date} = program.time
         //running period conflict
         if(!validateTime(start_date.getTime(), end_date.getTime(), time.start_date.getTime(), time.end_date.getTime()))
