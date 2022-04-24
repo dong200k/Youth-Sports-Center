@@ -55,8 +55,19 @@ export default class AttendanceController{
             }
             else{
                 //attendance already taken get that one
-                attendanceWithNames = [...attendance.attendance]
+                attendanceWithNames = []
+                const oldAttendance = attendance.attendance
 
+                for(const record of oldAttendance){
+                    let attendance = {
+                        kid_id: record.kid_id,
+                        notes: record.notes,
+                        attended: record.attended,
+                        kid_name: record.first_name + " " + record.last_name
+                    }
+                    attendanceWithNames.push(attendance)
+                }
+                // console.log(attendanceWithNames)
                 //assign kid names to attendance
                 for(const i in attendanceWithNames){
                     //get kid for ith attendance(kid_id, attended boolean)
@@ -64,6 +75,7 @@ export default class AttendanceController{
                     //write their name to the attendance with names
                     attendanceWithNames[i].kid_name = ithKid.first_name + " "+ ithKid.last_name
                 }
+                console.log(attendanceWithNames)
             }
             res.json({status: "success", attendance: attendanceWithNames})
         } catch (e) {
