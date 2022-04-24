@@ -65,6 +65,7 @@ export default class AttendanceController{
             if(!attendance)
                 res.json({status:"not found"})
             else{
+                console.log(attendance)
                 const attendanceWithNames = attendance.attendance
                 
                 //get program to take attendance for
@@ -79,7 +80,7 @@ export default class AttendanceController{
                 const kids = await Kid.find(filter)
                 if(kids.length!==program.kids.length)
                     throw new Error("error in attendance, could not retrieve all kids in program")
-                
+            
                 for(const i in attendanceWithNames){
                     //get kid for ith attendance(kid_id, attended boolean)
                     let ithKid = kids.find(kid=>kid._id.toString()===attendanceWithNames[i].kid_id.toString())
