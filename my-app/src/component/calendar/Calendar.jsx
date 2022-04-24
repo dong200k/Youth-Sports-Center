@@ -45,6 +45,7 @@ export default class Calendar extends Component {
         currentMonth:'',
         currentYear:'',
         currentDate:'',
+        kidFilter:'Lun'
     }
 
 
@@ -121,11 +122,16 @@ export default class Calendar extends Component {
             return 'item'
         }
     }
+
+    handleFilter = (filter) =>{
+        this.setState({kidFilter:filter})
+        //change the program list
+    }
   render() {
     let changeTime = true;
     return (
       <div className="calendar">
-        <CalendarHeader currentList={this.state.currentList} nextClick={this.nextClick} prevClick={this.prevClick}/>
+        <CalendarHeader handleFilter={this.handleFilter} filter={this.state.kidFilter} currentList={this.state.currentList} nextClick={this.nextClick} prevClick={this.prevClick}/>
         <div className = "calendar-body">
             <div className = "calendar-body-time">
                 <div className="time-icon">
@@ -146,6 +152,7 @@ export default class Calendar extends Component {
             {weekdayLabel.map((weekday, index)=>{
                 return(
                     <CalendarCol kids={this.state.kids}
+                      filter = {this.state.kidFilter}
                       currentDate={this.state.currentDate}
                       date={this.state.currentList[index]}
                       weekday={weekday} hourList={hourList} key={uuidv4()}/>

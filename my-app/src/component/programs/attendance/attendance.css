@@ -1,41 +1,68 @@
+.attendance{
+    position: relative;
+    width: 100%;
+    font-family: 'Quicksand';
+}
+
+.attendance-title{
+    width: 100%;
+    font-size: 30px;
+    font-weight: bolder;
+    text-align: start;
+    border-bottom: 1px solid black;
+}
+
+.attendance-filter-box{
+    
+}
+
+.attendance-header{
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 .attendance-filter {
     box-shadow: 0 0.5vw 2vw -5px rgba(0, 0, 0, .2);
     border-radius: 15px;
-    position: relative;
-    margin-top: 50px;
-    /* font-size: calc(.5rem + 2.4vw); */
+    position: absolute;
     font-size: 20px;
-    position: relative;
     font-weight: bolder;
-    z-index: 0;
+    z-index: 1;
+    top: 30px;
+    left: 60px;
+    background-color: #fff;
 }
 .attendance-filter:before, .attendance-filter:after {
     content: '';
     position: absolute;
     width: 100%;
-    height: 2.2em;
+    height: 1.5em;
     left: 0;
-    z-index: 1;
+    z-index: 2;
 }
 .attendance-filter:before {
-    top: -0.8em;
+    top: 0;
     background: linear-gradient(white, rgba(255, 255, 255, .7));
 }
 .attendance-filter:after {
-    bottom: -0.8em;
-    height: 2.4em;
+    bottom: 0;
     background: linear-gradient(rgba(255, 255, 255, .7), white);
 }
 
 .attendance-filter>ul {
+    margin-top: 0;
+    margin-bottom: 0;
     max-height: 4.5em;
     overflow-y: scroll;
     margin-right: 1em;
     scroll-snap-type: y mandatory;
+    list-style: none;
     padding-bottom: 1.5em;
     padding-top: 1.5em;
-    list-style: none;
 }
+
 .attendance-filter>ul::-webkit-scrollbar {
     display: none;
 }
@@ -43,18 +70,14 @@
     cursor: pointer;
     scroll-snap-align: center;
     height: 1.5em;
-    word-spacing: 0.2em;
 }
 .attendance-filter>ul {
     padding-right: 0.5em;
 }
-.attendance-filter>ul span {
-    padding-left: 0.56em;
-}
 
 
 .attendance-body{
-    border: 1px solid black;
+    
 }
 
 .attendance-record{
@@ -62,8 +85,12 @@
     display: flex;
     flex-direction: row;
     margin: 10px;
-    border: 1px solid rosybrown;
     height: 40px;
+    justify-content: center;
+}
+
+.attendance-record-gray{
+    background-color: bisque;
 }
 
 .attendence-name{

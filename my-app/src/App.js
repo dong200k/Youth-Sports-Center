@@ -17,6 +17,7 @@ import Attendance from './component/attendance/attendanceApp'
 import "./css/app.css"
 import {UserProvider } from './context/UserContext.jsx'
 import CreateProgram from "./component/createProgramForm/createProgram"
+import MyAlert from "./component/myAlert/MyAlert"
 export default function App() {
     return (
       <UserProvider navigate={useNavigate()}>
@@ -29,7 +30,7 @@ export default function App() {
             <Route path="program" element = {<ParentProgram/>}/>
             <Route path="announcement" element = {<Announcement/>}/>
             <Route path="Attendance" element = {<Attendance/>}/>
-            <Route path="Demo" element ={<CreateProgram/>}/>
+            <Route path="Demo" element ={<MyAlert/>}/>
             <Route path="InstructorProgram" element = {<InstructorProgram/>}/>
           </Route>
         </Routes>
