@@ -119,7 +119,7 @@ export default function Announcement(props){
     )
 
     return <div className="announcement">
-        {user_type == "Instructor" && <CreateButton programNames={programNames} onCreateAnnouncement={onCreateAnnouncement}/>}
+        {user_type == "Instructor" && <CreateButton onCreateAnnouncement={onCreateAnnouncement}/>}
         <div className="announcementHeader"> Announcement </div>
         <div className="announcementBody">
             <FilterButton programNames = {programNames} currentFilter={filter} onChangeFilter={onChangeFilter}/>
