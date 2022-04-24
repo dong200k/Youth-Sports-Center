@@ -192,4 +192,5 @@
 .dropDown > ul > li{
     z-index: 2;
     list-style: none;
+    cursor: pointer;
 }
