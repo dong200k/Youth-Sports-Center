@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { v4 as uuidv4 } from "uuid"
+import attendanceService from '../../../services/attendance.service.js';
 import Student from '../../attendance/Student';
 import "./attendance.css"
 
@@ -10,23 +11,8 @@ export default class Attendance extends Component {
     }
 
     state = {
-        schedule:["2022-03-28",
-            "2022-04-04",
-            "2022-04-11",
-            "2022-04-18",
-            "2022-04-18",
-            "2022-04-18",
-            "2022-04-25",
-            "2022-05-02"
-            ,"2022-05-09"],
-        attendance:[
-            {kid_id:'1', kid_name:'Lun1', attended:false},
-            {kid_id:'2', kid_name:'Lun2', attended:false},
-            {kid_id:'3', kid_name:'Lun3', attended:false},
-            {kid_id:'4', kid_name:'Lun4', attended:false},
-            {kid_id:'5', kid_name:'Lun5', attended:false},
-            {kid_id:'6', kid_name:'Lun6', attended:false},
-        ],
+        schedule:[...this.props.program.schedule],
+        attendance:[],
         date: '',
         filter_date: '',
         scrollTop: '',
@@ -41,6 +27,64 @@ export default class Attendance extends Component {
         window.removeEventListener('scroll', this._onScrollEvent, false);
     }
 
+    componentDidUpdate(prevProps, prevState){
+        if(this.state.filter_date === this.state.date){
+            this._container.scrollTop = this._container.scrollHeight
+        }
+        else{
+            this._container.scrollTop = this.state.scrollTop
+        }
+
+        //date change get attendance again
+        if(prevState.filter_date!==this.state.filter_date){
+            this.getAttendance()
+        }
+
+        //attendance record changed
+        if(prevState.attendance!==this.state.attendance){
+            this.postAttendance()
+        }
+    }
+
+    getAttendance(){
+        //get schedule for one program on one date
+        const data = {
+            program_id: this.props.program._id,
+            date: this.state.filter_date
+        }
+        attendanceService.getAttendance(data)
+            .then(res=>{
+                if(res.data.status==="success"){
+                    this.setState({
+                        attendance: res.data.attendance
+                    })
+                }
+            })
+            .catch(err=>{
+                this.setState({
+                    attendance: []
+                })
+            })
+    }
+
+    postAttendance(){
+        //post attendance for program on one date
+        const data = {
+            program_id: this.props.program._id,
+            date: this.state.filter_date,
+            attendances: this.state.attendance
+        }
+        attendanceService.upsertAttendance(data)
+            .then(res=>{
+                if(res.data.status==="success"){
+                    console.log("success")
+                }
+            })
+            .catch(err=>{
+                console.log("error updating attendance")
+                console.log(err)
+            })
+    }
 
     // _onScrollEvent() {
     //     if(this.state.filter_date === this.state.date){
@@ -63,22 +107,12 @@ export default class Attendance extends Component {
         this.setState({date:cYMD,filter_date:cYMD})
     }
     
-
     handleFilter = (event) =>{
         this.setState({filter_date:event})
     }
 
     handleScroll(scrollTop) {
         this.setState({scrollTop: scrollTop});
-    }
-
-    componentDidUpdate(){
-        if(this.state.filter_date === this.state.date){
-            this._container.scrollTop = this._container.scrollHeight
-        }
-        else{
-            this._container.scrollTop = this.state.scrollTop
-        }
     }
 
     showFilter(e){
@@ -106,12 +140,12 @@ export default class Attendance extends Component {
           </div>
           <div className="attendance-header">
               <div className="attendance-filter-box">
-                <div className="attendance-filter-btn" onClick={()=>this.showFilter()}> Date: {this.state.filter_date} </div>
+                <div className="attendance-filter-btn" onClick={()=>this.showFilter()}> Date: {this.state.filter_date.toString().substring(0,10)} </div>
                 <div className={this.state.showFilter?"attendance-filter":"attendance-filter hidden"}>
                   <ul ref={c => this._container = c}>
                     {this.state.schedule.map(date => (date.localeCompare(this.state.date) >= 0)? null:
                         (<li onClick={()=>{this.setState({filter_date:date,scrollTop:this._container.scrollTop,showFilter:false})}} className="attendance-filter-item" key={uuidv4()}>
-                            {date}
+                            {date.toString().substring(0,10)}
                         </li>)
                     )}
                   </ul>
