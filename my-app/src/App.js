@@ -30,7 +30,7 @@ export default function App() {
             <Route path="program" element = {<ParentProgram/>}/>
             <Route path="announcement" element = {<Announcement/>}/>
             <Route path="Attendance" element = {<Attendance/>}/>
-            <Route path="Demo" element ={<MyAlert/>}/>
+            <Route path="Demo" element ={<CreateProgram/>}/>
             <Route path="InstructorProgram" element = {<InstructorProgram/>}/>
           </Route>
         </Routes>

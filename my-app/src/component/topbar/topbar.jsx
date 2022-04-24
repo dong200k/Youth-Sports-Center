@@ -59,20 +59,16 @@ export default class topbar extends Component {
 
                     </ul>
                 </div>
-                <div className={`topLogo ${this.state.isUnfold ? '' : 'active'}`}>
+                {/* <div className={`topLogo ${this.state.isUnfold ? '' : 'active'}`}>
                     Youth Sport Center
-                </div>
+                </div> */}
                 <div className="topProfile">
-                {
-                    <img className="topImg" src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="" onClick={this.onImageClick}></img>
-                }
                     {this.state.open && (
-                    <div className='dropDown'>
-                        <ul>
-                            <li onClick={this.context.logout}>Log Out</li>
-                        </ul>
+                    <div className='topListItem' style={{position:"absolute", top:"0", right:"60px"}} onClick={this.context.logout}>
+                        Log Out
                     </div>
                     )}
+                    <img className="topImg" src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="" onClick={this.onImageClick}></img>
                 </div>
             </div>
         )
