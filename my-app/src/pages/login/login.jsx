@@ -4,6 +4,7 @@ import football from "../../assets/signup-bg.jpg"
 import basketball from "../../assets/signup-bg.jpg"
 import AuthService from '../../services/auth.service.js'
 import { UserContext } from '../../context/UserContext.jsx'
+import MyAlert from '../../component/myAlert/MyAlert'
 export default class login extends Component {
     static contextType = UserContext
     
@@ -18,7 +19,8 @@ export default class login extends Component {
         signInForm: {
             email: "",
             password: ""
-        }
+        },
+        error: '',
     };
 
     constructor(props){
@@ -43,8 +45,7 @@ export default class login extends Component {
                 // this.props.navigate("/")
             })
             .catch((e)=>{
-                console.log("error!")
-                console.log(e)
+                this.setState({error:e})
             })
     }
 
@@ -65,8 +66,7 @@ export default class login extends Component {
                 // this.props.navigate("/")
             })
             .catch(e=>{
-                console.log("error!")
-                console.log(e)
+                this.setState({error:e})
             })
     }
 
@@ -90,10 +90,14 @@ export default class login extends Component {
         this.setState({role: event.target.value});
     }
     
+    clearError = () => {
+        this.setState({error:''})
+    }
 
     render() {
         return (
             <div className="login">
+                {this.state.error != '' && <MyAlert error={this.state.error} clear={this.clearError}/>}
                 {/* color block */}
                 <div className={`loginColorBlock ${this.state.isNewUser ? 'left' : 'right'}`}></div>
 
