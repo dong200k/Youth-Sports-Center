@@ -45,6 +45,7 @@ export default class login extends Component {
                 // this.props.navigate("/")
             })
             .catch((e)=>{
+                console.log(e)
                 this.setState({error:e})
             })
     }
