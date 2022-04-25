@@ -123,6 +123,10 @@ export default class KidController{
             if(!parent)
                 throw new Error("Invalid parent!")
             
+            let program = await Program.findOne({kids: ObjectId(kid_id)})
+            if(program)
+                throw new Error("Cannot delete kid enrolled in program!")
+
             //delete kid
             const info = await Kid.deleteOne({"_id":ObjectId(kid_id)})
 
@@ -136,11 +140,26 @@ export default class KidController{
             //save parent
             await parent.save()
                 .catch(()=>{throw new Error("error saving parent in deleteKid")})
+            
+            // //remove kids from programs
+            // const program_filter = {
+            //     kids: ObjectId(kid_id)
+            // }
+            // const set = {
+            //     "$set": {enrolled: {"$inc": -1}},
+            // }
+            // await Program.updateMany(program_filter, set)
+
+            // const pull = {
+            //     "$pull": {kids: ObjectId(kid_id)}
+            // }
+            // await Program.updateMany(program_filter, pull)
 
             res.json({status:"success", info: info, parent: parent, kid_id: kid_id})
 
         } catch (e) {
-            res.status(404).json({error: e.message})
+            console.log(e)
+            res.status(403).json({error: e.message})
         }
     }
 }
