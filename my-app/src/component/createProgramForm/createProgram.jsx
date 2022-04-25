@@ -11,11 +11,11 @@ const CreateProgram = () => {
 
   return (
       <div className={show?"createProgram formshow":"createProgram"}>
-        <div className="createProgram-btn" onClick= {() => setShow(!show)}>
-          {!show&&<i className="fa-solid fa-angle-down"></i>}
-          {show&&<i className="fa-solid fa-angle-up"></i>}
-          Create New Program
-        </div>
+        <Button className="createProgram-btn" onClick= {() => setShow(!show)}>
+        {!show&&<i className="fa-solid fa-angle-down"></i>}
+        {show&&<i className="fa-solid fa-angle-up"></i>}
+        <span>Create New Program</span>
+      </Button>
       {
         show? <CreateProgramForm/> : null
       }

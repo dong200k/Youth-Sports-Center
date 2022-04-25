@@ -8,17 +8,13 @@
 }
 
 .instructorProgram-create{
-    margin-top: 10px;
-    width: 100%;
-    position: relative;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 80%;
+    height: 200px;
+    background-color: #fff;
 }
 
 .instructorProgram-filter{
-    margin-top: 10px;
-    position: relative;
     width: 100%;
     display: flex;
     justify-content: center;

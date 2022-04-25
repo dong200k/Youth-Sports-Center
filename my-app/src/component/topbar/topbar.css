@@ -105,7 +105,6 @@
 }
 
 .topListItem:hover{
-    cursor: pointer;
     color: #fff;
     background: #9051ff;
     transition: 0.3s;

@@ -123,9 +123,10 @@
     background-color: rgb(255, 251, 251, 0.5);
 }
 
-.annoucement-formshow{
+.formshow{
     height: 400px;
     transition: height 0.5s ease-in;
+
 }
 
 .accouncementCreate-btn{

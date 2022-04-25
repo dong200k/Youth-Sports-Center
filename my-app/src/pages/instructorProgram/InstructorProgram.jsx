@@ -4,14 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ProgramFilter from '../../component/programFilter/programFilter.jsx'
 import Programs from '../../component/programs/programs.jsx'
 import programService from '../../services/program.service.js';
-import Profile from '../../component/profile/profile'
-import {UserContext} from '../../context/UserContext.jsx'
-import CreateProgram from '../../component/createProgramForm/createProgram';
 
 export default class parentProgram extends Component {
-
-  static contextType = UserContext
-
   constructor(props){
     super(props)
     this.state = {
@@ -112,42 +106,11 @@ export default class parentProgram extends Component {
     }
     this.updateProgram(filter)
   }
-
-//   async updateUser(newUser){
-//     if(isDifferent(user, newUser)){
-//         let update = {
-//             first_name: newUser["first name"],
-//             last_name: newUser["last name"],
-//             email: newUser.email,
-//             contacts: [newUser.phone],
-//             _id: user_id
-//         }
-//         return userService.updateUser(update)
-//             .then(res=>{
-//                 if(res.data.status==="success"){
-//                     setUser(update)
-//                     return true
-//                 }else
-//                     return false
-//             })
-//             .catch(err=>false)
-//     }
-//     else
-//         return true
-// }
-
-updateUser(newUser){
-
-}
-
   render() {
     return (
       <div className="instructorProgram">
-        <div className="instructor-profile">
-          Instructor
-        </div>
         <div className="instructorProgram-create">
-            <CreateProgram />
+            Create New program
         </div>  
         <div className="instructorProgram-filter">
           {/* <ProgramFilter updateAppState = {this.updateAppState}/> */}
