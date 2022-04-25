@@ -14,9 +14,11 @@ import ParentModal from './modal/ParentModal'
 import InstructorModal from './modal/InstructorModal'
 import {UserContext} from '../../context/UserContext.jsx'
 import programService from '../../services/program.service.js'
+import { v4 as uuidv4 } from "uuid"
 
 export default class program extends Component {
   static contextType = UserContext
+  
   constructor(props){
     super(props)
     this.state = {
@@ -116,12 +118,12 @@ export default class program extends Component {
                 </Card.Text>
                 <Card.Text>
                 age: {this.props.program.ages.map((age)=>{
-                  return(<span key={age}> {age} </span>)
+                  return(<span key={uuidv4()}> {age} </span>)
                 })
                 }
                 </Card.Text>
                 <Card.Text>
-                {this.props.program.days.map(day=><span key={day}> {day.substring(0,2)} </span>)}
+                {this.props.program.days.map(day=><span key={uuidv4()}> {day.substring(0,2)} </span>)}
                 : {this.getTime(this.props.program.time.start_time)}
                 ~{this.getTime(this.props.program.time.end_time)}
                 </Card.Text>
@@ -144,9 +146,10 @@ export default class program extends Component {
             showModal={this.state.showModal} 
             setModal={()=>{this.setState({showModal: false})}} 
             getTime = {this.getTime}
-            registerKid = {this.handleRegister}/>
+            registerKid = {this.handleRegister}
+            key = {uuidv4()}/>
           :
-          this.state.showModal&&<InstructorModal {...this.props}  showModal={this.state.showModal} setModal={()=>{this.setState({showModal: false})}} getTime = {this.getTime}/>
+          this.state.showModal&&<InstructorModal {...this.props}  showModal={this.state.showModal} setModal={()=>{this.setState({showModal: false})}} getTime = {this.getTime} key = {uuidv4()}/>
         }
       </>
     )

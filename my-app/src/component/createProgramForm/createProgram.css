@@ -1,3 +1,38 @@
+.createProgram{
+    width: 1180px;
+    position: relative;
+    transition: all 1s;
+    transition: height 0.5s ease-out;
+    overflow: hidden;
+    background-color: rgb(255, 251, 251, 0.5);
+}
+
 .FormContainer{
-    width: 100px;
+    width: 1000px;
+    margin-top: top;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+}
+
+.createProgram-label{
+    width: 200pxs;
+}
+
+.createProgram-btn{
+    cursor: pointer;
+    padding: 10px;
+    font-size: 20px;
+    position: relative;
+    width: 100%;
+    height: 50px;
+    background-color: rgb(255, 251, 251, 0.5);
+}
+
+.createProgram-btn>i{
+    margin-right: 10px;
+}
+
+.formshow{
+    transition: height 0.5s ease-in;
 }
