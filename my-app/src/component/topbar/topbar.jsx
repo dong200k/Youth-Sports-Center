@@ -33,10 +33,10 @@ export default class topbar1 extends Component {
                         <NavLink to=""><li className="topListItem"><span>Home</span></li></NavLink>
                         <NavLink to="program">
                             <li className="topListItem"><span>Programs</span>
-                                {/* <ul className= "topSubList">
-                                    <li className= "topSubListItem">Available Program</li>
-                                    <li className= "topSubListItem">My Program</li>
-                                </ul> */}
+                                <ul className= "topSubList">
+                                    <NavLink to="announcement"><li className= "topSubListItem">Announcement</li></NavLink>
+                                    {/* <li className= "topSubListItem">My Program</li> */}
+                                </ul>
                             </li>
                         </NavLink>
                         <NavLink to="account"><li className="topListItem"><span>Account/Kids</span></li></NavLink>
