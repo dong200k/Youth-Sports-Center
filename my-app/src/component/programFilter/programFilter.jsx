@@ -5,6 +5,8 @@ import Row from 'react-bootstrap/esm/Row'
 import Container from 'react-bootstrap/Container'
 import Filter from './filter.jsx'
 import './programFilter.css'
+import Button from 'react-bootstrap/esm/Button'
+import { UserContext } from '../../context/UserContext.jsx'
 
 const age_range = [3,4,5,6,7,8,9,10,11]
 const sport_range = ["Soccer", "Basketball", "Football", "Badminton", "Handball", "Volleyball", "Tennis", "Baseball"]
@@ -20,6 +22,8 @@ const location_range = [
   "Prospect Park",
 ]
 export default class programFilter extends Component {
+  static contextType = UserContext
+
   constructor(props){
     super(props)
     // this.state = this.props.state.filter
@@ -138,6 +142,10 @@ export default class programFilter extends Component {
               </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
+        {this.context.user.user_type ==="Parent" &&
+         <Button style={{marginLeft:'10px'}} id="dropdown-button-dark-example1" variant="secondary" onClick={this.props.getKidProgram} >
+              My Programs
+          </Button>}
       </div>
     )
   }
