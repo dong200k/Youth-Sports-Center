@@ -51,7 +51,7 @@ export default class topbar extends Component {
                         <NavLink to="message"><li className="topListItem"><span>Message</span></li></NavLink>
                         </>:
                         <>
-                        <NavLink to="program"><li className="topListItem"><span>Program</span></li></NavLink>
+                        <NavLink to="InstructorProgram"><li className="topListItem"><span>Program</span></li></NavLink>
                         <NavLink to="announcement"><li className="topListItem"><span>Accouncement</span></li></NavLink>
                         <NavLink to="message"><li className="topListItem"><span>Message</span></li></NavLink>
                         </>

@@ -15,7 +15,7 @@ const AnnouncementCreate = (props) => {
       }
       ,[props])
   return (
-    <div className={show?"accouncementCreate formshow":"accouncementCreate"}>
+    <div className={show?"accouncementCreate annoucement-formshow":"accouncementCreate"}>
       <button className="accouncementCreate-btn" onClick= {() => setShow(!show)}>
         {!show&&<i className="fa-solid fa-angle-down"></i>}
         {show&&<i className="fa-solid fa-angle-up"></i>}
