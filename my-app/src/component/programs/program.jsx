@@ -141,13 +141,13 @@ export default class program extends Component {
         if it is instructor, then show attendence and program setting(such as delete, schedule change...) */}
         {
           user_type === "Parent"?
-          <ParentModal {...this.props} 
+          this.state.showModal&&<ParentModal {...this.props} 
             showModal={this.state.showModal} 
             setModal={()=>{this.setState({showModal: false})}} 
             getTime = {this.getTime}
             registerKid = {this.handleRegister}/>
           :
-          <InstructorModal {...this.props}  showModal={this.state.showModal} setModal={()=>{this.setState({showModal: false})}} getTime = {this.getTime}/>
+          this.state.showModal&&<InstructorModal {...this.props}  showModal={this.state.showModal} setModal={()=>{this.setState({showModal: false})}} getTime = {this.getTime}/>
         }
       </>
     )

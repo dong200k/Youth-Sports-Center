@@ -101,23 +101,30 @@ export default class AttendanceController{
                 }
             }
 
-            //ensure that all kids exist
-            const kid = await Kid.find(kidFilter)
-            //ensure every kid exists
-            if(!kid || kid.length!==kids.length){
-                res.status(404).json({error: "invalid kid!"})
-            }
+            // //ensure that all kids exist
+            // const kid = await Kid.find(kidFilter)
+            // //ensure every kid exists
+            // if(!kid || kid.length!==kids.length){
+            //     res.status(404).json({error: "invalid kid!"})
+            // }
 
-            //validate all kid is enrolled in program
+            // //validate all kid is enrolled in program
+            // const program_filter = {
+            //     _id: ObjectId(program_id),
+            //     kids: {"$all": kids}
+            // }
+            
+            // const program = await Program.findOne(program_filter)
+            // if(!program){
+            //     return res.status(404).json({error: "invalid program to post attendance!"})
+            // }
+
+            //get program
             const program_filter = {
-                _id: ObjectId(program_id),
-                kids: {"$all": kids}
+                _id: ObjectId(program_id)
             }
             
             const program = await Program.findOne(program_filter)
-            if(!program){
-                return res.status(404).json({error: "invalid program to post attendance!"})
-            }
 
             //check attendance date is valid
             let matchOneDate = false
