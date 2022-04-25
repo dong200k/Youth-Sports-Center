@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./kidCard.css"
+import KidModal from "./modal/KidModal"
 
 class UserCards extends Component {
 
@@ -22,6 +23,7 @@ class UserCards extends Component {
       edit:{
   
       },
+      showModal:false,
     };
     this.handleInput = this.handleInput.bind(this)
     this.updateKid = this.updateKid.bind(this)
@@ -87,7 +89,12 @@ class UserCards extends Component {
             </div>
           </div>
 
-          <div className="kidAvatar">
+          <div className="kidAvatar" 
+          onClick={() => {
+            this.setState({
+              showModal: true
+            });
+          }}>
             <img
               src={this.picture}
               className="kidImg"
@@ -211,7 +218,7 @@ class UserCards extends Component {
             </button>                                                       
         </form>
         </div>
-
+        {/* {this.state.showModal && <KidModal {...this.props} showModal={this.state.showModal} setModal={()=>{this.setState({showModal: false})}}/>} */}
       </div>
     );
   }

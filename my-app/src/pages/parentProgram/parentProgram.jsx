@@ -6,8 +6,12 @@ import Programs from '../../component/programs/programs.jsx'
 import Loading from '../../component/loading/loading'
 import programService from '../../services/program.service.js';
 import filter from '../../component/programFilter/filter.jsx';
+import { UserContext } from '../../context/UserContext';
 
 export default class parentProgram extends Component {
+  
+  static contextType = UserContext
+
   constructor(props){
     super(props)
     this.state = {
@@ -46,7 +50,7 @@ export default class parentProgram extends Component {
       .then(response=>{
 
          //********TODO: stop loading here****************
-         
+        console.log(response.data.result[0].data) 
         this.setState({
           programs: response.data.result[0].data,
           filter: filter,
@@ -108,12 +112,55 @@ export default class parentProgram extends Component {
     }
     this.updateProgram(filter)
   }
+
+  getKidProgram = () => {
+    const user_id = this.context.user._id
+    const kid_id = this.props._id
+    // programService.getUserProgram(user._id)
+    //     .then(res=>{
+    //     if(res.data.status==="success"){
+    //         setProgramNames(res.data.programs)
+    //     }
+    //     })
+    //     .catch((e)=>console.log(e))
+    // }, [user])
+
+    //********TODO: add loading here****************
+    programService.getUserProgram(user_id)
+      .then(response=>{
+
+        //********TODO: stop loading here****************
+        // let programs = []
+        // response.data.programs.map(program => program.kids.includes(kid_id)?programs.push(program):null)
+        console.log(response.data.programs)
+        this.setState({
+          programs: response.data.programs,
+        })
+      })
+      .catch(err=>{
+        this.setState({
+          isError: err
+        })
+        console.log(err)
+      })
+
+    this.setState({
+      filter:{
+      ageFilter:'',
+      sportFilter:'',
+      dayFilter:'',
+      locationFilter: '',
+    }
+    }
+    )
+  }
+
   render() {
     return (
       <div className="parentProgram">
         <div className="parentProgram-filter">
           {/* <ProgramFilter updateAppState = {this.updateAppState}/> */}
-          <ProgramFilter updateAppState = {this.updateAppState} filter = {this.state.filter}/>
+          <ProgramFilter getKidProgram={this.getKidProgram} updateAppState = {this.updateAppState} filter = {this.state.filter}/>
         </div>
         <div className="parentProgram-body">
           <Programs {...this.state} initailFilter={this.initailFilter}/>
