@@ -29,9 +29,10 @@ export default function AccountKids(props){
     //Fetch kids from database for user
     useEffect(()=>{
         //get kid
+        let isMounted = true; 
         KidService.getKids(user_id)
             .then(res=>{
-                if(res.data.status==="success"){
+                if(isMounted && res.data.status==="success"){
                     const kids = res.data.kids
                     for(const i in kids){
                         kids[i].birth_date = getBirthDate(kids[i].birth_date)
@@ -43,14 +44,16 @@ export default function AccountKids(props){
                 console.log(err)
                 console.log("error fetching kids")
             })
+        return () => { isMounted = false };
     }, [])
 
     //fetch user info from database
     useEffect(()=>{
         //get user from mongodb
+        let isMounted = true; 
         userService.getUser(user_id)
             .then(res=>{
-                if(res.data.status==="success"){
+                if(isMounted && res.data.status==="success"){
                     let user = res.data.user
                     if(user_id!==res.data.user._id.toString()){
                         console.log("error, user_id is different/another user's id, after updating user info")
@@ -67,6 +70,7 @@ export default function AccountKids(props){
                 }
             })
             .catch(err=>console.log(err))
+        return () => { isMounted = false };
     }, [])
     
     function isDifferent(obj1, obj2){

@@ -19,6 +19,15 @@ export default class profile extends Component {
             }
         };
         this.updateUser = this.updateUser.bind(this)
+        this._isMounted = false;
+    }
+
+    componentDidMount() {
+        this._isMounted = true;
+    }
+
+    componentWillUnmount(){
+        this._isMounted = false;
     }
 
     handleInput(key){
@@ -35,12 +44,14 @@ export default class profile extends Component {
     }
 
     async updateUser(e){
-        e.preventDefault()
-        let success = await this.props.updateUser(this.state.User)
-        if(success){
-            this.setState({
-                isEdit: false
-            })
+        if (this._isMounted) {
+            e.preventDefault()
+            let success = await this.props.updateUser(this.state.User)
+            if(success){
+                this.setState({
+                    isEdit: false
+                })
+            }
         }
     }
     
