@@ -73,5 +73,5 @@ function dayConflict(days1, days2){
     return false;
 }
 
-const Kid = mongoose.model("Kid", KidSchema, process.env.KID_COLLECTION||"kid")
+const Kid = mongoose.model("Kid", KidSchema, process.env.KID_COLLECTION||"Kid")
 export default Kid
