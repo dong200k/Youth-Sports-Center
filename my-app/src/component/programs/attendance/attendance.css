@@ -12,10 +12,6 @@
     border-bottom: 1px solid black;
 }
 
-.attendance-filter-box{
-    
-}
-
 .attendance-header{
     display: flex;
     position: relative;
@@ -73,11 +69,6 @@
 }
 .attendance-filter>ul {
     padding-right: 0.5em;
-}
-
-
-.attendance-body{
-    
 }
 
 .attendance-record{
