@@ -8,7 +8,7 @@ import {io} from "socket.io-client"
 
 export default function Messenger(){
   
-  const connection = "ws://localhost:5000"
+  const connection = "ws://sproj-youth-sport-center.herokuapp.com/"
   let user = GetUserContext().user
   const [groups, setGroups] = useState([])
   const [currentGroup, setCurrentGroup] = useState(null)
