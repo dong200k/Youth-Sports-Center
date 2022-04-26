@@ -1,8 +1,9 @@
 import axios from "axios"
-
+import baseURL from "./baseURL.js"
 class MessengerService{
     constructor(){
-        this.baseURL = "http://localhost:5000/api/v1/youthsportcenter"
+        // this.baseURL = "http://localhost:5000/api/v1/youthsportcenter"
+        this.baseURL = baseURL
     }
     createGroup(data){
         return axios.post(this.baseURL + "/group/create", data)
