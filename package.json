@@ -1,0 +1,20 @@
+{
+  "name": "youth-sports-center",
+  "version": "1.0.0",
+  "description": "$ cd server\r         $ NPM run dev",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dong200k/Youth-Sports-Center.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dong200k/Youth-Sports-Center/issues"
+  },
+  "homepage": "https://github.com/dong200k/Youth-Sports-Center#readme"
+}
