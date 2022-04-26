@@ -20,5 +20,5 @@ const GroupSchema = new Schema({
     }
 })
 
-const Group = mongoose.model("Group", GroupSchema)
+const Group = mongoose.model("Group", GroupSchema, process.env.GROUP_COLLECTION||"groups")
 export default Group

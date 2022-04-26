@@ -4,7 +4,9 @@
   "description": "$ cd server\r         $ NPM run dev",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "heroku-postbuild": "cd my-app && npm install && npm run build",
+    "start" : "cd Server && npm run prod"
   },
   "repository": {
     "type": "git",
@@ -16,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/dong200k/Youth-Sports-Center/issues"
   },
-  "homepage": "https://github.com/dong200k/Youth-Sports-Center#readme"
+  "homepage": "https://github.com/dong200k/Youth-Sports-Center#readme",
+  "engines": {
+    "node": "16.4.0"
+  }
 }

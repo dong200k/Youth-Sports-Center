@@ -11,7 +11,7 @@ dotenv.config()
 const MongoClient = mongodb.MongoClient
 
 //use port in .env or 5000
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 5000
 
 //Connect to mongodb
 MongoClient.connect(
@@ -40,7 +40,7 @@ MongoClient.connect(
   //http server
   const server = http.Server(app)
 
-  //call io.on and pass our http server
+  //pass our http server and initialize socket server
   initIO(server)
 
   //if mongodb connection was successful start server and listen on port

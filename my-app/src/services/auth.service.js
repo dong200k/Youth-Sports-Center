@@ -1,7 +1,9 @@
 import axiosInstance from "axios"
+import baseURL from "./baseURL.js"
 class AuthService{
     constructor(){
-        this.baseURL = "http://localhost:5000/api/v1/youthsportcenter"
+        // this.baseURL = "http://localhost:5000/api/v1/youthsportcenter"
+        this.baseURL = baseURL
     }
     login(data){
         // return axios.post("http://localhost:5000/api/v1/youthsportcenter/login", data)
