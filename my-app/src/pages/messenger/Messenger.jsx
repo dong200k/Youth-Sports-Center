@@ -7,8 +7,14 @@ import './messenger.css'
 import {io} from "socket.io-client"
 
 export default function Messenger(){
-  
-  const connection = "ws://localhost:5000"
+  let connection
+  if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+    // dev code
+    connection = "ws://localhost:5000"
+  } else {
+    // production code
+    connection = "/"
+  }
   let user = GetUserContext().user
   const [groups, setGroups] = useState([])
   const [currentGroup, setCurrentGroup] = useState(null)
