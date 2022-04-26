@@ -23,7 +23,7 @@ app.use("/api/v1/youthsportcenter", router)
 app.use(express.static(path.resolve(__dirname, "../my-app/build")));
 // Step 2:
 app.get("*", function (request, response) {
-  response.sendFile(path.resolve(__dirname, "./my-app/build", "index.html"));
+  response.sendFile(path.resolve(__dirname, "../my-app/build", "index.html"));
 });
 
 export default app
