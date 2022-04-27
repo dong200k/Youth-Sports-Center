@@ -1,16 +1,25 @@
 .conversation{
     display: flex;
     align-items: center;
+    justify-content: center;
     padding: 10px;
     cursor: pointer;
     margin-top: 20px;
+    border-top: 1px slategray solid;
+    border-bottom: 1px slategray solid;
 }
+
+.conversation:focus{
+    box-shadow: 1px black;
+}
+
 
 .conversation:hover{
     background-color: rgb(231,231,231);
 }
 
 .conversationImg{
+    position: relative;
     width: 40px;
     height: 40px;
     border-radius: 50%;

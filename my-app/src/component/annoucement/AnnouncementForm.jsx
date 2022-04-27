@@ -51,30 +51,29 @@ const AnnouncementForm = (props) => {
     }
     
   return (
-    <div className='FormBox'>
-        <Form className="AnnouncementForm" onSubmit={props.onCreateAnnouncement(announcement)}>
-            <Form.Group className="mb-3" controlId="formBasicProgram">
-                {/* <Form.Label>Program Name</Form.Label>
-                <Form.Control type="programName" placeholder='Program Name'></Form.Control> */}
-                 <DropdownButton className= "Button" 
-                                id="dropdown-basic-button" 
-                                title={announcement.program_name===""?"Select Program":announcement.program_name}>
+    <Form className="announcementForm" onSubmit={props.onCreateAnnouncement(announcement)}>
+        <Form.Group className="" controlId="formBasicProgram">
+                <DropdownButton className="announcementForm-Button"  
+                            title={announcement.program_name===""?"Select Program":announcement.program_name}>
                     {programNames.map((program,index)=>
                         <Dropdown.Item key={index}
-                                onClick={handleChange("program_name", program)}>{program.program_name}</Dropdown.Item>)}
+                                onClick={handleChange("program_name", program)}>{program.program_name}
+                        </Dropdown.Item>)}
                 </DropdownButton>
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicTitle">
-                <Form.Label>Title</Form.Label>
-                <Form.Control type="title" placeholder="Enter title" value={announcement.title} onChange={handleChange("title")}/>
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicMessage">
-                <Form.Label>Message</Form.Label>
-                <Form.Control as="textarea" rows={3} placeholder="Enter Message" value={announcement.message} onChange={handleChange("message")}/>
-            </Form.Group>
-            <Button className="Button" variant="primary" type="submit">Submit</Button>
-        </Form>
-    </div>
+
+            {/* <Form.Label>Program Name</Form.Label>
+            <Form.Control type="programName" placeholder='Program Name'></Form.Control> */}
+
+        </Form.Group>
+        <Form.Group className="announcementForm-input" controlId="formBasicTitle">
+            <Form.Control type="title" placeholder="Enter title" value={announcement.title} onChange={handleChange("title")}/>
+        </Form.Group>
+
+        <Form.Group className="announcementForm-input" controlId="formBasicMessage">
+            <Form.Control as="textarea" rows={5} placeholder="Enter Message" value={announcement.message} onChange={handleChange("message")}/>
+        </Form.Group>
+        <Button className="announcementForm-submit" variant="primary" type="submit">Submit</Button>
+    </Form>
   )
 }
 

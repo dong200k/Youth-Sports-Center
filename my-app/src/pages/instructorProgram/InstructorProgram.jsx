@@ -136,15 +136,12 @@ export default class parentProgram extends Component {
 //         return true
 // }
 
-updateUser(newUser){
-
-}
 
   render() {
     return (
       <div className="instructorProgram">
         <div className="instructor-profile">
-          Instructor
+          {/* <Profile key={this.context.user._id} updateUser={updateUser} user={this.context.user}/> */}
         </div>
         <div className="instructorProgram-create">
             <CreateProgram />

@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import { UserContext } from '../../../context/UserContext.jsx'
 import kidService from '../../../services/kid.service.js'
+import { v4 as uuidv4 } from "uuid"
 
 export default class ParentModal extends Component {
     static contextType = UserContext
@@ -75,13 +76,13 @@ export default class ParentModal extends Component {
           </Row>
           <Row>
             <Col style={{maxWidth:'130px'}}>Schedule:</Col>
-            <Col>{this.props.program.days.map(day=><span key={day}> {day.substring(0,2)} </span>)}| {this.props.getTime(this.props.program.time.start_time)}
+            <Col>{this.props.program.days.map(day=><span key={uuidv4()}> {day.substring(0,2)} </span>)}| {this.props.getTime(this.props.program.time.start_time)}
               ~{this.props.getTime(this.props.program.time.end_time)}</Col>
           </Row>
           <Row>
             <Col style={{maxWidth:'130px'}}>Coach:</Col>
             <Col>{this.props.program.instructors.map((i)=>{
-                return(<span key={i._id}> {i.first_name} </span>)
+                return(<span key={uuidv4()}> {i.first_name} </span>)
               })
               }
             </Col>
@@ -89,7 +90,7 @@ export default class ParentModal extends Component {
           <Row>
             <Col style={{maxWidth:'130px'}}>Age range:</Col>
             <Col>{this.props.program.ages.map((age)=>{
-                return(<span key={age}> {age} </span>)
+                return(<span key={uuidv4()}> {age} </span>)
               })
               }</Col>
           </Row>
@@ -100,7 +101,7 @@ export default class ParentModal extends Component {
             :              
             this.state.kids.map((kid) => 
             (
-              <Col key={kid._id} className="mb-3">
+              <Col key={uuidv4()} className="mb-3">
                 <Form.Check type='checkbox' id={`${kid._id}`}>
                   <Form.Check.Label className='kidSelect'>{`${kid.first_name+" "+kid.last_name}`}
                     <Form.Check.Input type='checkbox' isValid onClick={this.handleClick}/>
