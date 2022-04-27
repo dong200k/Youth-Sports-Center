@@ -125,6 +125,5 @@ export default function Announcement(props){
             <FilterButton programNames = {programNames} currentFilter={filter} onChangeFilter={onChangeFilter}/>
             <AnnouncementList announcementInfo={filteredAnnouncements}/>
         </div>
-        
     </div>
 }

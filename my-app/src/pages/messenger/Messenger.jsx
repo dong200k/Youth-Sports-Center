@@ -5,6 +5,7 @@ import { GetUserContext } from '../../context/UserContext.jsx'
 import MessengerService from '../../services/messenger.service.js'
 import './messenger.css'
 import {io} from "socket.io-client"
+import { v4 as uuidv4 } from "uuid"
 
 export default function Messenger(){
   let connection
@@ -124,7 +125,7 @@ export default function Messenger(){
           <div className="chatMenuWrapper">
               <input placeholder="Search for Classes" className="chatMenuInput" />
               {groups.map(group=>
-                <Conversation key={group._id} group={group}
+                <Conversation key={uuidv4()} group={group} current={group===currentGroup}
                   onClick={()=>{
                     setCurrentGroup(group)
                   }}/>
@@ -137,7 +138,7 @@ export default function Messenger(){
                 <div className="chatBoxTop">
                     {messages.map(message=>
                       <div ref={scrollRef}>
-                        <Message key={message._id} own = {message.sender_id===user._id} message={message}/>
+                        <Message key={uuidv4()} own = {message.sender_id===user._id} message={message}/>
                       </div>
                     )}
                 </div>
