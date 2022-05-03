@@ -120,37 +120,55 @@ export default function Messenger(){
   }, [messages])
 
   return (  
+    <div className="messenger-page">
     <div className="messenger">
         <div className="chatMenu">
-          <div className="chatMenuWrapper">
-              <input placeholder="Search for Classes" className="chatMenuInput" />
-              {groups.map(group=>
-                <Conversation key={uuidv4()} group={group} current={group===currentGroup}
-                  onClick={()=>{
-                    setCurrentGroup(group)
-                  }}/>
-                )}
+          <div className="chatMenuInput">
+            <i className="fa-solid fa-magnifying-glass" />
+            <input placeholder="Search for Classes"/>
           </div>
+
+          {groups.map(group=>
+            <Conversation key={uuidv4()} group={group} current={group===currentGroup}
+              onClick={()=>{
+                setCurrentGroup(group)
+              }}/>
+            )}
+
         </div>
         <div className="chatBox">
-          <div className="chatBoxWrapper">
-              {currentGroup?
-                <div className="chatBoxTop">
-                    {messages.map(message=>
-                      <div ref={scrollRef}>
-                        <Message key={uuidv4()} own = {message.sender_id===user._id} message={message}/>
-                      </div>
-                    )}
+          {currentGroup?
+            <>
+              <div className="chatBoxHeader">
+                <div className="chatBoxHeader-title"> 
+                  {currentGroup.name}
                 </div>
-                :
-                <h1>Please Select a Group Chat</h1>
-              }
-              <div className="chatBoxBottom">
-                  <textarea className="chatMessageInput" onChange={handleChange} value={message} placeholder="write something..."></textarea>
-                  <button className="chatSubmitButton" onClick={sendMessage}>Send</button>
+                <div className="chatBoxHeader-btn">
+                  <i className="fa-solid fa-list"></i>
+                </div>
               </div>
-          </div>
+              <div className="chatBoxTop">
+                {messages.map(message=>
+                  <div ref={scrollRef}>
+                    <Message key={uuidv4()} own = {message.sender_id===user._id} message={message}/>
+                  </div>
+                )}
+              </div>
+              <div className="chatBoxBottom">
+                <input className="chatMessageInput" onChange={handleChange} value={message} placeholder="write something..."></input>
+                <button className="chatSubmitButton" onClick={sendMessage}>
+                  <span>Send</span>
+                  <i class="fa-solid fa-paper-plane"></i>
+                </button>
+              </div>
+            </>
+            :
+            <div className="chatBox-shadow">
+              Select A Conversation Group to Continue...
+            </div>
+          }
         </div>
+      </div>
     </div>
   )
 }
