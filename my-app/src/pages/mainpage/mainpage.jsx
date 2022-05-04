@@ -15,7 +15,8 @@ export default function Mainpage(props){
         
         <div className="mainheader"><Topbar user_type={user_type}/></div> 
         
-        {(location.pathname==="/home")}
+        {user_type === "Parent" ?(location.pathname==="/home"):
+        (location.pathname==="/home/InstructorProgram")}
        
         <div className="mainbody"><Outlet user_type={user_type}/></div>
     </div>

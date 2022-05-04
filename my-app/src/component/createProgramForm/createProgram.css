@@ -2,21 +2,54 @@
     width: 1180px;
     position: relative;
     transition: all 1s;
-    transition: height 0.5s ease-out;
     overflow: hidden;
     background-color: rgb(255, 251, 251, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 50px;
 }
 
-.FormContainer{
-    width: 1000px;
+
+/* -------------------------------------------------------------------- */
+/* Program Form Css */
+.programForm{
+    width: 70%;
     margin-top: top;
     position: relative;
-    align-items: center;
-    justify-content: center;
+    margin-top: 20px;
+    font-family: 'Quicksand';
+    font-size: 20px;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
 }
 
-.createProgram-label{
-    width: 200pxs;
+.programForm-item{
+    margin-top: 20px;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    height: max-content;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.programForm-label{
+    margin: 0;
+    width: 160px;
+    display: flex;
+    margin-right: 10px;
+}
+
+.programForm-input{
+    position: relative;
+    width: 200px !important;
+}
+
+
+.programForm-item>.form-control{
+    position: relative;
+    width: 200px !important;
 }
 
 .createProgram-btn{
@@ -35,4 +68,22 @@
 
 .formshow{
     transition: height 0.5s ease-in;
+    height: 450px;
+}
+
+.programForm-row{
+    display: flex;
+    flex-direction: row;
+}
+
+.programForm-submit{
+    border: 0 !important;
+    border-radius: 0 !important;
+    background-color: lightcoral;
+    margin-top: 20px;
+    margin-left: 80%;
+}
+
+.programForm-submit:hover{
+    background-color: tomato;
 }

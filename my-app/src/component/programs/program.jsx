@@ -109,7 +109,7 @@ export default class program extends Component {
                 <Card.Title style={{fontWeight:'bolder', borderBottom: '1px solid grey'}}>{this.props.program.program_name}</Card.Title>
                 <Card.Text>
                 Coach: {this.props.program.instructors.map((i)=>{
-                  return(<span key={i._id}> {i.first_name} </span>)
+                  return(<span key={uuidv4()}> {i.first_name} </span>)
                 })
                 }
                 </Card.Text>
@@ -146,10 +146,9 @@ export default class program extends Component {
             showModal={this.state.showModal} 
             setModal={()=>{this.setState({showModal: false})}} 
             getTime = {this.getTime}
-            registerKid = {this.handleRegister}
-            key = {uuidv4()}/>
+            registerKid = {this.handleRegister}/>
           :
-          this.state.showModal&&<InstructorModal {...this.props}  showModal={this.state.showModal} setModal={()=>{this.setState({showModal: false})}} getTime = {this.getTime} key = {uuidv4()}/>
+          this.state.showModal&&<InstructorModal {...this.props}  showModal={this.state.showModal} setModal={()=>{this.setState({showModal: false})}} getTime = {this.getTime}/>
         }
       </>
     )

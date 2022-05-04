@@ -21,5 +21,5 @@ const AttendanceSchema = new Schema({
     }
 })
 
-const Attendance = mongoose.model("Attendance", AttendanceSchema)
+const Attendance = mongoose.model("Attendance", AttendanceSchema, process.env.ATTENDANCE_COLLECTION||"attendances")
 export default Attendance

@@ -6,17 +6,33 @@
 
 .messageTop{
     display: flex;
+    flex-direction: row;
+    align-items: center;
 }
+
 
 .messageImg{
     width: 32px;
     height: 32px;
     border-radius: 50%;
     object-fit: cover;
+}
+
+.messageMain{
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
     margin-right: 10px;
 }
 
+.messageSender{
+    font-size: 12px;
+    text-align: start;
+    margin: 0;
+}
+
 .messageText{
+    margin: 0;
     padding:10px;
     border-radius: 20px;
     background-color: rgb(101, 178, 222);

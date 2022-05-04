@@ -1,7 +1,9 @@
 import axios from "axios"
+import baseURL from "./baseURL.js"
 class AnnouncementService{
     constructor(){
-        this.baseURL = "http://localhost:5000/api/v1/youthsportcenter"
+        // this.baseURL = "http://localhost:5000/api/v1/youthsportcenter"
+        this.baseURL = baseURL
     }
     postAnnouncement(data){
         return axios.post(this.baseURL + "/announcement", data)
