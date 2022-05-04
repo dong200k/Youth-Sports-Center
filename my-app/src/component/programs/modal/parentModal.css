@@ -1,0 +1,74 @@
+.classinfo{
+    padding-left: 20px;
+    text-align: start;
+    display: flex;
+    flex-direction: row;
+}
+
+.classinfo-label{
+    width: 150px;
+}
+
+.classinfo > span{
+    margin-right: 20px;
+    border-bottom: 1px solid rgb(221, 219, 219);
+}
+
+.kid-register{
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    padding: 20px;
+    opacity: 0.7;
+    position: relative;
+    padding-bottom: 60px;
+}
+
+.kid-register::before,
+.kid-register::after{
+    content:"";
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    border: 2px solid plum;
+}
+
+.kid-register::before{
+    top:0;
+    left:0;
+    border-right: 0;
+    border-bottom: 0;
+}
+
+.kid-register::after{
+    bottom:0;
+    right:0;
+    border-left: 0;
+    border-top: 0;
+}
+
+.kid-register:hover{
+    opacity: 1;
+}
+
+.kid-register-header{
+    display: flex;
+    flex-direction: row;
+}
+
+.kid-register-form{
+    display: flex;
+    flex-direction: row;
+}
+
+.kid-register-item>input{
+    color: turquoise !important;
+}
+
+.kid-register-item>input:checked{
+    background-color: turquoise !important;
+}
+
+.kid-register-item > label{
+    color: turquoise !important;
+}
