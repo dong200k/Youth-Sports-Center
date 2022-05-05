@@ -1,5 +1,6 @@
 import { Server } from "socket.io";
 export default function initIO(server){
+    const port = process.env.PORT || 3000
     // const io = require("socket.io")(server);
         // {
         //     cors:{
@@ -9,7 +10,7 @@ export default function initIO(server){
     // );
     const io = new Server(server,{
         cors:{
-            origin:"http://localhost:3000"
+            origin:"http://localhost:" + port.toString()
         }
     })
 
@@ -18,15 +19,15 @@ export default function initIO(server){
     //key, val = user, socket
     const userSocket = {}
     
-    const addUser = (user_id, socket_id)=>{
-        if(userSocket[user_id])
+    const addUser = (user, socket_id)=>{
+        if(userSocket[user._id])
             throw new Error("Error, user connected twice!")
-        socketUser[socket_id] = user_id
-        userSocket[user_id] = socket_id
+        socketUser[socket_id] = user
+        userSocket[user._id] = socket_id
     }
     
     const removeUser = (socket_id) =>{
-        delete userSocket[socketUser[socket_id]]
+        delete userSocket[socketUser[socket_id]?._id]
         delete socketUser[socket_id]
     }
     
@@ -34,10 +35,10 @@ export default function initIO(server){
         console.log(`user ${socket.id} connected!`)
     
         //store user info on socket server
-        socket.on("add user", (user_id)=>{
+        socket.on("add user", (user)=>{
             console.log("adding user: ")
-            console.log(user_id)
-            addUser(user_id, socket.id)
+            console.log(user)
+            addUser(user, socket.id)
         })
         
         //get message sent from react socket
@@ -49,8 +50,9 @@ export default function initIO(server){
                 if(userSocket[member]&&userSocket[member]!==socket.id){//if member is connected
                     const newMessage = {
                         content: message,
-                        sender_id: socketUser[socket.id],
-                        group_id: group
+                        sender_id: socketUser[socket.id]._id,
+                        group_id: group,
+                        sender_name: socketUser[socket.id].name,
                     }
                     io.to(userSocket[member]).emit("get message", newMessage)
                 }
@@ -58,8 +60,7 @@ export default function initIO(server){
         })
     
         socket.on("disconnect", ()=>{
-            let user_id = socketUser[socket.id]
-            console.log(user_id)
+            let user_id = socketUser[socket.id]?._id
             console.log(`user ${user_id} diconnected!`)
             removeUser(socket.id)
         })
