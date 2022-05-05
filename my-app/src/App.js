@@ -15,7 +15,7 @@ import {
 import Mainpage from './pages/mainpage/mainpage.jsx'
 import Attendance from './component/attendance/attendanceApp'
 import "./css/app.css"
-import {UserProvider } from './context/UserContext.jsx'
+import { UserProvider } from './context/UserContext.jsx'
 import CreateProgram from "./component/createProgramForm/createProgram"
 import MyAlert from "./component/myAlert/MyAlert"
 export default function App() {

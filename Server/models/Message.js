@@ -24,5 +24,5 @@ const MessageSchema = new Schema({
     }
 })
 
-const Message = mongoose.model("Message", MessageSchema)
+const Message = mongoose.model("Message", MessageSchema, process.env.MESSAGE_COLLECTION||"messages")
 export default Message

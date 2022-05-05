@@ -124,5 +124,5 @@ function generateDatesForDay(start_date, end_date, day){
     return result
 }
 
-const Program = mongoose.model("Program", programSchema)
+const Program = mongoose.model("Program", programSchema, process.env.PROGRAM_COLLECTION||"programs")
 export default Program

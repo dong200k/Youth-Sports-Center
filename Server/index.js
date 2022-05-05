@@ -5,11 +5,13 @@ import dotenv from "dotenv"
 import announcementDao from "./dao/announcementDAO.js"
 import mongoose from "mongoose"
 import ProgramDAO from "./dao/programDAO.js"
+import http from "http"
+import initIO from "../socket/index.js"
 dotenv.config()
 const MongoClient = mongodb.MongoClient
 
 //use port in .env or 5000
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 5000
 
 //Connect to mongodb
 MongoClient.connect(
@@ -35,8 +37,14 @@ MongoClient.connect(
   //connect to mongoose
   mongoose.connect(process.env.MONGO_URI)
 
-  //if connection was successful start server and listen on port
-  app.listen(port, ()=>{
+  //http server
+  const server = http.Server(app)
+
+  //pass our http server and initialize socket server
+  initIO(server)
+
+  //if mongodb connection was successful start server and listen on port
+  server.listen(port, ()=>{
     console.log(`listening on ${port}`)
   })
 })
