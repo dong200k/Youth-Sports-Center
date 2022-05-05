@@ -1,5 +1,6 @@
 import { Server } from "socket.io";
 export default function initIO(server){
+    const port = process.env.PORT || 3000
     // const io = require("socket.io")(server);
         // {
         //     cors:{
@@ -9,7 +10,7 @@ export default function initIO(server){
     // );
     const io = new Server(server,{
         cors:{
-            origin:"http://localhost:3000"
+            origin:"http://localhost:" + port.toString()
         }
     })
 
