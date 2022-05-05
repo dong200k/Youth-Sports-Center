@@ -83,7 +83,7 @@ export default class ParentModal extends Component {
           <div className="classinfo">
             <div className="classinfo-label">Coach:</div>
             <span>{this.props.program.instructors.map((i)=>{
-                return(<span key={uuidv4()}> {i.first_name} </span>)
+                return(<span key={uuidv4()}> {i.first_name} ;</span>)
               })
               }</span>
           </div>
@@ -97,7 +97,7 @@ export default class ParentModal extends Component {
           <div className="kid-register">
             <div className="kid-register-header">
               <i className="fa-solid fa-angles-right"></i>
-              <div className="kid-register-title">register kid</div>
+              <div className="kid-register-title">Kid attempt to register</div>
             </div>
             <Form>
               <div className="kid-register-form">
@@ -113,20 +113,20 @@ export default class ParentModal extends Component {
                 )
                 }
               </div>
-              <Button style={{position:"absolute", right:'20px'}} onClick = {this.handleRegister}>Register Kid</Button>
+              <Button className="kid-register-btn" type="submit" onClick = {this.handleRegister}>Register Kid</Button>
           </Form>
           </div>
           <div className="kid-register">
             <div className="kid-register-header">
               <i className="fa-solid fa-angles-right"></i>
-              <div className="kid-register-title">Kid already enrolled</div>
+              <div className="kid-register-title">Kid have enrolled</div>
             </div>   
             <Form>
               <div className="kid-register-form">
-                {this.state.kids.length === 0?
+                {this.state.enrolledKids.length === 0?
                 <div>No kids aviliable</div>
                 :              
-                this.state.kids.map((kid) => 
+                this.state.enrolledKids.map((kid) => 
                 (
                   <Form.Check className="kid-register-item" key={uuidv4()} type='checkbox'
                   id={`${kid._id}`} label={`${kid.first_name+" "+kid.last_name}`}
@@ -135,7 +135,7 @@ export default class ParentModal extends Component {
                 )
                 }
               </div>
-              <Button style={{position:"absolute", right:'20px'}} onClick = {this.handleRegister}>Drop Kid</Button>
+              <Button className="kid-register-btn" onClick = {this.handleRegister}>Drop Kid</Button>
           </Form>
           </div>
         </Modal.Body>
