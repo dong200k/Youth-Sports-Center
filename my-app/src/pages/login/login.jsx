@@ -221,19 +221,6 @@ export default class login extends Component {
                                     this.setSignIn(event, 'password');
                                 }}
                                 />
-                        <div>
-                            <label className={`loginSelectBox ${this.state.role=="Parent" ? 'isChecked' : 'notChecked'}`}> 
-                                <input type="radio" name = "role" value="Parent" checked={this.state.role==="Parent"}
-                                    onChange={(event) => {
-                                        this.setRole(event);
-                                    }}/>I'm parent</label>
-                            
-                            <label className={`loginSelectBox ${this.state.role=="Instructor" ? 'isChecked' : 'notChecked'}`}> 
-                                <input type="radio" name = "role" value="Instructor" checked={this.state.role==="Instructor"}
-                                    onChange={(event) => {
-                                        this.setRole(event);
-                                    }}/>I'm instructor</label>
-                        </div>
 
                             <button
                                 className="loginMainBoxButton">
