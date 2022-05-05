@@ -32,10 +32,14 @@ export default function Messenger(){
 
     console.log("add user")
     //add user to socket server
-    socket.current.emit("add user", user._id)
+    let userInfo = {
+      _id: user._id,
+      name: user.first_name + " " + user.last_name
+    }
+    socket.current.emit("add user", userInfo)
     
     return ()=>socket.current.close()
-  }, [user._id])
+  }, [user])
 
   // useEffect(()=>{
   //   GetUserContext().logout()
@@ -43,16 +47,12 @@ export default function Messenger(){
 
   //listen for messages from socket server
   useEffect(()=>{
-    console.log(currentGroup)
     if(!currentGroup)
       return
     socket.current.on("get message", (message)=>{
-      console.log("received message")
-      console.log(message)
       if(currentGroup._id===message.group_id){
         message.date = new Date().getTime()
         setMessages(messages=>{
-          console.log(messages)
           return [...messages, message]
         })
       }
@@ -82,6 +82,7 @@ export default function Messenger(){
       .then(res=>{
         if(res.data.status==="success"){
           setMessages(res.data.messages)
+          console.log(res.data)
         }
       })
       .catch(err=>console.log(err))
