@@ -5,10 +5,33 @@ import { Dropdown } from 'react-bootstrap'
 export default class CalendarHeader extends Component {
   constructor(props){
     super(props)
+
+  }
+
+  componentDidUpdate(prevProps){
+    if(this.props.kids != prevProps.kids){
+      const filter_range = []
+      this.props.kids.map(k => {
+        const kid = {id:k._id,
+                     name:k.first_name +' '+ k.last_name}
+        filter_range.push(kid)
+      })
+      this.setState({filter_range:filter_range})
+    } 
+  }
+
+  initFilter = () =>{
+    const filter_range = []
+    this.props.kids.map(k => {
+      filter_range.push(k.first_name)
+    })
+    this.setState({
+      filter_range:filter_range
+    })
   }
 
   state = {
-    filter_range:["Lun","Refeal","Dong","Luis"]
+    filter_range:[]
   }
 
   render() {
@@ -26,13 +49,13 @@ export default class CalendarHeader extends Component {
           <div className="calendar-header-filter">
             <Dropdown style={{marginLeft:'10px'}}>
               <Dropdown.Toggle id="dropdown-button-dark-example1" variant="secondary"  >
-                  {this.props.filter} 
+                  {this.props.filter.name} 
               </Dropdown.Toggle>
               <Dropdown.Menu variant="dark">
                   {this.state.filter_range.map(i => {
                       return (
-                      <Dropdown.Item key={i}>
-                          {i}
+                      <Dropdown.Item onClick={()=>this.props.handleFilter(i)} key={i.id}>
+                          {i.name}
                       </Dropdown.Item>
                       )
                   }
