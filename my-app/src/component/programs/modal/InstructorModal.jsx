@@ -19,6 +19,7 @@ export default class InstructorModal extends Component {
             <div>Class Information and Edit</div>
             <Attendance program={this.props.program}/>
         </Modal.Body>
+        <Button className='DeleteButton'>Delete Program</Button>
     </Modal>
     )
   }
