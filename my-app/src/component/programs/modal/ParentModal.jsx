@@ -15,9 +15,10 @@ export default class ParentModal extends Component {
         super(props)
         this.state = {
           kids: [],
-          enrolledKids: []
+          enrolledKids: [],
+          dropKids:[]
         }
-        this.handleClick = this.handleClick.bind(this)
+        this.handleRegisterClick = this.handleRegisterClick.bind(this)
         this.handleRegister = this.handleRegister.bind(this)
     }
 
@@ -36,7 +37,7 @@ export default class ParentModal extends Component {
         .catch(err=>console.log(err))
     }
 
-    handleClick(e){
+    handleRegisterClick(e){
       this.setState(prev=>{
         const enrolledKids = {...prev.enrolledKids}
         const id = e.target.id
@@ -50,7 +51,15 @@ export default class ParentModal extends Component {
       })
     }
 
-    handleRegister(){
+    handleDropClick(e){
+
+    }
+
+    handleDrop(event){
+
+    }
+
+    handleRegister(event){
       this.props.registerKid(this.state.enrolledKids)
     }
 
@@ -99,43 +108,46 @@ export default class ParentModal extends Component {
               <i className="fa-solid fa-angles-right"></i>
               <div className="kid-register-title">Kid attempt to register</div>
             </div>
-            <Form>
+            <Form onSubmit={this.handleRegister}>
               <div className="kid-register-form">
                 {this.state.kids.length === 0?
                 <div>No kids aviliable</div>
                 :              
-                this.state.kids.map((kid) => 
+                this.state.kids.map((kid) => this.props.program.kids.includes(kid._id)?
+                null:
                 (
                   <Form.Check className="kid-register-item" key={uuidv4()} type="checkbox"
-                  id={`${kid._id}`} label={`${kid.first_name+" "+kid.last_name}`}
-                  isValid ></Form.Check>
+                  id={`${kid._id}`} label={`${kid.first_name+" "+kid.last_name}`} checked={this.state.enrolledKids[kid._id]} onClick={this.handleRegisterClick}
+                  isValid >
+                    {/* <Form.Check.Label className='kidSelect'>{`${kid.first_name+" "+kid.last_name}`}
+                      <Form.Check.Input type='checkbox' isValid onChange={this.handleClick}/>
+                    </Form.Check.Label> */}
+                  </Form.Check>
                 )
                 )
                 }
               </div>
-              <Button className="kid-register-btn" type="submit" onClick = {this.handleRegister}>Register Kid</Button>
+              <Button className="kid-register-btn" type="submit">Register Kid</Button>
           </Form>
           </div>
-          <div className="kid-register">
+          <div className="kid-register" >
             <div className="kid-register-header">
               <i className="fa-solid fa-angles-right"></i>
               <div className="kid-register-title">Kid have enrolled</div>
             </div>   
-            <Form>
+            <Form  onSubmit={this.handleDrop}>
               <div className="kid-register-form">
-                {this.state.enrolledKids.length === 0?
-                <div>No kids aviliable</div>
-                :              
-                this.state.enrolledKids.map((kid) => 
+                {     
+                this.state.kids.map((kid) => this.props.program.kids.includes(kid._id)?
                 (
                   <Form.Check className="kid-register-item" key={uuidv4()} type='checkbox'
-                  id={`${kid._id}`} label={`${kid.first_name+" "+kid.last_name}`}
+                  id={`${kid._id}`} label={`${kid.first_name+" "+kid.last_name}`} checked={this.state.dropKids[kid._id]} onClick={this.handleDropClick}
                   isValid ></Form.Check>
-                )
+                ):null
                 )
                 }
               </div>
-              <Button className="kid-register-btn" onClick = {this.handleRegister}>Drop Kid</Button>
+              <Button className="kid-register-btn" type="submit">Drop Kid</Button>
           </Form>
           </div>
         </Modal.Body>
