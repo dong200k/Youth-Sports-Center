@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { v4 as uuidv4 } from "uuid"
 import { Modal } from 'react-bootstrap'
 
+let rowHeight = 60
 export default class CalendarCol extends Component {
     state ={
         bgcolorList:[
@@ -39,10 +40,11 @@ export default class CalendarCol extends Component {
           if(currentDate.localeCompare(program.time.start_date.substring(0,10)) >= 0 &&
           currentDate.localeCompare(program.time.end_date.substring(0,10)) <= 0 &&
           program.days.includes(currentWeekday)){
+            let minsheight = rowHeight*7/(14*60)
             let todayProgram = {
               ...program,
-              top: program.time.start_time*3.5 + 60,
-              height: (program.time.end_time - program.time.start_time)*3.5
+              top: (program.time.start_time-480)*minsheight + 60,
+              height: (program.time.end_time - program.time.start_time)*minsheight
             }   
             programsList.push(todayProgram)
           }
