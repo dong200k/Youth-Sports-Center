@@ -137,6 +137,46 @@ export default class parentProgram extends Component {
 // }
 
 
+  getMyProgram = () => { 
+    const user_id = this.context.user._id
+    const kid_id = this.props._id
+    // programService.getUserProgram(user._id)
+    //     .then(res=>{
+    //     if(res.data.status==="success"){
+    //         setProgramNames(res.data.programs)
+    //     }
+    //     })
+    //     .catch((e)=>console.log(e))
+    // }, [user])
+
+    //********TODO: add loading here****************
+    programService.getUserProgram(user_id)
+        .then(response=>{
+
+          //********TODO: stop loading here****************
+          // let programs = []
+          // response.data.programs.map(program => program.kids.includes(kid_id)?programs.push(program):null)
+          console.log(response.data.programs)
+          this.setState({
+            programs: response.data.programs,
+          })
+        })
+        .catch(err=>{
+          this.setState({
+            isError: err
+          })
+          console.log(err)
+        })
+
+      this.setState({
+        filter:{
+          ageFilter:'',
+          sportFilter:'',
+          dayFilter:'',
+          locationFilter: '',
+        }
+      })
+  }
   render() {
     return (
       <div className="instructorProgram">
@@ -148,7 +188,7 @@ export default class parentProgram extends Component {
         </div>  
         <div className="instructorProgram-filter">
           {/* <ProgramFilter updateAppState = {this.updateAppState}/> */}
-          <ProgramFilter updateAppState = {this.updateAppState} filter = {this.state.filter}/>
+          <ProgramFilter getKidProgram={this.getMyProgram} updateAppState = {this.updateAppState} filter = {this.state.filter}/>
         </div>
         <div className="instructorProgram-body">
           <Programs {...this.state} initailFilter={this.initailFilter}/>

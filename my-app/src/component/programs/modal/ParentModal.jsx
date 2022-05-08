@@ -14,6 +14,7 @@ export default class ParentModal extends Component {
     constructor(props){
         super(props)
         this.state = {
+          currentDate:'',
           kids: [],
           enrolledKids: [],
           dropKids:[]
@@ -23,6 +24,7 @@ export default class ParentModal extends Component {
     }
 
     componentDidMount(){
+      this.initDate()
       const user = this.context.user
       if(user.user_type!=="Parent")
         return
@@ -35,6 +37,21 @@ export default class ParentModal extends Component {
           }
         })
         .catch(err=>console.log(err))
+    }
+
+    initDate = () =>{
+      let date = new Date()
+      let cYear = date.getFullYear()
+      let cMonth = this.format(date.getMonth() + 1)
+      let cDate = this.format(date.getDate())
+      let currentDay = date.getDay()
+      let cYMD = `${cYear}-${cMonth}-${cDate}`
+      this.setState({currentDate:cYMD})
+    }
+
+    format = (num) =>{
+      var f = num < 10 ? '0' + num : num;
+      return f
     }
 
     handleRegisterClick(e){
@@ -72,6 +89,7 @@ export default class ParentModal extends Component {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body style={{fontFamily:'Quicksand',fontWeight:'500', fontSize:'20px'}}>
+          <div style={{ paddingBottom:"20px", borderBottom: "1px solid rgb(221, 219, 219)"}}>
           <div className="classinfo">
             <div className="classinfo-label">Program:</div>
             <span>{this.props.program.program_name}</span>
@@ -96,12 +114,29 @@ export default class ParentModal extends Component {
               })
               }</span>
           </div>
-          <div className="classinfo" style={{ paddingBottom:"20px", borderBottom: "1px solid rgb(221, 219, 219)"}}>
+          <div className="classinfo" >
             <div className="classinfo-label">Age range:</div>
             <span>{this.props.program.ages.map((age)=>{
                 return(<span key={uuidv4()}> {age} </span>)
               })
               }</span>
+          </div>
+          <div className="classinfo">
+            <div className="classinfo-label">Status:</div>
+            {
+              (this.state.currentDate.localeCompare(this.props.program.time.start_date.substring(0,10))<0)&&
+              <span> Wait to Start </span>
+            }
+            {
+              (this.state.currentDate.localeCompare(this.props.program.time.end_date.substring(0,10))>0)&&              
+              <span> Expired </span>
+            }
+            {
+              (this.state.currentDate.localeCompare(this.props.program.time.start_date.substring(0,10))>=0)&&
+              (this.state.currentDate.localeCompare(this.props.program.time.end_date.substring(0,10))<=0)&&
+              (<span> Current Running </span>)
+            }
+          </div>
           </div>
           <div className="kid-register">
             <div className="kid-register-header">
