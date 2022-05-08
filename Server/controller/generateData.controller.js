@@ -74,7 +74,7 @@ export default class GenerateData{
         const time = {}
         time.start_date = new Date(date.start_date)
         time.end_date = new Date(date.end_date)
-        time.start_time = Math.floor(Math.random()*134)*10
+        time.start_time = Math.floor(Math.random()*63)*10+480
         time.end_time = time.start_time + 60 + Math.floor(Math.random()*5)*10
 
         //1-3 instructors

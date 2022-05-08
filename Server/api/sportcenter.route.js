@@ -91,17 +91,17 @@ router
     .get(AttendanceController.getAttendance)
     .post(AttendanceController.upsertAttendance)
 //generate random data
-// router
-//     .route("/generate/programs")
-//     .post(GenerateData.generatePrograms)
-// router
-//     .route("/generate/instructors")
-//     .post(GenerateData.generatePrograms)
-// router
-//     .route("/generate/announcements")
-//     .post(GenerateData.generateAnnouncements)
-// router
-//     .route("/generate/deleterandom")
-//     .post(GenerateData.deletePrograms)
+router
+    .route("/generate/programs")
+    .post(GenerateData.generatePrograms)
+router
+    .route("/generate/instructors")
+    .post(GenerateData.generatePrograms)
+router
+    .route("/generate/announcements")
+    .post(GenerateData.generateAnnouncements)
+router
+    .route("/generate/deleterandom")
+    .post(GenerateData.deletePrograms)
 export default router
 
