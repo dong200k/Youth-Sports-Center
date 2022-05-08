@@ -53,7 +53,7 @@ function ProgramForm(props) {
         {props.edit ? (
             <>
                 <input 
-                    placeholder = "'Upadte class information"
+                    placeholder = "'Update class information"
                     value = {input}
                     onChange = {handleChange}
                     name = 'text'

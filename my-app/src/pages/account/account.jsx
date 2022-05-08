@@ -4,7 +4,6 @@ import Profile from "../../component/profile/profile.jsx"
 import runningtracks from "../../assets/runningtracks.jpg"
 import AddKid from "../../component/addKid/addKid.jsx"
 import "./account.css"
-import KidService from "../../services/kid.service.js"
 import kidService from "../../services/kid.service.js"
 import userService from "../../services/user.service.js"
 import { GetUserContext } from "../../context/UserContext.jsx"
@@ -30,7 +29,7 @@ export default function AccountKids(props){
     useEffect(()=>{
         let isMounted = true;
         //get kid
-        KidService.getKids(user_id)
+        kidService.getKids(user_id)
             .then(res=>{
                 if(res.data.status==="success"&&isMounted){
                     const kids = res.data.kids

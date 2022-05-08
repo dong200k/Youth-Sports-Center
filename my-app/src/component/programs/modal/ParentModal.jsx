@@ -14,14 +14,17 @@ export default class ParentModal extends Component {
     constructor(props){
         super(props)
         this.state = {
+          currentDate:'',
           kids: [],
-          enrolledKids: []
+          enrolledKids: [],
+          dropKids:[]
         }
-        this.handleClick = this.handleClick.bind(this)
+        this.handleRegisterClick = this.handleRegisterClick.bind(this)
         this.handleRegister = this.handleRegister.bind(this)
     }
 
     componentDidMount(){
+      this.initDate()
       const user = this.context.user
       if(user.user_type!=="Parent")
         return
@@ -36,7 +39,22 @@ export default class ParentModal extends Component {
         .catch(err=>console.log(err))
     }
 
-    handleClick(e){
+    initDate = () =>{
+      let date = new Date()
+      let cYear = date.getFullYear()
+      let cMonth = this.format(date.getMonth() + 1)
+      let cDate = this.format(date.getDate())
+      let currentDay = date.getDay()
+      let cYMD = `${cYear}-${cMonth}-${cDate}`
+      this.setState({currentDate:cYMD})
+    }
+
+    format = (num) =>{
+      var f = num < 10 ? '0' + num : num;
+      return f
+    }
+
+    handleRegisterClick(e){
       this.setState(prev=>{
         const enrolledKids = {...prev.enrolledKids}
         const id = e.target.id
@@ -50,7 +68,15 @@ export default class ParentModal extends Component {
       })
     }
 
-    handleRegister(){
+    handleDropClick(e){
+
+    }
+
+    handleDrop(event){
+
+    }
+
+    handleRegister(event){
       this.props.registerKid(this.state.enrolledKids)
     }
 
@@ -63,6 +89,7 @@ export default class ParentModal extends Component {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body style={{fontFamily:'Quicksand',fontWeight:'500', fontSize:'20px'}}>
+          <div style={{ paddingBottom:"20px", borderBottom: "1px solid rgb(221, 219, 219)"}}>
           <div className="classinfo">
             <div className="classinfo-label">Program:</div>
             <span>{this.props.program.program_name}</span>
@@ -87,55 +114,75 @@ export default class ParentModal extends Component {
               })
               }</span>
           </div>
-          <div className="classinfo" style={{ paddingBottom:"20px", borderBottom: "1px solid rgb(221, 219, 219)"}}>
+          <div className="classinfo" >
             <div className="classinfo-label">Age range:</div>
             <span>{this.props.program.ages.map((age)=>{
                 return(<span key={uuidv4()}> {age} </span>)
               })
               }</span>
           </div>
+          <div className="classinfo">
+            <div className="classinfo-label">Status:</div>
+            {
+              (this.state.currentDate.localeCompare(this.props.program.time.start_date.substring(0,10))<0)&&
+              <span> Wait to Start </span>
+            }
+            {
+              (this.state.currentDate.localeCompare(this.props.program.time.end_date.substring(0,10))>0)&&              
+              <span> Expired </span>
+            }
+            {
+              (this.state.currentDate.localeCompare(this.props.program.time.start_date.substring(0,10))>=0)&&
+              (this.state.currentDate.localeCompare(this.props.program.time.end_date.substring(0,10))<=0)&&
+              (<span> Current Running </span>)
+            }
+          </div>
+          </div>
           <div className="kid-register">
             <div className="kid-register-header">
               <i className="fa-solid fa-angles-right"></i>
               <div className="kid-register-title">Kid attempt to register</div>
             </div>
-            <Form>
+            <Form onSubmit={this.handleRegister}>
               <div className="kid-register-form">
                 {this.state.kids.length === 0?
                 <div>No kids aviliable</div>
                 :              
-                this.state.kids.map((kid) => 
+                this.state.kids.map((kid) => this.props.program.kids.includes(kid._id)?
+                null:
                 (
                   <Form.Check className="kid-register-item" key={uuidv4()} type="checkbox"
-                  id={`${kid._id}`} label={`${kid.first_name+" "+kid.last_name}`}
-                  isValid ></Form.Check>
+                  id={`${kid._id}`} label={`${kid.first_name+" "+kid.last_name}`} checked={this.state.enrolledKids[kid._id]} onClick={this.handleRegisterClick}
+                  isValid >
+                    {/* <Form.Check.Label className='kidSelect'>{`${kid.first_name+" "+kid.last_name}`}
+                      <Form.Check.Input type='checkbox' isValid onChange={this.handleClick}/>
+                    </Form.Check.Label> */}
+                  </Form.Check>
                 )
                 )
                 }
               </div>
-              <Button className="kid-register-btn" type="submit" onClick = {this.handleRegister}>Register Kid</Button>
+              <Button className="kid-register-btn" type="submit">Register Kid</Button>
           </Form>
           </div>
-          <div className="kid-register">
+          <div className="kid-register" >
             <div className="kid-register-header">
               <i className="fa-solid fa-angles-right"></i>
               <div className="kid-register-title">Kid have enrolled</div>
             </div>   
-            <Form>
+            <Form  onSubmit={this.handleDrop}>
               <div className="kid-register-form">
-                {this.state.enrolledKids.length === 0?
-                <div>No kids aviliable</div>
-                :              
-                this.state.enrolledKids.map((kid) => 
+                {     
+                this.state.kids.map((kid) => this.props.program.kids.includes(kid._id)?
                 (
                   <Form.Check className="kid-register-item" key={uuidv4()} type='checkbox'
-                  id={`${kid._id}`} label={`${kid.first_name+" "+kid.last_name}`}
+                  id={`${kid._id}`} label={`${kid.first_name+" "+kid.last_name}`} checked={this.state.dropKids[kid._id]} onClick={this.handleDropClick}
                   isValid ></Form.Check>
-                )
+                ):null
                 )
                 }
               </div>
-              <Button className="kid-register-btn" onClick = {this.handleRegister}>Drop Kid</Button>
+              <Button className="kid-register-btn" type="submit">Drop Kid</Button>
           </Form>
           </div>
         </Modal.Body>
