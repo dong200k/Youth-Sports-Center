@@ -10,7 +10,7 @@ export default class ProgramController{
     static async getProgram(req, res, next){
         console.log("get protgram fitler")
         console.log(req.body)
-        const {days, ages, sports, locations, pageNumber, pageSize, program_id} = req.body.filter
+        const {days, ages, sports, locations, user_id, pageNumber, pageSize, program_id} = req.body.filter
         try{
 
             //filter for days, ages, sports, and locations
@@ -47,6 +47,25 @@ export default class ProgramController{
             }:
             null
 
+            const user = await User.findById(ObjectId(user_id))
+            
+            let user_filter
+            if(user?.user_type==="Parent"){
+                const kid_ids = user.kids.map(kid=> ObjectId(kid))
+                
+                //filter for programs of the parent's kids
+                user_filter = {
+                    kids: {
+                        "$in": kid_ids
+                    }
+                }
+            }else if(user?.user_type==="Instructor"){
+                //filter for programs instructor teach
+                user_filter = {
+                    instructors: ObjectId(user_id)
+                }
+            }
+
             //if filter exists add to pipeline array of filters
             const filters = []
             if(program_id)filters.push(program_id_filter)
@@ -54,6 +73,7 @@ export default class ProgramController{
             if(filter_ages)filters.push(filter_ages)
             if(filter_locations)filters.push(filter_locations)
             if(filter_sports)filters.push(filter_sports)
+            if(user_filter)filters.push(user_filter)
 
             //if there is one or more filters create match object
             let match 
