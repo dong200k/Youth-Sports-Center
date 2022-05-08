@@ -5,10 +5,15 @@ import Modal from 'react-bootstrap/Modal'
 import Attendance from '../attendance/Attendance'
 import { v4 as uuidv4 } from "uuid"
 import { UserContext } from '../../../context/UserContext.jsx'
+import programService from '../../../services/program.service.js'
 
 export default class InstructorModal extends Component {
   static contextType = UserContext
 
+  constructor(props){
+    super(props);
+    this.handleDelete = this.handleDelete.bind(this)
+  }
   state = {
     currentDate:'',
   }
@@ -18,7 +23,21 @@ export default class InstructorModal extends Component {
   }
 
   handleDelete = () => {
-
+    const program = this.props.program
+    const user= this.context.user
+    console.log(program)
+    let data = {
+      user_id: user._id,
+      program_id: program._id
+    }
+    programService.deleteProgram(data)
+      .then(res=>{
+        if(res.data.status==="success"){
+          console.log("remove program!")
+          console.log(res.data)
+        }
+      })
+      .catch(err=>console.log(err))
   }
 
   initDate = () =>{
