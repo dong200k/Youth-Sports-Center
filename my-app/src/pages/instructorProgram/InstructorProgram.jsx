@@ -23,11 +23,13 @@ export default class parentProgram extends Component {
         sportFilter:'',
         dayFilter:'',
         locationFilter: '',
+        myprogram: false,
       }
     }
   }
 
   updateProgram(filter){
+    
     const data = {
       filter:{
         pageNumber: 1,
@@ -36,6 +38,7 @@ export default class parentProgram extends Component {
         ages: !filter.ageFilter||filter.ageFilter===''?null:[parseInt(filter.ageFilter)],
         sports: !filter.sportFilter||filter.sportFilter===''?null:[filter.sportFilter],
         locations: !filter.locationFilter||filter.locationFilter===''?null:[filter.locationFilter],
+        user_id: !filter.myprogram?null:this.context.user._id
         //for future maybe allow multiple selections with array
         // days: [...this.state.dayFilter],
         // ages: [...this.state.ageFilter].map(age=>parseInt(age)),
@@ -49,8 +52,7 @@ export default class parentProgram extends Component {
       .then(response=>{
 
          //********TODO: stop loading here****************
-         
-        console.log(response.data.result[0].data)
+        console.log(response.data.result[0].data) 
         this.setState({
           programs: response.data.result[0].data,
           filter: filter,
@@ -85,6 +87,7 @@ export default class parentProgram extends Component {
       sportFilter: stateObj.sportFilter || stateObj.sportFilter===""? stateObj.sportFilter : this.state.filter.sportFilter,
       dayFilter: stateObj.dayFilter || stateObj.dayFilter===""? stateObj.dayFilter : this.state.filter.dayFilter,
       locationFilter: stateObj.locationFilter || stateObj.locationFilter===""? stateObj.locationFilter : this.state.filter.locationFilter,
+      myprogram: stateObj.myprogram? stateObj.myprogram : this.state.filter.myprogram
     }
     this.setState({isLoad:true})
     this.updateProgram(filter)
@@ -109,6 +112,7 @@ export default class parentProgram extends Component {
       sportFilter:'',
       dayFilter:'',
       locationFilter: '',
+      myprogram: false
     }
     this.updateProgram(filter)
   }

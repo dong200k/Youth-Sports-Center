@@ -46,18 +46,18 @@ export default class programFilter extends Component {
   }
 
   initialFilter = (filterType) => {
-    if(filterType == 'ageFilter'){
+    if(filterType === 'ageFilter'){
       this.updateFilter({ageFilter:''})
     }
-    else if(filterType == 'sportFilter'){
+    else if(filterType === 'sportFilter'){
       this.updateFilter({sportFilter:''})
     }
-    else if(filterType == 'dayFilter'){
+    else if(filterType === 'dayFilter'){
       this.updateFilter({dayFilter:''})
-    }else if(filterType == 'locationFilter'){
+    }else if(filterType === 'locationFilter'){
       this.updateFilter({locationFilter:''})
-    }else if(filterType == 'userFilter'){
-      this.updateFilter({user_id: ''})
+    }else if(filterType === 'userFilter'){
+      this.updateFilter({myprogram: false})
     }
     
   }
@@ -145,7 +145,7 @@ export default class programFilter extends Component {
           </Dropdown.Menu>
         </Dropdown>
         
-         <Button style={{marginLeft:'10px'}} id="dropdown-button-dark-example1" variant="secondary" onClick={this.props.getKidProgram} >
+         <Button style={{marginLeft:'10px'}} id="dropdown-button-dark-example1" variant="secondary" onClick={()=>this.updateFilter({myprogram: !this.state.myprogram})} >
               My Programs
           </Button>
       </div>
