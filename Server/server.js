@@ -17,7 +17,7 @@ app.use(express.json())
 app.use("/api/v1/youthsportcenter", router)
 
 //handle unknown routes
-app.use("*", (req,res)=> res.status(404).json({error: "page not found"}))
+// app.use("*", (req,res)=> res.status(404).json({error: "page not found"}))
 
 // Step 1:
 app.use(express.static(path.resolve(__dirname, "../my-app/build")));
