@@ -56,6 +56,8 @@ export default class programFilter extends Component {
       this.updateFilter({dayFilter:''})
     }else if(filterType == 'locationFilter'){
       this.updateFilter({locationFilter:''})
+    }else if(filterType == 'userFilter'){
+      this.updateFilter({user_id: ''})
     }
     
   }
