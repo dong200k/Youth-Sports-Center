@@ -8,7 +8,7 @@ import './programFilter.css'
 import Button from 'react-bootstrap/esm/Button'
 import { UserContext } from '../../context/UserContext.jsx'
 
-const age_range = [3,4,5,6,7,8,9,10,11]
+const age_range = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17]
 const sport_range = ["Soccer", "Basketball", "Football", "Badminton", "Handball", "Volleyball", "Tennis", "Baseball"]
 const weekday_range = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
 const location_range = [
