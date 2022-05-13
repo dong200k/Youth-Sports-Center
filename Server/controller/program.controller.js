@@ -10,7 +10,7 @@ export default class ProgramController{
     static async getProgram(req, res, next){
         console.log("get protgram fitler")
         console.log(req.body)
-        const {days, ages, sports, locations, pageNumber, pageSize, program_id} = req.body.filter
+        const {days, ages, sports, locations, user_id, pageNumber, pageSize, program_id} = req.body.filter
         try{
 
             //filter for days, ages, sports, and locations
@@ -47,6 +47,25 @@ export default class ProgramController{
             }:
             null
 
+            const user = await User.findById(ObjectId(user_id))
+            
+            let user_filter
+            if(user?.user_type==="Parent"){
+                const kid_ids = user.kids.map(kid=> ObjectId(kid))
+                
+                //filter for programs of the parent's kids
+                user_filter = {
+                    kids: {
+                        "$in": kid_ids
+                    }
+                }
+            }else if(user?.user_type==="Instructor"){
+                //filter for programs instructor teach
+                user_filter = {
+                    instructors: ObjectId(user_id)
+                }
+            }
+
             //if filter exists add to pipeline array of filters
             const filters = []
             if(program_id)filters.push(program_id_filter)
@@ -54,6 +73,7 @@ export default class ProgramController{
             if(filter_ages)filters.push(filter_ages)
             if(filter_locations)filters.push(filter_locations)
             if(filter_sports)filters.push(filter_sports)
+            if(user_filter)filters.push(user_filter)
 
             //if there is one or more filters create match object
             let match 
@@ -114,7 +134,7 @@ export default class ProgramController{
         const {program_name, days, location, ages, sport_type, 
             capacity, waitlist_capacity, time, user_id, instructors
         } = req.body
-
+        console.log(req.body)
         try{
 
             const filter_instructor = {
@@ -128,12 +148,21 @@ export default class ProgramController{
                 throw new Error("must be instructor to access!")
             }
 
+            if(time.end_time<=time.start_time){
+                throw new Error("end time must be after start time")
+            }
+
+            //for sorting days monday to sunday
+            const sortDay = ()=>{
+                const day_dict={"Monday": 1, "Tuesday": 2, "Wednesday":3, "Thursday": 4, "Friday":5, "Saturday": 6, "Sunday":7}
+                return (a,b)=>day_dict[a]-day_dict[b]
+            }
             const new_program = {
                 program_name: program_name, 
                 sport_type: sport_type, 
                 location: location, 
-                days: days, 
-                ages: ages,
+                days: days.sort(sortDay()), 
+                ages: ages.sort((a,b)=>a-b),
                 capacity: capacity, 
                 waitlist_capacity: waitlist_capacity, 
                 time:{
@@ -163,8 +192,9 @@ export default class ProgramController{
                 else   
                     res.json({status:"success", program: program})
             })
-            .catch(()=>{throw new Error("error saving program in post program")})
-        }catch(e){
+                // .catch(()=>{throw new Error("error saving program in post program")})
+            }catch(e){
+            console.log(e.message)
             res.status(404).json({error: e.message})
         }
     }

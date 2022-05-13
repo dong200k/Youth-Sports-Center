@@ -11,6 +11,9 @@ class UserService{
     getUser(id){
         return axios.get(this.baseURL + "/user/" + id)
     }
+    getInstructors(){
+        return axios.get(this.baseURL + "/instructor")
+    }
 }
 
 export default new UserService()

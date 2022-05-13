@@ -7,10 +7,11 @@ import CreateProgramForm from './createProgramForm'
 import "./createProgram.css"
 
 const CreateProgram = () => {
-    const[show, setShow] = useState(false);
+  
+  const[show, setShow] = useState(false);
 
   return (
-      <div className={show?"createProgram formshow":"createProgram"}>
+      <div className={show?"createProgram formshow":"createProgram formhide"}>
         <div className="createProgram-btn" onClick= {() => setShow(!show)}>
           {!show&&<i className="fa-solid fa-angle-down"></i>}
           {show&&<i className="fa-solid fa-angle-up"></i>}
@@ -21,6 +22,6 @@ const CreateProgram = () => {
       }
      </div>
   )
-}
+} 
 
 export default CreateProgram

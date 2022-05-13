@@ -21,7 +21,10 @@ export const UserProvider = (props)=>{
     useEffect(()=>{
       //if user redirect to home
       if(user&&location.pathname==="/"){
-        navigate("/home")
+        if(user.user_type==="Parent")
+          navigate("/home")
+        else
+          navigate("/home/InstructorProgram")
       }
     }, [user])
 
