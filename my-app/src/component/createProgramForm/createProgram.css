@@ -8,6 +8,7 @@
     flex-direction: column;
     align-items: center;
     height: 50px;
+    user-select: none;
 }
 
 
@@ -67,9 +68,27 @@
 }
 
 .formshow{
-    transition: height 0.5s ease-in;
-    height: 450px;
+    max-height: 700px;
+    transition: max-height 1s ease-in-out;
+    height: auto;
 }
+
+.formhide{
+    max-height: 50px;
+}
+.formslide{
+    animation: slidein;
+    animation-duration: 1s;
+}
+  
+  @keyframes slidein {
+    from{
+        max-height: 700px
+    }
+    to{
+        max-height: 50px
+    }
+  }
 
 .programForm-row{
     display: flex;
@@ -109,6 +128,4 @@
     border-radius: 10px;
 }
 
-multiselectContainer{ /* To change css for multiselect (Width,height,etc..)*/
-    background-color: black;
-}
+

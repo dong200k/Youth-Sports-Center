@@ -134,7 +134,7 @@ export default class ProgramController{
         const {program_name, days, location, ages, sport_type, 
             capacity, waitlist_capacity, time, user_id, instructors
         } = req.body
-
+        console.log(req.body)
         try{
 
             const filter_instructor = {
@@ -148,12 +148,21 @@ export default class ProgramController{
                 throw new Error("must be instructor to access!")
             }
 
+            if(time.end_time<=time.start_time){
+                throw new Error("end time must be after start time")
+            }
+
+            //for sorting days monday to sunday
+            const sortDay = ()=>{
+                const day_dict={"Monday": 1, "Tuesday": 2, "Wednesday":3, "Thursday": 4, "Friday":5, "Saturday": 6, "Sunday":7}
+                return (a,b)=>day_dict[a]-day_dict[b]
+            }
             const new_program = {
                 program_name: program_name, 
                 sport_type: sport_type, 
                 location: location, 
-                days: days, 
-                ages: ages,
+                days: days.sort(sortDay()), 
+                ages: ages.sort((a,b)=>a-b),
                 capacity: capacity, 
                 waitlist_capacity: waitlist_capacity, 
                 time:{
@@ -183,8 +192,9 @@ export default class ProgramController{
                 else   
                     res.json({status:"success", program: program})
             })
-            .catch(()=>{throw new Error("error saving program in post program")})
-        }catch(e){
+                // .catch(()=>{throw new Error("error saving program in post program")})
+            }catch(e){
+            console.log(e.message)
             res.status(404).json({error: e.message})
         }
     }
