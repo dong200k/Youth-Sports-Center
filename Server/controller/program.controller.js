@@ -381,13 +381,13 @@ export default class ProgramController{
                 )
             console.log("saved program")
             //create group chat for parent and all program instructors
-            const members = [program.instructors.map(_id=>ObjectId(_id)), ObjectId(parent_id)]
+            const members = [...program.instructors.map(_id=>ObjectId(_id)), ObjectId(parent_id)]
             const group_name = program.program_name + " | " + parent.first_name
             let group_filter = {
                 name: group_name
             }
             //find if group chat already exist
-            let group_chat = await Group.find(group_filter)
+            let group_chat = await Group.findOne(group_filter)
             if(!group_chat){
                 console.log("group chat")
                 //create group chat if not exist
