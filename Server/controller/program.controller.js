@@ -4,12 +4,11 @@ import Attendance from "../models/Attendance.js"
 import Kid from "../models/Kid.js";
 import User from "../models/User.js";
 import ProgramDAO from "../dao/programDAO.js";
+import Group from "../models/Group.js";
 
 export default class ProgramController{
     //program search
-    static async getProgram(req, res, next){
-        console.log("get protgram fitler")
-        console.log(req.body)
+    static async getProgram(req, res, next){    
         const {days, ages, sports, locations, user_id, pageNumber, pageSize, program_id} = req.body.filter
         try{
 
@@ -287,7 +286,7 @@ export default class ProgramController{
 
             if(!user){
                 throw new Error("must be instructor to access!")
-            }
+            } 
 
             Program.findByIdAndDelete(ObjectId(program_id), (err, doc)=>{
                 if(err)
@@ -316,7 +315,8 @@ export default class ProgramController{
             }
 
             //ensure parent is valid
-            if(!User.findOne(parent_filter)){
+            const parent = await User.findOne(parent_filter)
+            if(!parent){
                 res.status(404).json({error: "invalid parent!"})
             }
 
@@ -359,7 +359,6 @@ export default class ProgramController{
             //check for time conflict for every kid
             for(const kid_id of kids){
                 let conflictingProgram = await Kid().getConflictingProgram(kid_id, program)
-                console.log(`conflict: ${conflictingProgram}`)
                 if(conflictingProgram){
                     throw new Error(`kid ${kid_id} has program conflict with ${conflictingProgram}`)
                 }
@@ -374,16 +373,39 @@ export default class ProgramController{
             program.enrolled = program.kids.length
 
             //attempt to save
-            program.save()
-            .then(()=>{
-                res.json({status:"success", program: program})
-                return
-            })
-            .catch((err)=>{
-                console.log(err)
-                throw new Error("error saving program in enrollkid")}
-            )
+            await program.save()
+                .then(()=>res.json({status:"success", program: program}))
+                .catch((err)=>{
+                    console.log(err)
+                    throw new Error("error saving program in enrollkid")}
+                )
+            console.log("saved program")
+            //create group chat for parent and all program instructors
+            const members = [program.instructors.map(_id=>ObjectId(_id)), ObjectId(parent_id)]
+            const group_name = program.program_name + " | " + parent.first_name
+            let group_filter = {
+                name: group_name
+            }
+            //find if group chat already exist
+            let group_chat = await Group.find(group_filter)
+            if(!group_chat){
+                console.log("group chat")
+                //create group chat if not exist
+                const query = {
+                    members: members,
+                    name : group_name
+                }
+                const group = new Group(query)
+                await group.save()
+                    .then(()=>{
+                        console.log("parent-instructors group created successfully in program controller enrollKid")
+                    })
+                    .catch(err=>{
+                        throw new Error(err.message)
+                    })
+            }
         }catch(e){
+            console.log(e.message)
             res.status(404).json({error: e.message})
         }
     }
