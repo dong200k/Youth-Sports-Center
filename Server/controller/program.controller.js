@@ -289,14 +289,19 @@ export default class ProgramController{
             } 
 
             Program.findByIdAndDelete(ObjectId(program_id), (err, doc)=>{
-                if(err)
+                if(err){
+                    console.log(err.message)
                     res.status(404).json({error: err.message})
-                else if(!doc)
+                }
+                else if(!doc){
+                    console.log("no program with that id")
                     res.status(404).json({error: "no program with that id"})
+                }
                 else
                     res.json({status:"success", program: doc})
             })
         }catch(e){
+            console.log(e.message)
             res.status(404).json({error: e.message})
         }
     }
