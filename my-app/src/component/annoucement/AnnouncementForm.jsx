@@ -49,7 +49,7 @@ const AnnouncementForm = (props) => {
             })  
         }
     }
-    
+
   return (
     <Form className="announcementForm" onSubmit={props.onCreateAnnouncement(announcement)}>
         <Form.Group className="" controlId="formBasicProgram">

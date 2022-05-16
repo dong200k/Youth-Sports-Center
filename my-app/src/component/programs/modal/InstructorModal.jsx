@@ -35,6 +35,7 @@ export default class InstructorModal extends Component {
         if(res.data.status==="success"){
           console.log("remove program!")
           console.log(res.data)
+          window.location.reload()
         }
       })
       .catch(err=>console.log(err))
@@ -102,21 +103,28 @@ export default class InstructorModal extends Component {
             <div className="classinfo-label">Status:</div>
             {
               (this.state.currentDate.localeCompare(this.props.program.time.start_date.substring(0,10))<0)&&
+              <>
               <span> Wait to Start </span>
+                <button className='classinfo-delete-btn' onClick={this.handleDelete}>Delete Program</button>
+              </>
+              
             }
             {
               (this.state.currentDate.localeCompare(this.props.program.time.end_date.substring(0,10))>0)&&
               <>
               <span> Expired </span>
-              {this.props.program.instructors.includes(user_id)&&
                 <button className='classinfo-delete-btn' onClick={this.handleDelete}>Delete Program</button>
-              }
               </>
             }
             {
               (this.state.currentDate.localeCompare(this.props.program.time.start_date.substring(0,10))>=0)&&
               (this.state.currentDate.localeCompare(this.props.program.time.end_date.substring(0,10))<=0)&&
-              (<span> Current Running </span>)
+              <>
+              <span> Current Running </span>
+              {this.props.program.kids.length===0&&
+                <button className='classinfo-delete-btn' onClick={this.handleDelete}>Delete Program</button>
+              }
+              </>
             }
           </div>
           </div>

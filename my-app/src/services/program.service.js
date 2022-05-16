@@ -18,7 +18,7 @@ class ProgramService{
         return axios.put(this.baseURL + "/program", data)
     }
     deleteProgram(data){
-        return axios.delete(this.baseURL + "/program", data)
+        return axios.delete(this.baseURL + "/program", {data: data})
     }
     getUserProgram(id){//get program based on user_id
         // console.log(id+"adjasnasjdsajasn")

@@ -7,10 +7,16 @@ const AnnouncementCreate = (props) => {
     const[show, setShow] = useState(false)
     const handleSubmit = useCallback(
       (announcement)=>{
-        return (e) => {
+        return async (e) => {
           e.preventDefault()
           props.onCreateAnnouncement(announcement)
-          setShow(prevShow=>!prevShow)
+            .then(res=>{
+              if(res){
+                // setShow(prevShow=>!prevShow)
+                document.location.reload()
+                console.log("res true")
+              }
+            })
         }
       }
       ,[props])

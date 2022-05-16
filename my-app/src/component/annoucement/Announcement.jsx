@@ -93,7 +93,7 @@ export default function Announcement(props){
     }, [announcementInfo, filter])
 
     const onCreateAnnouncement = useCallback(
-        (announcement) => {
+        async (announcement) => {
             const newAnnouncement = {
                 program_id: announcement.program_id, 
                 title: announcement.title, 
@@ -103,17 +103,18 @@ export default function Announcement(props){
             if(newAnnouncement.program_id===""||announcement.program_name==="")
                 return
             // setAnnouncementInfo([newAnnouncement, ...announcementInfo])
-            announcementService.postAnnouncement(newAnnouncement)
+            return announcementService.postAnnouncement(newAnnouncement)
                 .then(res=>{
                     if(res.data.status==="success"){
                         const name = res.data.announcement
                         name.program_name = announcement.program_name
                         setAnnouncementInfo(prevAnnouncementInfo=>[name, ...prevAnnouncementInfo])
-                    }
+                        //reset filter so we can see the new announcements 
+                        setFilter({})
+                        return true
+                    }else return false
                 })
                 .catch(err=>console.log(err))
-            //reset filter so we can see the new announcements 
-            setFilter({})
         }
         ,[]
     )

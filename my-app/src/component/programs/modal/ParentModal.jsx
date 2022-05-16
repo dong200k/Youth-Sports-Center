@@ -17,10 +17,13 @@ export default class ParentModal extends Component {
           currentDate:'',
           kids: [],
           enrolledKids: [],
-          dropKids:[]
+          dropKids:[],
+          programKids: this.props.program.kids
         }
         this.handleRegisterClick = this.handleRegisterClick.bind(this)
         this.handleRegister = this.handleRegister.bind(this)
+        this.handleDropClick = this.handleDropClick.bind(this)
+        this.handleDrop = this.handleDrop.bind(this)
     }
 
     componentDidMount(){
@@ -67,17 +70,56 @@ export default class ParentModal extends Component {
         }
       })
     }
-
+    //can combine with handleRegisterClick
     handleDropClick(e){
-
+      this.setState(prev=>{
+        const dropKids = {...prev.dropKids}
+        const id = e.target.id
+        if(dropKids[id])
+          delete dropKids[id]
+        else
+          dropKids[id] = 1
+        return {
+          dropKids
+        }
+      })
     }
 
     handleDrop(event){
+      event.preventDefault()
+      const res = this.props.dropKid(this.state.dropKids)
+      if(res){//drop success
+        this.setState(prevState=>{
+          let newProgramKids = [...prevState.programKids]
+          for(const kid_id in prevState.dropKids){
+            newProgramKids = newProgramKids.filter(_id=>kid_id!==_id)
+          }
 
+          return {
+            enrolledKids: {},
+            programKids: newProgramKids
+          }
+        })
+      }
     }
 
-    handleRegister(event){
-      this.props.registerKid(this.state.enrolledKids)
+    async handleRegister(event){
+      event.preventDefault()
+      const res = await this.props.registerKid(this.state.enrolledKids)
+      
+      if(res){//enroll success
+        this.setState(prevState=>{
+          const kidsToAdd = []
+          for(const kid_id in prevState.enrolledKids){
+            kidsToAdd.push(kid_id)
+          }
+
+          return {
+            enrolledKids: {},
+            programKids: [...prevState.programKids, ...kidsToAdd]
+          }
+        })
+      }
     }
 
   render() {
@@ -148,7 +190,7 @@ export default class ParentModal extends Component {
                 {this.state.kids.length === 0?
                 <div>No kids aviliable</div>
                 :              
-                this.state.kids.map((kid) => this.props.program.kids.includes(kid._id)?
+                this.state.kids.map((kid) => this.state.programKids.includes(kid._id)?
                 null:
                 (
                   <Form.Check className="kid-register-item" key={uuidv4()} type="checkbox"
@@ -173,7 +215,7 @@ export default class ParentModal extends Component {
             <Form  onSubmit={this.handleDrop}>
               <div className="kid-register-form">
                 {     
-                this.state.kids.map((kid) => this.props.program.kids.includes(kid._id)?
+                this.state.kids.map((kid) => this.state.programKids.includes(kid._id)?
                 (
                   <Form.Check className="kid-register-item" key={uuidv4()} type='checkbox'
                   id={`${kid._id}`} label={`${kid.first_name+" "+kid.last_name}`} checked={this.state.dropKids[kid._id]} onClick={this.handleDropClick}
