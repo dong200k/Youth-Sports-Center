@@ -95,7 +95,14 @@ export default function AccountKids(props){
             return userService.updateUser(update)
                 .then(res=>{
                     if(res.data.status==="success"){
-                        setUser(update)
+                        let changeUpdate = {
+                            "first name": update.first_name,
+                            "last name": update.last_name,
+                            "email": update.email,
+                            _id: update._id,
+                            contacts: update.contacts
+                        }
+                        setUser(changeUpdate)
                         return true
                     }else
                         return false
