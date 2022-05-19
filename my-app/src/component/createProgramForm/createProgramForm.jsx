@@ -96,7 +96,9 @@ const CreateProgramForm = () => {
     }
 
     const handleChange = (input)=>{
+        console.log(input)
         return (e)=>{
+            console.log(e)
             setProgram(prev=>{
                 let next = {...prev}
                 if(input==="sport_type"||input==="location")
@@ -141,13 +143,13 @@ const CreateProgramForm = () => {
             </Form.Group> */}
 
             <Form.Group className="programForm-item" controlId="formBasicLocation">
-                <MultiFilter  type="age" filter_range={age_range}/>
+                <MultiFilter  type="age" filter_range={age_range} handleChange={handleChange("ages")}/>
             </Form.Group>
             <Form.Group className="programForm-item" controlId="formBasicLocation">
-                <MultiFilter  type="instructor" filter_range={instructors.map(instructor=>({value: instructor, label: instructor.first_name}))}/>
+                <MultiFilter  type="instructor" filter_range={instructors.map(instructor=>({value: instructor, label: instructor.first_name}))} handleChange={handleChange("instructors")}/>
             </Form.Group>
             <Form.Group className="programForm-item" controlId="formBasicLocation">
-                <MultiFilter  type="Days" filter_range={weekday_range}/>
+                <MultiFilter  type="Days" filter_range={weekday_range} handleChange={handleChange("days")}/>
             </Form.Group>
 
         </div>
