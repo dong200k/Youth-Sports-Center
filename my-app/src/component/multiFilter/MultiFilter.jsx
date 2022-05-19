@@ -35,6 +35,7 @@ export default class MultiFilter extends Component {
         this.setState({
             filter:this.state.tem_filter,
         })
+        this.props.handleChange(this.state.tem_filter);
         this.handleClose();
     }
 
@@ -57,8 +58,10 @@ export default class MultiFilter extends Component {
         this.setState({
             filter:[],
         })
+        this.props.handleChange([]);
         this.handleClose();
     }
+
 
 
   render() {
