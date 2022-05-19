@@ -156,6 +156,9 @@ export default class program extends Component {
                 : {this.getTime(this.props.program.time.start_time)}
                 ~{this.getTime(this.props.program.time.end_time)}
                 </Card.Text>
+                <Card.Text>
+                  Current Enrolled: {this.props.program.kids.length}
+                </Card.Text>
                 <Card.Text style={{ borderTop:'1px solid grey', color:'grey', justifyContent:'space-between', display:'flex'}}>
                     <span className={`${this.props.program.days.filter(day=>day==='Monday')[0] ? 'weekday':''}`}>M</span>
                     <span className={`${this.props.program.days.filter(day=>day==='Tuesday')[0] ? 'weekday':''}`}>T</span>

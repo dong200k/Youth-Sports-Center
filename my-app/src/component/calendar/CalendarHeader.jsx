@@ -5,7 +5,6 @@ import { Dropdown } from 'react-bootstrap'
 export default class CalendarHeader extends Component {
   constructor(props){
     super(props)
-
   }
 
   componentDidUpdate(prevProps){
@@ -47,11 +46,11 @@ export default class CalendarHeader extends Component {
             </div>
           </div>
           <div className="calendar-header-filter">
-            <Dropdown style={{marginLeft:'10px'}}>
-              <Dropdown.Toggle id="dropdown-button-dark-example1" variant="secondary"  >
+            <Dropdown style={{marginLeft:'10px'}} className="Calendar-Button">
+              <Dropdown.Toggle>
                   {this.props.filter.name} 
               </Dropdown.Toggle>
-              <Dropdown.Menu variant="dark">
+              <Dropdown.Menu >
                   {this.state.filter_range.map(i => {
                       return (
                       <Dropdown.Item onClick={()=>this.props.handleFilter(i)} key={i.id}>
