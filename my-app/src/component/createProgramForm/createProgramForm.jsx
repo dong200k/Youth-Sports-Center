@@ -13,6 +13,7 @@ import weekday_range from './ranges/weekday_range.js'
 import userService from '../../services/user.service.js'
 import programService from '../../services/program.service.js'
 import { GetUserContext } from '../../context/UserContext.jsx'
+import MultiFilter from '../multiFilter/MultiFilter'
 
 const CreateProgramForm = () => { 
     const user_id = GetUserContext().user._id
@@ -138,7 +139,19 @@ const CreateProgramForm = () => {
             {/* <Form.Group style={{display:"flex", flexDirection:"row"}} controlId="formBasicAge">
                 <DropdownButton className='Button' id="dropdown-basic-button" title="Select Age Range"></DropdownButton>
             </Form.Group> */}
+
             <Form.Group className="programForm-item" controlId="formBasicLocation">
+                <MultiFilter  type="age" filter_range={age_range}/>
+            </Form.Group>
+            <Form.Group className="programForm-item" controlId="formBasicLocation">
+                <MultiFilter  type="instructor" filter_range={instructors.map(instructor=>({value: instructor, label: instructor.first_name}))}/>
+            </Form.Group>
+            <Form.Group className="programForm-item" controlId="formBasicLocation">
+                <MultiFilter  type="Days" filter_range={weekday_range}/>
+            </Form.Group>
+
+        </div>
+        {/* <Form.Group className="programForm-item" controlId="formBasicLocation">
                 <Select
                     options={age_range}
                     // value={program.ages}
@@ -148,8 +161,8 @@ const CreateProgramForm = () => {
                     // styles={customStyles}
                     placeholder="Ages"
                 />
-            </Form.Group>
-            <Form.Group className="programForm-item" controlId="formBasicLocation">
+        </Form.Group>
+        <Form.Group className="programForm-item" controlId="formBasicLocation">
                 <Select
                     options={weekday_range}
                     // value={program.days}
@@ -158,7 +171,8 @@ const CreateProgramForm = () => {
                     onChange={handleChange("days")}
                     placeholder="Days"
                 />
-            </Form.Group>
+        </Form.Group>
+        <div className="programForm-row">
             <Form.Group className="programForm-item" controlId="formBasicLocation">
                 <Select
                     options={instructors.map(instructor=>({value: instructor, label: instructor.first_name}))}
@@ -169,10 +183,7 @@ const CreateProgramForm = () => {
                     placeholder="Instructors"
                 />
             </Form.Group>
-        </div>
-        <div className="programForm-row">
-            
-        </div>
+        </div> */}
         <Form.Group className="programForm-item" controlId="formBasicProgramName">
             <Form.Label className="programForm-label">Program Name</Form.Label>
             <Form.Control className="programForm-input" type="input" placeholder="Enter Program Name" onChange={handleChange("program_name")}/>
