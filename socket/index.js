@@ -11,7 +11,9 @@ export default function initIO(server){
     const io = new Server(server,{
         cors:{
             origin:"http://localhost:" + port.toString()
+            // origin:"http://localhost:3000"
         }
+        // , transports: ['websocket', 'polling', 'flashsocket'] 
     })
 
     //key, val = socket, user
