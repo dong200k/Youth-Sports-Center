@@ -90,15 +90,14 @@ const CreateProgramForm = () => {
                 if(res.data.status==="success"){
                     console.log("program posted!")
                     console.log(res.data.program)
+                    window.location.reload();
                 }
             })
             .catch(e=>console.log(e))
     }
 
     const handleChange = (input)=>{
-        console.log(input)
         return (e)=>{
-            console.log(e)
             setProgram(prev=>{
                 let next = {...prev}
                 if(input==="sport_type"||input==="location")
