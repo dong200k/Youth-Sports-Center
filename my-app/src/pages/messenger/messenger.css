@@ -47,8 +47,9 @@
 
 .messenger-programs-item{
     display: flex;
-    align-items: center;
-    justify-content: start;
+    flex-direction: row;
+    
+    text-align: left;
     padding: 10px 20px;
     cursor: pointer;
     width: 100%;
@@ -164,17 +165,22 @@
 }
 
 .chatBoxHeader{
+    position: relative;
     width: 90%;
     height: 10%;
+    padding: 10px;
     border-bottom: 1px solid rgb(221, 219, 219);
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px 0 20px;
+    color: rgb(86, 84, 84);
+}
+
+.chatBoxHeader > p{
+    text-align: left;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     font-size: 30px;
     font-weight: 600;
-    color: rgb(86, 84, 84);
 }
 
 .chatBoxTop{
