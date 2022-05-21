@@ -57,6 +57,9 @@ router
 router.
     route("/group/create")
     .post(GroupController.createGroup)
+router.
+    route("/classes/:id")
+    .get(GroupController.getGroupsForUser)
 //messages
 router
     .route("/message/post")
