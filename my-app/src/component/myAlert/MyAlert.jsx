@@ -12,11 +12,12 @@ export default function MyAlert(props) {
     }
     if (show) {
       return (
-        <Alert style={{zIndex:2, height:'80px',width:'100%'}} variant="danger" onClose={onClose} dismissible>
-          <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
-          <p>
+        <Alert style={{zIndex:2,height: '100px',width:'100%'}} variant="danger" onClose={onClose} dismissible>
+          <Alert.Heading style={{margin:0}}>Oh snap! You got an error!
+          <p style={{margin:0}}>
             {props.error.message}
           </p>
+          </Alert.Heading>
         </Alert>
       );
     }

@@ -106,13 +106,30 @@ export default class addKid extends Component {
                         <label className="inputLabel">
                             Gender: 
                         </label>
-                        <input
-                            className="loginMainBoxInput"
-                            type="text"
-                            placeholder="Gender"
-                            value={this.state.kid.gender}
+                        <div className="radiobox">
+                        <label>
+                            <input 
+                            type="radio"
+                            value="Male"
+                            name="gender"
+                            checked={this.state.kid.gender=="Male"}
                             onChange={this.handleInput("gender")}
-                        />
+                            />
+                            Male
+                        </label>
+                        <label>
+                            <input
+                                type="radio"
+                                value="Female"
+                                name="gender"
+                                checked={this.state.kid.gender=="Female"}
+                                onChange={this.handleInput("gender")}
+                            />
+                            Female
+                        </label>
+
+                        </div>
+                        
 
                         <label className="inputLabel" style={{marginLeft:'30px'}}>
                             Birthday: 

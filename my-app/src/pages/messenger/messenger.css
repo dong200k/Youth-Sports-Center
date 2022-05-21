@@ -82,6 +82,8 @@
     }
 }
 .messenger-targets{
+    animation-name: "shiftIn";
+    animation-duration: 0.5s;
     -webkit-animation-name: "shiftIn";
     -webkit-animation-duration: 0.5s;
     width: 250px;
@@ -151,6 +153,8 @@
 }
 
 .chatBox{
+    animation-name: "shiftIn";
+    animation-duration: 0.5s;
     -webkit-animation-name: "shiftIn";
     -webkit-animation-duration: 0.5s;
     width: 700px;

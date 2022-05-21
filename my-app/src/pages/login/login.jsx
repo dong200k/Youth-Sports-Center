@@ -64,6 +64,14 @@ export default class login extends Component {
                     console.log(response.data.error)
                     throw(new Error("Registration Error"))
                 }
+                this.setState({        
+                    signUpForm: {
+                    name: "",
+                    email: "",
+                    password: ""
+                    },
+                    isNewUser: false,
+                })
                 // this.props.navigate("/")
             })
             .catch(e=>{
@@ -155,6 +163,7 @@ export default class login extends Component {
                             className="loginMainBoxInput"
                             type="text"
                             placeholder="Name"
+                            value={this.state.signUpForm.name}
                             onInput={(event) => {
                                 this.setSignUp(event, 'name');
                             }}
@@ -163,6 +172,7 @@ export default class login extends Component {
                             className="loginMainBoxInput"
                             type="email"
                             placeholder="Email"
+                            value={this.state.signUpForm.email}
                             onInput={(event) => {
                                 this.setSignUp(event, 'email');
                             }}
@@ -171,6 +181,7 @@ export default class login extends Component {
                             className="loginMainBoxInput"
                             type="password"
                             placeholder="Password"
+                            value={this.state.signUpForm.password}
                             onInput={(event) => {
                                 this.setSignUp(event, 'password');
                             }}
