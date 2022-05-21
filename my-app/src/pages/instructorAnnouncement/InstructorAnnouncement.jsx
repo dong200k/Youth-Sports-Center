@@ -6,7 +6,7 @@ export default class InstructorAnnouncement extends Component {
   render() {
     return (
       <div className="announcementPage">
-          <Announcement user_type="Instructor"/>
+        <Announcement user_type="Instructor"/>
       </div>
     )
   }
