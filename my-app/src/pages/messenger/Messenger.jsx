@@ -79,7 +79,9 @@ export default function Messenger(){
       .then(res=>{
         if(res.data.status==="success"){
           console.log(res.data)
-          setPrograms(res.data.classes)
+          let programs = res.data.classes
+          programs = programs.filter(program => program.users.filter(member=> member.user_type != user.user_type).length != 0)
+          setPrograms(programs)
         }
       })
       .catch(err=>console.log(err))
@@ -135,9 +137,13 @@ export default function Messenger(){
   const handleSelectProgram = (program) => {
     setCurrentProgram(program)
     let members = program.users
+    if(user.user_type == "Parent"){
+      members = members.filter(member=>(member.user_type!=user.user_type))
+    }
     setMembers(members)
     setCurrentMember(null)
   }
+
   return (  
     <div className="messenger-page">
     <div className="messenger">
@@ -168,13 +174,13 @@ export default function Messenger(){
         <div className="chatBox">   
               <div className="chatBoxHeader">
                 <p> 
-                  {currentMember.first_name} {currentMember.last_name} ({currentProgram.name})
+                  {currentMember.first_name} {currentMember.last_name} ({currentMember.user_type})
                 </p>
               </div>
               <div className="chatBoxTop">
                 {messages.map(message=>
-                  <div ref={scrollRef}>
-                    <Message key={uuidv4()} own = {message.sender_id===user._id} message={message}/>
+                  <div ref={scrollRef} key={uuidv4()}>
+                    <Message own = {message.sender_id===user._id} message={message}/>
                   </div>
                 )}
               </div>
