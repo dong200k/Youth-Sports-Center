@@ -6,6 +6,7 @@ import announcementService from "../../services/announcement.service.js";
 import AnnouncementList from "./AnnouncementList";
 import "./announcement.css"
 import { GetUserContext, UserContext } from "../../context/UserContext.jsx";
+import MyAlert from "../myAlert/MyAlert";
 
 export default function Announcement(props){
     let resetFilter = "All";
@@ -14,7 +15,9 @@ export default function Announcement(props){
 
     const [announcementInfo, setAnnouncementInfo] = useState([]);
 
-    const [filteredAnnouncements, setFilteredAnnouncements] = useState([])
+    const [filteredAnnouncements, setFilteredAnnouncements] = useState([]);
+
+    const [error, setError] = useState('');
 
     //programNames for the filter button
     const[programNames, setProgramNames] = useState([])
@@ -93,33 +96,36 @@ export default function Announcement(props){
     }, [announcementInfo, filter])
 
     const onCreateAnnouncement = useCallback(
+
         async (announcement) => {
-            const newAnnouncement = {
-                program_id: announcement.program_id, 
-                title: announcement.title, 
-                message: announcement.message, 
-                sender_id: user_id,
+  
+                const newAnnouncement = {
+                    program_id: announcement.program_id, 
+                    title: announcement.title, 
+                    message: announcement.message, 
+                    sender_id: user_id,
+                }
+                if(newAnnouncement.program_id===""||announcement.program_name==="")
+                    return
+                // setAnnouncementInfo([newAnnouncement, ...announcementInfo])
+                return announcementService.postAnnouncement(newAnnouncement)
+                    .then(res=>{
+                        if(res.data.status==="success"){
+                            const name = res.data.announcement
+                            name.program_name = announcement.program_name
+                            setAnnouncementInfo(prevAnnouncementInfo=>[name, ...prevAnnouncementInfo])
+                            //reset filter so we can see the new announcements 
+                            setFilter({})
+                            return true
+                        }else return false
+                    })
+                    .catch(err=>setError(err))
             }
-            if(newAnnouncement.program_id===""||announcement.program_name==="")
-                return
-            // setAnnouncementInfo([newAnnouncement, ...announcementInfo])
-            return announcementService.postAnnouncement(newAnnouncement)
-                .then(res=>{
-                    if(res.data.status==="success"){
-                        const name = res.data.announcement
-                        name.program_name = announcement.program_name
-                        setAnnouncementInfo(prevAnnouncementInfo=>[name, ...prevAnnouncementInfo])
-                        //reset filter so we can see the new announcements 
-                        setFilter({})
-                        return true
-                    }else return false
-                })
-                .catch(err=>console.log(err))
-        }
         ,[]
     )
 
     return <div className="announcement">
+        {error != '' && <MyAlert error={error} clear={()=>setError('')}/>}
         {user_type == "Instructor" && <CreateButton onCreateAnnouncement={onCreateAnnouncement}/>}
         <div className="announcementHeader"> Announcement </div>
         <div className="announcementBody">

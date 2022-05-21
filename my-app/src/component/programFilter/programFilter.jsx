@@ -145,7 +145,7 @@ export default class programFilter extends Component {
           </Dropdown.Menu>
         </Dropdown>
         
-         <Button style={{marginLeft:'10px'}} id="dropdown-button-dark-example1" variant="secondary" onClick={()=>this.updateFilter({myprogram: !this.state.myprogram})} >
+         <Button style={{marginLeft:'10px'}} id="dropdown-button-dark-example1" variant={this.props.filter.myprogram?"primary":"secondary"} onClick={()=>this.updateFilter({myprogram: !this.state.myprogram})} >
               My Programs
           </Button>
       </div>

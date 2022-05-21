@@ -17,8 +17,9 @@ export default function Mainpage(props){
         navigate("/home/InstructorProgram")
     }
 
+
+
     return <div className="mainpage" >
-        
         <div className="mainheader"><Topbar user_type={user_type}/></div> 
         
         {user_type === "Parent" ?(location.pathname==="/home"):

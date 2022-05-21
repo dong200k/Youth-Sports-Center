@@ -1,0 +1,125 @@
+.multifilter-window-hidden{
+    display: none;
+}
+
+.multifilter-btn{
+    display: flex;
+    padding: 5px 20px;
+    border: none;
+    border-radius: 50px;
+}
+
+.multifilter-btn-unselected{
+    box-shadow: 0 0 12px 3px rosybrown;
+    outline: 2px solid chocolate;
+}   
+
+
+.multifilter-close{
+    display: flex;
+    position: absolute;
+    right: -8px;
+    top:-8px;
+    font-size: 30px;
+    color: brown;
+    border: none;
+    background-color: transparent;
+}
+
+.multifilter-close:hover{
+    font-size: 34px;
+    top:-10px;
+    right: -10px;
+    /* transition: all  0.5s; */
+}
+
+.multifilter-window{
+    padding: 20px 20px 70px 20px !important;
+    font-family: 'Quicksand';
+    font-weight: bolder;
+    
+}
+
+.multifilter-window > .modal-content{
+    border: none !important;
+}
+
+
+.multifilter-header{
+    font-size: 20px;
+}
+
+.multifilter-body-agefilter{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.multifilter-body-agefilter > .multifilter-item{
+    display: flex;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+}
+
+.multifilter-body{
+    max-height: 800px;
+    overflow: auto;
+}
+
+.multifilter-item{
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    font-size: 20px;
+    height: 40px;
+    align-content: center;
+    justify-content: center;
+    margin: 20px 20px 20px 20px;
+    border-radius: 50px;
+    border: 1px solid rosybrown;
+}
+
+.multifilter-item:hover{
+    background-color: rosybrown;
+    cursor: pointer;
+}
+
+.filtered{
+    background-color: rosybrown;
+}
+
+.multifilter-apply{
+    margin-top: 5px;
+    padding: 5px;
+    position: absolute;
+    width: 50%;
+    font-size: 20px;
+    border-radius: 50px;
+    left: 40px;
+    background-color: lightcoral;
+    border: none;
+    font-weight: bolder;
+}
+
+.multifilter-clear{
+    margin-top: 5px;
+    padding: 5px;
+    position: absolute;
+    margin-left: 20%;
+    width: 30%;
+    border: none;
+    right: 40px;
+    font-weight: bolder;
+    color: rgb(86, 84, 84);
+}
+
+.multifilter-item-check{
+    position: absolute;
+    right: 0;
+    top: -5px;
+    color: tomato;
+}
