@@ -2,14 +2,14 @@
     position: relative;
     width: 100%;
     font-family: 'Quicksand';
+    padding: 10px;
 }
 
 .attendance-title{
-    width: 100%;
+    width: 90%;
     font-size: 30px;
     font-weight: bolder;
     text-align: start;
-    border-bottom: 1px solid black;
 }
 
 .attendance-header{
@@ -19,6 +19,18 @@
     justify-content: space-between;
 }
 
+.attendance-filter-btn{
+    border: 1px solid lightgrey;
+    padding: 5px 20px;
+    border-radius: 50px;
+    background-color:rgb(237, 236, 236);
+    cursor: pointer;
+}   
+
+.attendance-filter-btn:hover{
+    background-color: lightcoral ;
+}
+
 .attendance-filter {
     box-shadow: 0 0.5vw 2vw -5px rgba(0, 0, 0, .2);
     border-radius: 15px;
@@ -26,9 +38,9 @@
     font-size: 20px;
     font-weight: bolder;
     z-index: 1;
-    top: 30px;
-    left: 60px;
     background-color: #fff;
+    width: 200px;
+    
 }
 .attendance-filter:before, .attendance-filter:after {
     content: '';
@@ -87,9 +99,9 @@
 .attendence-name{
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
     font-weight: bold;
-    width: 150px;
+    width: 250px;
 }
 
 .attendence-check-btn > input{

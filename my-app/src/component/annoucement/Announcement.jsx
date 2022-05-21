@@ -98,7 +98,6 @@ export default function Announcement(props){
     const onCreateAnnouncement = useCallback(
 
         async (announcement) => {
-  
                 const newAnnouncement = {
                     program_id: announcement.program_id, 
                     title: announcement.title, 

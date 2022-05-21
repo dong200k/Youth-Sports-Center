@@ -89,7 +89,7 @@ export default class parentProgram extends Component {
       sportFilter: stateObj.sportFilter || stateObj.sportFilter===""? stateObj.sportFilter : this.state.filter.sportFilter,
       dayFilter: stateObj.dayFilter || stateObj.dayFilter===""? stateObj.dayFilter : this.state.filter.dayFilter,
       locationFilter: stateObj.locationFilter || stateObj.locationFilter===""? stateObj.locationFilter : this.state.filter.locationFilter,
-      myprogram: stateObj.myprogram
+      myprogram: stateObj.myprogram != undefined?stateObj.myprogram:this.state.filter.myprogram
     }
     this.setState({isLoad:true})
     this.updateProgram(filter)
