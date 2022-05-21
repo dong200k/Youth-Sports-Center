@@ -118,7 +118,7 @@ export default function Announcement(props){
                             return true
                         }else return false
                     })
-                    .catch(err=>setError(err))
+                    .catch(e=>setError({message:e.response.data.error}))
             }
         ,[]
     )

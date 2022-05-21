@@ -96,9 +96,10 @@ const CreateProgramForm = () => {
                         window.location.reload();
                     }
                 })
-                .catch(e=>console.log(e))
+                .catch(e=>setError({message:e.response.data.error}))
         } catch (error) {
-            setError(error)
+            console.log(error)
+            setError({message:'Please fill all blank!'})
         }
         
     }
@@ -200,7 +201,7 @@ const CreateProgramForm = () => {
         </Form.Group>
 
         
-        <div className="programForm-row">
+        {/* <div className="programForm-row">
             <Form.Group className="programForm-item" controlId="formBasicCapacity">
                 <Form.Label className="programForm-label">Capacity</Form.Label>
                 <Form.Control className="programForm-input" type="number" min="1" placeholder="Enter Class Size" onChange={handleChange("capacity")}/>
@@ -209,7 +210,7 @@ const CreateProgramForm = () => {
                 <Form.Label className="programForm-label">Waitlist Capacity</Form.Label>
                 <Form.Control className="programForm-input" type="number" min="0" placeholder="Enter Waitlist Size" onChange={handleChange("waitlist_capacity")}/>
             </Form.Group>
-        </div>
+        </div> */}
         <div className="programForm-row">
             <Form.Group className="programForm-item" controlId="formBasicStartDates">
                 <Form.Label className="programForm-label">Start Date</Form.Label>
