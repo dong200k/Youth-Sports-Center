@@ -19,6 +19,9 @@ class MessengerService{
     sendMessage(data){
         return axios.post(this.baseURL + "/message/post", data) 
     }
+    getClasses(id){
+        return axios.get(this.baseURL + "/classses/" + id)
+    }
 }
 
 export default new MessengerService()
