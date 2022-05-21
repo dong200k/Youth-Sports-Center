@@ -59,32 +59,32 @@ export default function Messenger(){
   const socket = useRef()
   const scrollRef = useRef()
 
-  // //connect to socket backend
-  // useEffect(()=>{
-  //   if(!user._id)
-  //     return
-  //   socket.current = io(connection)
+  //connect to socket backend
+  useEffect(()=>{
+    if(!user._id)
+      return
+    socket.current = io(connection)
 
-  //   console.log("add user")
-  //   //add user to socket server
-  //   let userInfo = {
-  //     _id: user._id,
-  //     name: user.first_name + " " + user.last_name
-  //   }
-  //   socket.current.emit("add user", userInfo)
+    console.log("add user")
+    //add user to socket server
+    let userInfo = {
+      _id: user._id,
+      name: user.first_name + " " + user.last_name
+    }
+    socket.current.emit("add user", userInfo)
     
-  //   return ()=>socket.current.close()
-  // }, [user])
+    return ()=>socket.current.close()
+  }, [user])
 
-  // // useEffect(()=>{
-  // //   GetUserContext().logout()
-  // // }, [])
+  // useEffect(()=>{
+  //   GetUserContext().logout()
+  // }, [])
 
   // //
 
   // //listen for messages from socket server
   // useEffect(()=>{
-  //   if(!currentGroup)
+  //   if(!currentMember)
   //     return
   //     socket.current.on("get message", (message)=>{
   //       if(currentGroup._id===message.group_id){
@@ -94,7 +94,7 @@ export default function Messenger(){
   //         })
   //       }
   //     })
-  // }, [currentProgram])
+  // }, [currentMember])
 
   // const sendMessageToSocket = useCallback((message)=>{
   //   socket.current.emit("send message", {members: currentGroup.members, group: currentGroup._id, message: message.content})
@@ -127,10 +127,10 @@ export default function Messenger(){
   // }, [currentGroup])
 
   //handle input change
-  // const handleChange = (e)=>{
-  //   setMessage(e.target.value)
-  // }
-  // //send messages to backend
+  const handleChange = (e)=>{
+    setMessage(e.target.value)
+  }
+  //send messages to backend
   // const sendMessage = ()=>{
   //   if(!currentGroup)
   //     return
@@ -205,11 +205,13 @@ export default function Messenger(){
                 )} */}
               </div>
               <div className="chatBoxBottom">
-                {/* <input className="chatMessageInput" onChange={handleChange} value={message} placeholder="write something..."></input>
-                <button className="chatSubmitButton" onClick={sendMessage}>
+                <input className="chatMessageInput" onChange={handleChange} value={message} placeholder="write something..."></input>
+                <button className="chatSubmitButton" 
+                // onClick={sendMessage}
+                >
                   <span>Send</span>
                   <i class="fa-solid fa-paper-plane"></i>
-                </button> */}
+                </button>
               </div>
         </div>
       }

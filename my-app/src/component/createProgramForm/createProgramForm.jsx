@@ -14,11 +14,13 @@ import userService from '../../services/user.service.js'
 import programService from '../../services/program.service.js'
 import { GetUserContext } from '../../context/UserContext.jsx'
 import MultiFilter from '../multiFilter/MultiFilter'
+import MyAlert from '../myAlert/MyAlert'
 
 const CreateProgramForm = () => { 
     const user_id = GetUserContext().user._id
     const [program, setProgram] = useState({})
     const [instructors, setInstructors] = useState([])
+    const [error, setError] = useState("")
 
     // const customStyles = {
     //     option: (provided, state) => {
@@ -69,31 +71,36 @@ const CreateProgramForm = () => {
     //post new program
     const handleSubmit = (e)=>{
         e.preventDefault()
-        const hhmmToMins = (hhmm)=>{
-            return parseInt(hhmm.substring(0,2))*60 + parseInt(hhmm.substring(3))
+        try {
+            const hhmmToMins = (hhmm)=>{
+                return parseInt(hhmm.substring(0,2))*60 + parseInt(hhmm.substring(3))
+            }
+            const data = {
+                ...program,
+                capacity: parseInt(program.capacity),
+                waitlist_capacity: parseInt(program.waitlist_capacity),
+                instructors: program.instructors.map(instructor=>instructor._id),
+                time:{
+                    start_date: program.start_date,
+                    end_date: program.end_date,
+                    start_time: hhmmToMins(program.start_time),
+                    end_time: hhmmToMins(program.end_time)
+                },
+                user_id: user_id
+            }
+            programService.createProgram(data)
+                .then(res=>{
+                    if(res.data.status==="success"){
+                        console.log("program posted!")
+                        console.log(res.data.program)
+                        window.location.reload();
+                    }
+                })
+                .catch(e=>console.log(e))
+        } catch (error) {
+            setError(error)
         }
-        const data = {
-            ...program,
-            capacity: parseInt(program.capacity),
-            waitlist_capacity: parseInt(program.waitlist_capacity),
-            instructors: program.instructors.map(instructor=>instructor._id),
-            time:{
-                start_date: program.start_date,
-                end_date: program.end_date,
-                start_time: hhmmToMins(program.start_time),
-                end_time: hhmmToMins(program.end_time)
-            },
-            user_id: user_id
-        }
-        programService.createProgram(data)
-            .then(res=>{
-                if(res.data.status==="success"){
-                    console.log("program posted!")
-                    console.log(res.data.program)
-                    window.location.reload();
-                }
-            })
-            .catch(e=>console.log(e))
+        
     }
 
     const handleChange = (input)=>{
@@ -111,8 +118,10 @@ const CreateProgramForm = () => {
         }
     }
 
+
   return (
     <Form className='programForm' onSubmit={handleSubmit}>
+        {error != '' && <MyAlert error={error} clear={()=>setError('')}/>}
         <div className="programForm-row">
             <Form.Group className="programForm-item" controlId="formBasicProgramName">
                 <DropdownButton className='Button' id="dropdown-basic-button" variant="secondary" title={program.sport_type?program.sport_type:"Select Sport"}>

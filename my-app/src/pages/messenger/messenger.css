@@ -22,7 +22,7 @@
 .messenger-programs{
     width: 250px;
     height: 100%;
-    background-color: #a1c4fd;
+    background-color: peachpuff;
     border-radius: 3px;
     overflow: scroll;
     box-shadow: 5px 3px 8px 3px rgba(0, 0, 0, 0.3);
@@ -57,7 +57,7 @@
 }
 
 .program-select{
-    background-color: #5191fa;
+    background-color: #fff;
 }
 
 .messenger-programs-item:focus{
@@ -67,7 +67,7 @@
 
 
 .messenger-programs-item:hover{
-    background-color: #5191fa;
+    background-color: palevioletred;
 }
 
 @keyframes shiftIn {
@@ -85,7 +85,7 @@
     -webkit-animation-duration: 0.5s;
     width: 250px;
     height: 100%;
-    background-color: #eff1f2;
+    background-color: papayawhip;
     border-radius: 3px;
     overflow: auto;
     box-shadow: 5px 3px 8px 3px rgba(0, 0, 0, 0.3239);
@@ -113,7 +113,7 @@
 }
 
 .messenger-targets-item:hover{
-    background-color: #fff;
+    background-color: palevioletred;
 }
 
 .chatMenuInput{
@@ -153,7 +153,7 @@
     -webkit-animation-name: "shiftIn";
     -webkit-animation-duration: 0.5s;
     width: 700px;
-    background-color: #fff;
+    background-color: #fff1eb;
     border-radius: 3px;
     position: relative;
     display: flex;
