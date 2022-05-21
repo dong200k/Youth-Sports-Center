@@ -102,14 +102,14 @@ export default function Messenger(){
 
   //fetch groups from backend after load
   useEffect(()=>{
-    // MessengerService.getGroup(user._id)
-    //   .then(res=>{
-    //     if(res.data.status==="success"){
-    //       setGroups(res.data.groups)
-    //     }
-    //   })
-    //   .catch(err=>console.log(err))
-    setPrograms(demo_programs);
+    MessengerService.getClasses(user._id)
+      .then(res=>{
+        if(res.data.status==="success"){
+          console.log(res.data)
+          setPrograms(res.data.groups)
+        }
+      })
+      .catch(err=>console.log(err))
   }, [])
 
   // //fetch messages from backend on click group
