@@ -386,28 +386,32 @@ export default class ProgramController{
                 )
             console.log("saved program")
             //create group chat for parent and all program instructors
-            const members = [...program.instructors.map(_id=>ObjectId(_id)), ObjectId(parent_id)]
-            const group_name = program.program_name + " | " + parent.first_name
-            let group_filter = {
-                name: group_name
-            }
-            //find if group chat already exist
-            let group_chat = await Group.findOne(group_filter)
-            if(!group_chat){
-                console.log("group chat")
-                //create group chat if not exist
-                const query = {
-                    members: members,
-                    name : group_name
+            for(const instructor of program.instructors){
+                const members = [ObjectId(instructor), ObjectId(parent_id)]
+                const group_name = program.program_name
+                let group_filter = {
+                    members: {
+                        "$size": 2,
+                        "$all": members
+                    }
                 }
-                const group = new Group(query)
-                await group.save()
-                    .then(()=>{
-                        console.log("parent-instructors group created successfully in program controller enrollKid")
-                    })
-                    .catch(err=>{
-                        throw new Error(err.message)
-                    })
+                //find if group chat already exist
+                let group_chat = await Group.findOne(group_filter)
+                if(!group_chat){
+                    //create group chat if not exist
+                    const query = {
+                        members: members,
+                        name : group_name
+                    }
+                    const group = new Group(query)
+                    await group.save()
+                        .then(()=>{
+                            console.log("parent-instructors group created successfully in program controller enrollKid")
+                        })
+                        .catch(err=>{
+                            throw new Error(err.message)
+                        })
+                }
             }
         }catch(e){
             console.log(e.message)
