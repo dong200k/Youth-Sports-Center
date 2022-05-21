@@ -169,3 +169,22 @@
       display: none;
       transition: none;
   }
+
+  .radiobox{
+    position: relative;
+    width: 290px;
+    height: 34px;
+    display: flex;
+    justify-content: start;
+  }
+
+  .radiobox > label > input{
+      background-color: red;
+      transform: scale(2.5);
+      margin-left: 5px;
+      margin-right: 15px;
+  }
+
+  .radiobox > label{
+      margin-right: 10px;
+  }
