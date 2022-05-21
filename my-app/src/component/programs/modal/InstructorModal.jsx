@@ -105,7 +105,7 @@ export default class InstructorModal extends Component {
               (this.state.currentDate.localeCompare(this.props.program.time.start_date.substring(0,10))<0)&&
               <>
               <span> Wait to Start </span>
-                <button className='classinfo-delete-btn' onClick={this.handleDelete}>Delete Program</button>
+                <button className='classinfo-delete-btn' onClick={this.handleDelete}><i className="fa-solid fa-trash"></i> Delete Program</button>
               </>
               
             }
@@ -113,7 +113,7 @@ export default class InstructorModal extends Component {
               (this.state.currentDate.localeCompare(this.props.program.time.end_date.substring(0,10))>0)&&
               <>
               <span> Expired </span>
-                <button className='classinfo-delete-btn' onClick={this.handleDelete}>Delete Program</button>
+                <button className='classinfo-delete-btn' onClick={this.handleDelete}><i className="fa-solid fa-trash"></i> Delete Program</button>
               </>
             }
             {
@@ -122,7 +122,7 @@ export default class InstructorModal extends Component {
               <>
               <span> Current Running </span>
               {this.props.program.kids.length===0&&
-                <button className='classinfo-delete-btn' onClick={this.handleDelete}>Delete Program</button>
+                <button className='classinfo-delete-btn' onClick={this.handleDelete}><i className="fa-solid fa-trash"></i> Delete Program</button>
               }
               </>
             }
