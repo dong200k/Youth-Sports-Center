@@ -144,10 +144,12 @@ export default class programFilter extends Component {
               </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
-        
+        {
+          this.context.user.user_type == "Parent" &&
          <Button style={{marginLeft:'10px'}} id="dropdown-button-dark-example1" variant={this.props.filter.myprogram?"primary":"secondary"} onClick={()=>this.updateFilter({myprogram: !this.state.myprogram})} >
               My Programs
           </Button>
+        }
       </div>
     )
   }

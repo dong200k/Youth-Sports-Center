@@ -23,7 +23,7 @@ export default class parentProgram extends Component {
         sportFilter:'',
         dayFilter:'',
         locationFilter: '',
-        myprogram: false,
+        myprogram: true,
       }
     }
   }
@@ -39,6 +39,7 @@ export default class parentProgram extends Component {
         sports: !filter.sportFilter||filter.sportFilter===''?null:[filter.sportFilter],
         locations: !filter.locationFilter||filter.locationFilter===''?null:[filter.locationFilter],
         user_id: !filter.myprogram?null:this.context.user._id
+        
         //for future maybe allow multiple selections with array
         // days: [...this.state.dayFilter],
         // ages: [...this.state.ageFilter].map(age=>parseInt(age)),
@@ -77,6 +78,7 @@ export default class parentProgram extends Component {
       sportFilter:'',
       dayFilter:'',
       locationFilter: '',
+      myprogram: true,
     }
     this.updateProgram(filter)
   }
@@ -87,9 +89,10 @@ export default class parentProgram extends Component {
       sportFilter: stateObj.sportFilter || stateObj.sportFilter===""? stateObj.sportFilter : this.state.filter.sportFilter,
       dayFilter: stateObj.dayFilter || stateObj.dayFilter===""? stateObj.dayFilter : this.state.filter.dayFilter,
       locationFilter: stateObj.locationFilter || stateObj.locationFilter===""? stateObj.locationFilter : this.state.filter.locationFilter,
-      myprogram: stateObj.myprogram
+      myprogram: stateObj.myprogram != undefined?stateObj.myprogram:this.state.filter.myprogram
     }
     this.setState({isLoad:true})
+    console.log(filter)
     this.updateProgram(filter)
   }
 
@@ -112,7 +115,7 @@ export default class parentProgram extends Component {
       sportFilter:'',
       dayFilter:'',
       locationFilter: '',
-      myprogram: false
+      myprogram: true
     }
     this.updateProgram(filter)
   }
@@ -172,15 +175,16 @@ export default class parentProgram extends Component {
           console.log(err)
         })
 
-      this.setState({
-        filter:{
-          ageFilter:'',
-          sportFilter:'',
-          dayFilter:'',
-          locationFilter: '',
-        }
-      })
+      // this.setState({
+      //   filter:{
+      //     ageFilter:'',
+      //     sportFilter:'',
+      //     dayFilter:'',
+      //     locationFilter: '',
+      //   }
+      // })
   }
+
   render() {
     return (
       <div className="instructorProgram">

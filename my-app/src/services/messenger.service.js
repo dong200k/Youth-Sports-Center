@@ -20,7 +20,7 @@ class MessengerService{
         return axios.post(this.baseURL + "/message/post", data) 
     }
     getClasses(id){
-        return axios.get(this.baseURL + "/classses/" + id)
+        return axios.get(this.baseURL + "/classes/" + id)
     }
 }
 

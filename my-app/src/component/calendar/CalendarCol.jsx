@@ -106,7 +106,7 @@ export default class CalendarCol extends Component {
                 <div className="calendar-grid-shown" key={uuidv4()}
                  style={{position:'absolute', top:topDistance, height:height}}
                  onClick={()=>{this.setState({showModal:true, modalProgram:p})}}>
-                     {p.program_name}
+                     {p.program_name.split(' ')[0]}
                 </div>
             )
         })}

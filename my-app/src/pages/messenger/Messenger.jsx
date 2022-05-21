@@ -7,33 +7,6 @@ import './messenger.css'
 import {io} from "socket.io-client"
 import { v4 as uuidv4 } from "uuid"
 
-
-let demo_programs = [{program_name:"program1",
-                 _id: 1234564,
-                 users: [
-                   {_id: 456464,
-                    user_type: "Instructor",
-                    first_name: "Lun",
-                    last_name: "Qu",
-                    email:"123456@gmail.com",
-                    password:"111",
-                    }
-                  ],
-                      },
-                      {program_name:"program2",
-                      _id: 1234564,
-                      users: [
-                        {_id: 456464,
-                         user_type: "Instructor",
-                         first_name: "L",
-                         last_name: "Q",
-                         email:"123456@gmail.com",
-                         password:"111",
-                         }
-                       ],
-                    }] 
-
-
 export default function Messenger(){
 
   let connection
@@ -96,9 +69,9 @@ export default function Messenger(){
   //     })
   // }, [currentMember])
 
-  // const sendMessageToSocket = useCallback((message)=>{
-  //   socket.current.emit("send message", {members: currentGroup.members, group: currentGroup._id, message: message.content})
-  // }, [currentGroup])
+  const sendMessageToSocket = useCallback((message)=>{
+    socket.current.emit("send message", {members: currentMember.group.members, group: currentMember.group._id, message: message.content})
+  }, [currentMember])
 
   //fetch groups from backend after load
   useEffect(()=>{
@@ -106,57 +79,58 @@ export default function Messenger(){
       .then(res=>{
         if(res.data.status==="success"){
           console.log(res.data)
-          setPrograms(res.data.groups)
+          setPrograms(res.data.classes)
         }
       })
       .catch(err=>console.log(err))
   }, [])
 
-  // //fetch messages from backend on click group
-  // useEffect(()=>{
-  //   if(!currentGroup)
-  //     return
-  //   MessengerService.getMessages(currentGroup._id)
-  //     .then(res=>{
-  //       if(res.data.status==="success"){
-  //         setMessages(res.data.messages)
-  //         console.log(res.data)
-  //       }
-  //     })
-  //     .catch(err=>console.log(err))
-  // }, [currentGroup])
+
+  //fetch messages from backend on click group
+  useEffect(()=>{
+    if(!currentMember)
+      return
+    MessengerService.getMessages(currentMember.group._id)
+      .then(res=>{
+        if(res.data.status==="success"){
+          setMessages(res.data.messages)
+          console.log(res.data)
+        }
+      })
+      .catch(err=>console.log(err))
+  }, [currentMember])
 
   //handle input change
   const handleChange = (e)=>{
     setMessage(e.target.value)
   }
   //send messages to backend
-  // const sendMessage = ()=>{
-  //   if(!currentGroup)
-  //     return
-  //   let data = {
-  //     sender_id: user._id,
-  //     group_id: currentGroup._id,
-  //     content: message
-  //   }
-  //   MessengerService.sendMessage(data)
-  //     .then(res=>{
-  //       if(res.data.status==="success"){
-  //         //update messages
-  //         setMessages(message=>[...message, res.data.message])
-  //         //set input text to empty string
-  //         setMessage("")
-  //         //send to socket
-  //         sendMessageToSocket(res.data.message)
-  //       }
-  //     })
-  //     .catch(err=>console.log(err))
-  // }
+  const sendMessage = ()=>{
+    if(!currentMember)
+      return
+    let data = {
+      sender_id: user._id,
+      group_id: currentMember.group._id,
+      content: message
+    }
+    MessengerService.sendMessage(data)
+      .then(res=>{
+        if(res.data.status==="success"){
+          //update messages
+          setMessages(message=>[...message, res.data.message])
+          //set input text to empty string
+          setMessage("")
+          //send to socket
+          sendMessageToSocket(res.data.message)
+        }
+      })
+      .catch(err=>console.log(err))
+  }
 
-  // //scroll to newest message
-  // useEffect(()=>{
-  //   scrollRef?.current?.scrollIntoView({behavior: "smooth"})
-  // }, [messages])
+  //scroll to newest message
+  useEffect(()=>{
+    scrollRef?.current?.scrollIntoView({behavior: "smooth"})
+  }, [messages])
 
   const handleSelectProgram = (program) => {
     setCurrentProgram(program)
@@ -176,7 +150,7 @@ export default function Messenger(){
           )} */}
           {programs.map(program=>
             <div className={program==currentProgram?"messenger-programs-item program-select":"messenger-programs-item"} onClick={()=>handleSelectProgram(program)} key={uuidv4()}>
-              {program.program_name}
+              {program.name}
             </div>
           )}
       </div>
@@ -193,24 +167,24 @@ export default function Messenger(){
       {currentMember &&
         <div className="chatBox">   
               <div className="chatBoxHeader">
-                <div className="chatBoxHeader-title"> 
-                  {currentMember.first_name} {currentMember.last_name} ({currentProgram.program_name})
-                </div>
+                <p> 
+                  {currentMember.first_name} {currentMember.last_name} ({currentProgram.name})
+                </p>
               </div>
               <div className="chatBoxTop">
-                {/* {messages.map(message=>
+                {messages.map(message=>
                   <div ref={scrollRef}>
                     <Message key={uuidv4()} own = {message.sender_id===user._id} message={message}/>
                   </div>
-                )} */}
+                )}
               </div>
               <div className="chatBoxBottom">
                 <input className="chatMessageInput" onChange={handleChange} value={message} placeholder="write something..."></input>
                 <button className="chatSubmitButton" 
-                // onClick={sendMessage}
+                onClick={sendMessage}
                 >
                   <span>Send</span>
-                  <i class="fa-solid fa-paper-plane"></i>
+                  <i className="fa-solid fa-paper-plane"></i>
                 </button>
               </div>
         </div>
