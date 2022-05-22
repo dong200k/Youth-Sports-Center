@@ -276,6 +276,7 @@ export default function Messenger(){
           )} */}
           {programs.map(program=>
             <div className={program==currentProgram?"messenger-programs-item program-select":"messenger-programs-item"} onClick={()=>handleSelectProgram(program)} key={uuidv4()}>
+              <div className={program.hasNewMessage?"messenger-new-messge":null}></div>
               {program.name}
             </div>
           )}
@@ -284,6 +285,7 @@ export default function Messenger(){
       <div className="messenger-targets"> 
         {members.map(member=>
           <div className={member==currentMember?"messenger-targets-item target-select":"messenger-targets-item"} onClick={()=>setCurrentMember(member)} key={uuidv4()}>
+            <div className={member.hasNewMessage?"messenger-new-messge":null}></div>
             {member.first_name} {member.last_name}
           </div>
         )}

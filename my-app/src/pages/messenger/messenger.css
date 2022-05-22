@@ -48,13 +48,23 @@
 .messenger-programs-item{
     display: flex;
     flex-direction: row;
-    
+    position: relative;
     text-align: left;
     padding: 10px 20px;
     cursor: pointer;
     width: 100%;
     color: rgb(86, 84, 84);
     border-bottom: 1px solid rgb(231,231,231);
+}
+
+.messenger-new-messge{
+    width: 15px;
+    height: 15px;
+    right: 5px;
+    top: 5px;
+    border-radius: 50%;
+    position: absolute;
+    background-color: red;
 }
 
 .program-select{
@@ -101,6 +111,7 @@
 }
 
 .messenger-targets-item{
+    position: relative;
     padding: 10px 10px 10px 20px;
     display: flex;
     align-items: center;
@@ -274,3 +285,4 @@
         );
     background-size: 50px 50px;
 }
+
