@@ -405,7 +405,15 @@ export default class ProgramController{
                     //create group chat if not exist
                     const query = {
                         members: members,
-                        name : group_name
+                        name : group_name,
+                        readStatus: [
+                            {
+                                user_id: ObjectId(user_id)
+                            },
+                            {
+                                user_id: ObjectId(user._id)
+                            }
+                        ]
                     }
                     const group = new Group(query)
                     await group.save()
