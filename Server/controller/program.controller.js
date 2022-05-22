@@ -179,6 +179,14 @@ export default class ProgramController{
 
             if(new_program.instructors.length===0)
                 throw new Error("please select 1 or more instructors!")
+            
+            //check for time conflict for every instructor
+            for(const i of instructors){
+                let conflictingProgram = await User().getConflictingProgram(i, new_program)
+                if(conflictingProgram){
+                    throw new Error(`instructor has program conflict with ${conflictingProgram}`)
+                }
+            }
 
             for(const key in new_program){
                 //if any key is not defined
