@@ -48,6 +48,7 @@ export default class Attendance extends Component {
 
     getAttendance(){
         //get schedule for one program on one date
+        console.log(this.state.filter_date)
         const data = {
             program_id: this.props.program._id,
             date: this.state.filter_date
@@ -74,6 +75,8 @@ export default class Attendance extends Component {
             date: this.state.filter_date,
             attendances: this.state.attendance
         }
+        console.log("post attendance")
+        console.log(data)
         attendanceService.upsertAttendance(data)
             .then(res=>{
                 if(res.data.status==="success"){
