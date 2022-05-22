@@ -24,6 +24,7 @@ export default class program extends Component {
     this.state = {
       programImg: defaultImg,
       showModal:false,
+      error:'',
     }
     this.handleRegister = this.handleRegister.bind(this)
     this.handleDrop = this.handleDrop.bind(this)
@@ -53,6 +54,11 @@ export default class program extends Component {
     }
   } 
 
+  state = {
+    programImg: defaultImg,
+    showModal:false,
+    error:'',
+  }
   async handleRegister(kids){
     if(!this.state||!this.state.showModal||this.currentProgram==="")
       return
@@ -77,7 +83,7 @@ export default class program extends Component {
           return true
         }else return false
       })
-      .catch(err=>console.log(err))
+      .catch(err=>this.setState({error:{message:err.response.data.error}}))
   }
 
   async handleDrop(kids){
@@ -157,7 +163,7 @@ export default class program extends Component {
                 ~{this.getTime(this.props.program.time.end_time)}
                 </Card.Text>
                 <Card.Text>
-                  Current Enrolled: {this.props.program.kids.length}
+                  Current Enrolled: {this.props.program.kids.length} / {this.props.program.capacity}
                 </Card.Text>
                 <Card.Text style={{ borderTop:'1px solid grey', color:'grey', justifyContent:'space-between', display:'flex'}}>
                     <span className={`${this.props.program.days.filter(day=>day==='Monday')[0] ? 'weekday':''}`}>M</span>
@@ -179,9 +185,11 @@ export default class program extends Component {
             setModal={()=>{this.setState({showModal: false})}} 
             getTime = {this.getTime}
             registerKid = {this.handleRegister}
+            clear={()=>this.setState({error:''})}
+            error={this.state.error} 
             dropKid = {this.handleDrop}/>
           :
-          this.state.showModal&&<InstructorModal {...this.props}  showModal={this.state.showModal} setModal={()=>{this.setState({showModal: false})}} getTime = {this.getTime}/>
+          this.state.showModal&&<InstructorModal {...this.props}  clear={()=>this.setState({error:''})} error={this.state.error} showModal={this.state.showModal} setModal={()=>{this.setState({showModal: false})}} getTime = {this.getTime}/>
         }
       </>
     )

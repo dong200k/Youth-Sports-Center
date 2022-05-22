@@ -8,6 +8,7 @@ import { UserContext } from '../../../context/UserContext.jsx'
 import kidService from '../../../services/kid.service.js'
 import { v4 as uuidv4 } from "uuid"
 import "./parentModal.css"
+import MyAlert from '../../myAlert/MyAlert.jsx'
 
 export default class ParentModal extends Component {
     static contextType = UserContext
@@ -125,6 +126,7 @@ export default class ParentModal extends Component {
   render() {
     return (
       <Modal show={this.props.showModal} onHide={this.props.setModal} dialogClassName="modalSize">
+        {this.props.error != '' && <MyAlert error={this.props.error} clear={this.props.clear}/>}
         <Modal.Header style={{marginLeft:'2.5%', width:'95%'}} closeButton>
           <Modal.Title style={{position:'absolute', left:'50%', width:'140px', marginLeft:'-70px', textAlign:'center'}}>
             Class Details
@@ -194,7 +196,7 @@ export default class ParentModal extends Component {
                 null:
                 (
                   <Form.Check className="kid-register-item" key={uuidv4()} type="checkbox"
-                  id={`${kid._id}`} label={`${kid.first_name+" "+kid.last_name}`} checked={this.state.enrolledKids[kid._id]} onClick={this.handleRegisterClick}
+                  id={`${kid._id}`} label={`${kid.first_name+" "+kid.last_name}`} checked={this.state.enrolledKids[kid._id]} onChange={this.handleRegisterClick}
                   isValid >
                     {/* <Form.Check.Label className='kidSelect'>{`${kid.first_name+" "+kid.last_name}`}
                       <Form.Check.Input type='checkbox' isValid onChange={this.handleClick}/>
@@ -218,7 +220,7 @@ export default class ParentModal extends Component {
                 this.state.kids.map((kid) => this.state.programKids.includes(kid._id)?
                 (
                   <Form.Check className="kid-register-item" key={uuidv4()} type='checkbox'
-                  id={`${kid._id}`} label={`${kid.first_name+" "+kid.last_name}`} checked={this.state.dropKids[kid._id]} onClick={this.handleDropClick}
+                  id={`${kid._id}`} label={`${kid.first_name+" "+kid.last_name}`} checked={this.state.dropKids[kid._id]} onChange={this.handleDropClick}
                   isValid ></Form.Check>
                 ):null
                 )
