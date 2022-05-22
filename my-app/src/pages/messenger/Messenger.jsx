@@ -50,6 +50,22 @@ export default function Messenger(){
     return ()=>socket.current.close()
   }, [user])
 
+  //fetch groups from backend after load
+  useEffect(()=>{
+    MessengerService.getClasses(user._id)
+      .then(res=>{
+        if(res.data.status==="success"){
+          let programs = res.data.classes
+          // programs = programs.filter(program => program.users.filter(member=> member.user_type != user.user_type).length != 0)
+          programs = updateNewMessageStatus(programs)
+          console.log("get class from backend")
+          console.log(programs)
+          setPrograms(programs)
+        }
+      })
+      .catch(err=>console.log(err))
+  }, [])
+
   // useEffect(()=>{
   //   GetUserContext().logout()
   // }, [])
@@ -104,8 +120,9 @@ export default function Messenger(){
 
   //update classes with new status, called after new socket message or when user open new group
   const updateClassStatus = useCallback((group_id, sender_id, type)=>{
+    let newPrograms = [...programs]
     if(group_id && sender_id)
-      for(const program of programs)
+      for(const program of newPrograms)
         for(const user of program.users)
           if(user.group._id===group_id){
             let readStatus = user.group.readStatus
@@ -115,7 +132,9 @@ export default function Messenger(){
             else if(type==="lastOpened")
               senderStatus.lastOpened = new Date(Date.now())
           }
-    setPrograms(updateNewMessageStatus(programs))
+    console.log("updateClassstatus")
+    console.log(newPrograms)
+    setPrograms(updateNewMessageStatus(newPrograms))
   }, [programs, updateNewMessageStatus])
 
   // //listen for messages from socket server
@@ -128,10 +147,11 @@ export default function Messenger(){
           return [...messages, message]
         })
       }
+
       //update hasNewMessage
       updateClassStatus(message.group_id, message.sender_id, "lastModified")
     })
-  }, [currentMember])
+  }, [currentMember, programs, updateClassStatus])
 
   //update last opened when currentMember change
   useEffect(()=>{
@@ -163,22 +183,6 @@ export default function Messenger(){
       .catch(e=>console.log(e.message))
 
   }, [currentMember, user._id])
-
-  //fetch groups from backend after load
-  useEffect(()=>{
-    MessengerService.getClasses(user._id)
-      .then(res=>{
-        if(res.data.status==="success"){
-          let programs = res.data.classes
-          // programs = programs.filter(program => program.users.filter(member=> member.user_type != user.user_type).length != 0)
-          programs = updateNewMessageStatus(programs)
-          console.log("get class from backend")
-          console.log(programs)
-          setPrograms(programs)
-        }
-      })
-      .catch(err=>console.log(err))
-  }, [])
 
   //fetch messages from backend on click group
   useEffect(()=>{
