@@ -169,16 +169,16 @@ export default class ParentModal extends Component {
             <div className="classinfo-label">Status:</div>
             {
               (this.state.currentDate.localeCompare(this.props.program.time.start_date.substring(0,10))<0)&&
-              <span> Wait to Start </span>
+              <span> Waiting to Start </span>
             }
             {
               (this.state.currentDate.localeCompare(this.props.program.time.end_date.substring(0,10))>0)&&              
-              <span> Expired </span>
+              <span> Finished </span>
             }
             {
               (this.state.currentDate.localeCompare(this.props.program.time.start_date.substring(0,10))>=0)&&
               (this.state.currentDate.localeCompare(this.props.program.time.end_date.substring(0,10))<=0)&&
-              (<span> Current Running </span>)
+              (<span> Running </span>)
             }
           </div>
           </div>

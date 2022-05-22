@@ -12,8 +12,8 @@ const AnnouncementCreate = (props) => {
           props.onCreateAnnouncement(announcement)
             .then(res=>{
               if(res){
-                // setShow(prevShow=>!prevShow)
-                document.location.reload()
+                setShow(prevShow=>!prevShow)
+                // document.location.reload()
                 console.log("res true")
               }
             })
