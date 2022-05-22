@@ -40,9 +40,9 @@ export default class MultiFilter extends Component {
     }
 
     handleFilter = (item) => {
-        if(this.state.tem_filter.includes(item)){
+        if(this.state.tem_filter.find(i=> (i.label === item.label && i.value === item.value))){
             let filter = []
-            filter = this.state.tem_filter.filter(i => i !== item);
+            filter = this.state.tem_filter.filter(i => i.value !== item.value);
             this.setState({
                 tem_filter:filter
             })
@@ -86,7 +86,7 @@ export default class MultiFilter extends Component {
             <div className={this.props.type === "age"?"multifilter-body-agefilter": "multifilter-body"}>
                 {this.props.filter_range.map(item => {
                     return(
-                        <div className={this.state.tem_filter.includes(item)?"multifilter-item filtered":"multifilter-item"} key={uuidv4()} onClick={()=>this.handleFilter(item)}>
+                        <div className={this.state.tem_filter.find(i=> (i.label === item.label && i.value === item.value))?"multifilter-item filtered":"multifilter-item"} key={uuidv4()} onClick={()=>this.handleFilter(item)}>
                             {(typeof(item) == "object")?item.label:item}
                         </div>
                         )}
