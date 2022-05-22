@@ -177,6 +177,9 @@ export default class ProgramController{
                 instructors: instructors.map(instructor=>ObjectId(instructor))
             }
 
+            if(new_program.instructors.length===0)
+                throw new Error("please select 1 or more instructors!")
+
             for(const key in new_program){
                 //if any key is not defined
                 if(new_program[key]===undefined)
@@ -291,6 +294,9 @@ export default class ProgramController{
             if(!user){
                 throw new Error("must be instructor to access!")
             } 
+
+            //delete all program announcements
+            
 
             Program.findByIdAndDelete(ObjectId(program_id), (err, doc)=>{
                 if(err){

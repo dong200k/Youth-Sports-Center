@@ -30,6 +30,8 @@ export default function Messenger(){
   const [messages, setMessages] = useState([])
   const [message, setMessage] = useState("")
 
+  const[messageFromSocket, setmessageFromSocket] = useState({})
+
   const socket = useRef()
   const scrollRef = useRef()
 
@@ -77,7 +79,7 @@ export default function Messenger(){
   }, [currentMember])
 
   //check if group has new message from this user's viewpoint
-  const updateUserNewMessageStatus = useCallback((user)=>{
+  const updateUserNewMessageStatus = (user)=>{
     let hasNewMessage = false
     let statuses = user.group.readStatus
 
@@ -98,10 +100,10 @@ export default function Messenger(){
     }
     user.hasNewMessage = hasNewMessage
     return user
-  },[user_id])
+  }
 
   //check if program has a group with unread message
-  const updateProgramNewMessageStatus = useCallback((program)=>{
+  const updateProgramNewMessageStatus = (program)=>{
     let hasNewMessage = false
     program.users = program.users.map(user=>{
       let newUser = updateUserNewMessageStatus(user)
@@ -111,15 +113,15 @@ export default function Messenger(){
     })
     program.hasNewMessage = hasNewMessage
     return program
-  },[updateUserNewMessageStatus])
+  }
 
   //return programs with updated status for each program and each group of each program
-  const updateNewMessageStatus = useCallback((programs)=>{
+  const updateNewMessageStatus = (programs)=>{
     return programs.map(program=>updateProgramNewMessageStatus(program))
-  }, [updateProgramNewMessageStatus])
+  }
 
   //update classes with new status, called after new socket message or when user open new group
-  const updateClassStatus = useCallback((group_id, sender_id, type)=>{
+  const updateClassStatus = (group_id, sender_id, type)=>{
     let newPrograms = [...programs]
     if(group_id && sender_id)
       for(const program of newPrograms)
@@ -135,7 +137,7 @@ export default function Messenger(){
     console.log("updateClassstatus")
     console.log(newPrograms)
     setPrograms(updateNewMessageStatus(newPrograms))
-  }, [programs, updateNewMessageStatus])
+  }
 
   // //listen for messages from socket server
   useEffect(()=>{
@@ -143,15 +145,25 @@ export default function Messenger(){
       //if open a chat and message for the open chat then update messages
       if(currentMember && currentMember.group._id===message.group_id){
         message.date = new Date().getTime()
-        setMessages(messages=>{
-          return [...messages, message]
-        })
+        setmessageFromSocket(message)
+        // setMessages(messages=>{
+        //   return [...messages, message]
+        // })
       }
-
-      //update hasNewMessage
-      updateClassStatus(message.group_id, message.sender_id, "lastModified")
     })
-  }, [currentMember, programs, updateClassStatus])
+  }, [currentMember])
+
+  //if message from socket update
+  useEffect(()=>{
+    if(!messageFromSocket.content)
+      return
+    setMessages(messages=>{
+      return [...messages, messageFromSocket]
+    })
+    
+    //update hasNewMessage
+    updateClassStatus(messageFromSocket.group_id, messageFromSocket.sender_id, "lastModified")
+  }, [messageFromSocket])
 
   //update last opened when currentMember change
   useEffect(()=>{
