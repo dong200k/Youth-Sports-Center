@@ -23,7 +23,8 @@ export default function initIO(server){
     
     const addUser = (user, socket_id)=>{
         if(userSocket[user._id])
-            throw new Error("Error, user connected twice!")
+            // throw new Error("Error, user connected twice!")
+            return
         socketUser[socket_id] = user
         userSocket[user._id] = socket_id
     }
