@@ -10,7 +10,11 @@ const readStatusSchema = new Schema({
         type: ObjectId,
         required:[true, "user_id required"]
     },
-    lastRead:{
+    lastOpened:{
+        type: Date,
+        default: Date.now
+    },
+    lastModified:{
         type: Date,
         default: Date.now
     },

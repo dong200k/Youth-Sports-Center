@@ -12,8 +12,6 @@ class MessengerService{
         return axios.get(this.baseURL + "/group/" + id)
     }
     getMessages(id){
-        console.log("get messae")
-        console.log(id)
         return axios.get(this.baseURL + "/message/" + id) 
     }
     sendMessage(data){
@@ -21,6 +19,9 @@ class MessengerService{
     }
     getClasses(id){
         return axios.get(this.baseURL + "/classes/" + id)
+    }
+    updateStatus(data){
+        return axios.put(this.baseURL + "/group/openstatus", data)
     }
 }
 
