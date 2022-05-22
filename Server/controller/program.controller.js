@@ -369,7 +369,7 @@ export default class ProgramController{
             for(const kid_id of kids){
                 let conflictingProgram = await Kid().getConflictingProgram(kid_id, program)
                 if(conflictingProgram){
-                    throw new Error(`kid ${kid_id} has program conflict with ${conflictingProgram}`)
+                    throw new Error(`kid has program conflict with ${conflictingProgram}`)
                 }
             }
 

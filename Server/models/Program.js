@@ -83,7 +83,7 @@ programSchema.methods.generateSchedule = ({days, time}) =>{
     for(const day of days){
         // const next = schedule.concat(generateDatesForDay(start_date, end_date, day))
         // console.log(next)
-        schedule = schedule.concat(generateDatesForDay(start_date, end_date, day))
+        schedule = schedule.concat(generateDatesForDay(start_date,end_date, day))
     }
 
     return schedule.sort((a,b)=>{
@@ -105,9 +105,12 @@ function generateDatesForDay(start_date, end_date, day){
         'Saturday': 6
     } 
     
+    console.log(currentDate)
+    console.log(currentDate.getUTCDate())
+    console.log(currentDate.getUTCDay())
     //start on first day week day, e.g. start on first monday instead of the start_date which may be tuesday
     //getDate gets the day of the month 1-31, getDay gets 0-6(sun-sat)
-    let shift = currentDate.getDay()-weekdays[day]
+    let shift = currentDate.getUTCDay()-weekdays[day]
     if(shift<=0){
         currentDate.setDate(currentDate.getDate() - shift)
     }
@@ -115,6 +118,7 @@ function generateDatesForDay(start_date, end_date, day){
         currentDate.setDate(currentDate.getDate() + 7-shift)
     }
 
+   
     while(currentDate.getTime()<=end.getTime()){
         result.push(new Date(currentDate))
         //move 7 days to next week day/monday
