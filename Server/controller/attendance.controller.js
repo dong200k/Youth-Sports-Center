@@ -32,15 +32,20 @@ export default class AttendanceController{
             //check attendance date is valid
             let matchOneDate = false
             for(const programDate of program.schedule){
-                if(new Date(programDate).getTime()===new Date(date).getTime()){
+                if(new Date(programDate).toString().substring(0,15)===new Date(date).toString().substring(0,15)){
+                    console.log(new Date(date))
                     matchOneDate = true
                     break
+                }
+                else{
+                    console.log(new Date(programDate).toString().substring(0,15))
+                    console.log(new Date(date).toString().substring(0,15))
                 }
             }
             if(!matchOneDate)
                 return res.status(403).json({error: "date has no class in session!"})
 
-            if(!attendance){
+            if(!attendance || attendance.length == undefined){
                 //no attendance for that day yet, generate new one
                 attendanceWithNames = []
                 
@@ -54,6 +59,8 @@ export default class AttendanceController{
                 }
             }
             else{
+                console.log('nihao')
+                console.log(attendance.length)
                 //attendance already taken get that one
                 attendanceWithNames = []
                 const oldAttendance = attendance.attendance

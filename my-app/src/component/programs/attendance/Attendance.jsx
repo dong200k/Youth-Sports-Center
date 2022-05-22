@@ -21,6 +21,7 @@ export default class Attendance extends Component {
 
     componentDidMount(){ 
         this.initDate();
+
     }
 
     componentWillUnmount() {
@@ -53,6 +54,8 @@ export default class Attendance extends Component {
             program_id: this.props.program._id,
             date: this.state.filter_date
         }
+
+        console.log(data)
         attendanceService.getAttendance(data)
             .then(res=>{
                 if(res.data.status==="success"){
@@ -106,8 +109,30 @@ export default class Attendance extends Component {
         let cMonth = this.format(date.getMonth() + 1)
         let cDate = this.format(date.getDate())
         let currentDay = date.getDay()
-        let cYMD = `${cYear}-${cMonth}-${cDate}`
+        let cYMD = `${cYear}-${cMonth}-${cDate}T00:00:00.000Z`
         this.setState({date:cYMD,filter_date:cYMD})
+        this.getAttendance()
+
+        const data = {
+            program_id: this.props.program._id,
+            date: cYMD
+        }
+
+        console.log(data)
+        attendanceService.getAttendance(data)
+            .then(res=>{
+                if(res.data.status==="success"){
+                    console.log("nihao")
+                    this.setState({
+                        attendance: res.data.attendance
+                    })
+                }
+            })
+            .catch(err=>{
+                this.setState({
+                    attendance: []
+                })
+            })
     }
     
     handleFilter = (event) =>{
