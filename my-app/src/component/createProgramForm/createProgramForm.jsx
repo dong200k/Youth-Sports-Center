@@ -155,7 +155,7 @@ const CreateProgramForm = () => {
                 <MultiFilter  type="age" filter_range={age_range} handleChange={handleChange("ages")}/>
             </Form.Group>
             <Form.Group className="programForm-item" controlId="formBasicLocation">
-                <MultiFilter  type="instructor" filter_range={instructors.map(instructor=>({label: instructor.first_name, value: instructor._id}))} handleChange={handleChange("instructors")}/>
+                <MultiFilter  type="instructor" filter_range={instructors.map(instructor=>({label: instructor.first_name, value: instructor}))} handleChange={handleChange("instructors")}/>
             </Form.Group>
             <Form.Group className="programForm-item" controlId="formBasicLocation">
                 <MultiFilter  type="days" filter_range={weekday_range} handleChange={handleChange("days")}/>
