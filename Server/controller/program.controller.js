@@ -5,6 +5,7 @@ import Kid from "../models/Kid.js";
 import User from "../models/User.js";
 import ProgramDAO from "../dao/programDAO.js";
 import Group from "../models/Group.js";
+import AnnouncementDao from "../dao/announcementDAO.js";
 
 export default class ProgramController{
     //program search
@@ -179,6 +180,14 @@ export default class ProgramController{
 
             if(new_program.instructors.length===0)
                 throw new Error("please select 1 or more instructors!")
+            
+            //check for time conflict for every instructor
+            for(const i of instructors){
+                let conflictingProgram = await User().getConflictingProgram(i, new_program)
+                if(conflictingProgram){
+                    throw new Error(`instructor has program conflict with ${conflictingProgram}`)
+                }
+            }
 
             for(const key in new_program){
                 //if any key is not defined
@@ -296,7 +305,9 @@ export default class ProgramController{
             } 
 
             //delete all program announcements
-            
+            let {error} = await AnnouncementDao.deleteAnnouncements(program_id)
+            if(error)
+                throw new Error(error)
 
             Program.findByIdAndDelete(ObjectId(program_id), (err, doc)=>{
                 if(err){
@@ -332,7 +343,7 @@ export default class ProgramController{
             //ensure parent is valid
             const parent = await User.findOne(parent_filter)
             if(!parent){
-                res.status(404).json({error: "invalid parent!"})
+                throw new Error("Not parent of all the kids!")
             }
 
             //get all kids
@@ -389,7 +400,6 @@ export default class ProgramController{
 
             //attempt to save
             await program.save()
-                .then(()=>res.json({status:"success", program: program}))
                 .catch((err)=>{
                     console.log(err)
                     throw new Error("error saving program in enrollkid")}
@@ -414,10 +424,10 @@ export default class ProgramController{
                         name : group_name,
                         readStatus: [
                             {
-                                user_id: ObjectId(user_id)
+                                user_id: ObjectId(instructor)
                             },
                             {
-                                user_id: ObjectId(user._id)
+                                user_id: ObjectId(parent_id)
                             }
                         ]
                     }
@@ -431,6 +441,7 @@ export default class ProgramController{
                         })
                 }
             }
+            res.json({status:"success", program: program})
         }catch(e){
             console.log(e.message)
             res.status(404).json({error: e.message})

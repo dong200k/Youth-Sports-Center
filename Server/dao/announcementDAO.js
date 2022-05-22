@@ -49,6 +49,17 @@ export default class AnnouncementDao{
             return { error: e }
         }
     }
+    static async deleteAnnouncements(program_id){
+        try{
+            let filter = {
+                program_id: ObjectId(program_id)
+            }
+            return await announcement.deleteMany(filter)
+        }catch(e){
+            console.error(`Unable to delete announcements from program: ${e}`)
+            return { error: e }
+        }
+    }
     static async getProgramAnnouncement(program_id){// returns array of announcements/empty
         try{
             let query = {program_id: ObjectId(program_id)}

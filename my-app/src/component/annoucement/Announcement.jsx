@@ -36,6 +36,10 @@ export default function Announcement(props){
         return names
     }
 
+    useEffect(()=>{
+        setProgramNames(getProgramNames(announcementInfo))
+    }, [announcementInfo])
+
     // when we mount this component
     useEffect(()=>{
         // fetch announcements from database for user_id,
