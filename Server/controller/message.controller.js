@@ -30,7 +30,8 @@ export default class MessageController{
                     sender_id: message.sender_id,
                     content: message.content,
                     _id: message._id,
-                    sender_name: names[message.sender_id]
+                    sender_name: names[message.sender_id],
+                    date: message.date
                 }
 
                 messagesWithNames.push(newMessage)
@@ -59,6 +60,24 @@ export default class MessageController{
                 sender_id: ObjectId(sender_id),
                 content: content
             }
+
+            //find status for current user
+            let status = group.readStatus.find(status=>status.user_id.toString()===sender_id)
+
+            //update the lastModified and opened
+            let date = new Date(Date.now())
+            status.lastModified = date
+            status.lastOpened = date 
+            await 
+                group.save()
+                    .then(()=>{
+                        // res.json({status:"success", message: message})
+                        console.log("updated lastModified")
+                        console.log(group.readStatus)
+                    })
+                    .catch(err=>{
+                        throw new Error("error posting message!")
+                    })
 
             await 
                 new Message(message).save()

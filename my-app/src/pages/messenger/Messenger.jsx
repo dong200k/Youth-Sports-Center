@@ -19,6 +19,7 @@ export default function Messenger(){
   }
 
   let user = GetUserContext().user
+  let user_id = user._id
 
   const [programs, setPrograms] = useState([])
   const [currentProgram, setCurrentProgram] = useState(null)
@@ -55,38 +56,129 @@ export default function Messenger(){
 
   // //
 
-  // //listen for messages from socket server
-  // useEffect(()=>{
-  //   if(!currentMember)
-  //     return
-  //     socket.current.on("get message", (message)=>{
-  //       if(currentGroup._id===message.group_id){
-  //         message.date = new Date().getTime()
-  //         setMessages(messages=>{
-  //           return [...messages, message]
-  //         })
-  //       }
-  //     })
-  // }, [currentMember])
-
   const sendMessageToSocket = useCallback((message)=>{
     socket.current.emit("send message", {members: currentMember.group.members, group: currentMember.group._id, message: message.content})
   }, [currentMember])
+
+  //check if group has new message from this user's viewpoint
+  const updateUserNewMessageStatus = useCallback((user)=>{
+    let hasNewMessage = false
+    let statuses = user.group.readStatus
+
+    //find last time current user opened the group chat
+    let lastOpened = new Date(statuses.find(status=>status.user_id.toString()===user_id).lastOpened).getTime()
+
+    for(const status of statuses){
+      //skip status for current user
+      if(status.user_id===user._id)
+        continue
+      const lastModified = new Date(status.lastModified).getTime()
+      
+      //there was message after user last opened
+      if(lastOpened<lastModified){
+        hasNewMessage = true
+        break
+      }
+    }
+    user.hasNewMessage = hasNewMessage
+    return user
+  },[user_id])
+
+  //check if program has a group with unread message
+  const updateProgramNewMessageStatus = useCallback((program)=>{
+    let hasNewMessage = false
+    program.users = program.users.map(user=>{
+      let newUser = updateUserNewMessageStatus(user)
+      if(newUser.hasNewMessage)
+        hasNewMessage = true
+      return newUser
+    })
+    program.hasNewMessage = hasNewMessage
+    return program
+  },[updateUserNewMessageStatus])
+
+  //return programs with updated status for each program and each group of each program
+  const updateNewMessageStatus = useCallback((programs)=>{
+    return programs.map(program=>updateProgramNewMessageStatus(program))
+  }, [updateProgramNewMessageStatus])
+
+  //update classes with new status, called after new socket message or when user open new group
+  const updateClassStatus = useCallback((group_id, sender_id, type)=>{
+    if(group_id && sender_id)
+      for(const program of programs)
+        for(const user of program.users)
+          if(user.group._id===group_id){
+            let readStatus = user.group.readStatus
+            let senderStatus = readStatus.find(status=>status.user_id===sender_id)
+            if(type==="lastModified")
+              senderStatus.lastModified = new Date(Date.now())
+            else if(type==="lastOpened")
+              senderStatus.lastOpened = new Date(Date.now())
+          }
+    setPrograms(updateNewMessageStatus(programs))
+  }, [programs, updateNewMessageStatus])
+
+  // //listen for messages from socket server
+  useEffect(()=>{
+    socket.current.on("get message", (message)=>{
+      //if open a chat and message for the open chat then update messages
+      if(currentMember && currentMember.group._id===message.group_id){
+        message.date = new Date().getTime()
+        setMessages(messages=>{
+          return [...messages, message]
+        })
+      }
+      //update hasNewMessage
+      updateClassStatus(message.group_id, message.sender_id, "lastModified")
+    })
+  }, [currentMember])
+
+  //update last opened when currentMember change
+  useEffect(()=>{
+    if(!currentMember||!currentMember.group)
+      return
+    const group = currentMember.group
+    const status = group.readStatus.find(status=>status.user_id===user._id)
+
+    const newStatus = {
+      lastOpened: new Date(Date.now()),
+      lastModified: status.lastModified,
+      user_id: user._id
+    }
+    const data = {  
+      user_id: user._id,
+      group_id: group._id,
+      readStatus: newStatus
+    }
+
+    MessengerService.updateStatus(data)
+      .then(res=>{
+        if(res.data.status==="success")
+          console.log("successfully updated open status")
+          setTimeout(function () {
+            console.log("5 seconds passed since opening chat, updating class again")
+            updateClassStatus(group._id, user._id, "lastOpened")
+          }, 5000);
+      })
+      .catch(e=>console.log(e.message))
+
+  }, [currentMember, user._id])
 
   //fetch groups from backend after load
   useEffect(()=>{
     MessengerService.getClasses(user._id)
       .then(res=>{
         if(res.data.status==="success"){
-          console.log(res.data)
           let programs = res.data.classes
-          programs = programs.filter(program => program.users.filter(member=> member.user_type != user.user_type).length != 0)
+          // programs = programs.filter(program => program.users.filter(member=> member.user_type != user.user_type).length != 0)
+          programs = updateNewMessageStatus(programs)
+          console.log("get class from backend")
+          console.log(programs)
           setPrograms(programs)
         }
       })
       .catch(err=>console.log(err))
   }, [])
-
 
   //fetch messages from backend on click group
   useEffect(()=>{
@@ -96,7 +188,6 @@ export default function Messenger(){
       .then(res=>{
         if(res.data.status==="success"){
           setMessages(res.data.messages)
-          console.log(res.data)
         }
       })
       .catch(err=>console.log(err))
@@ -108,7 +199,7 @@ export default function Messenger(){
   }
   //send messages to backend
   const sendMessage = ()=>{
-    if(!currentMember)
+    if(!currentMember || !message || message==="")
       return
     let data = {
       sender_id: user._id,
@@ -143,6 +234,11 @@ export default function Messenger(){
     setMembers(members)
     setCurrentMember(null)
   }
+
+  //when program change load print
+  useEffect(()=>{
+    console.log(programs)
+  }, [programs])
 
   return (  
     <div className="messenger-page">

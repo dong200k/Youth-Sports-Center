@@ -95,6 +95,8 @@ export default class GroupController{
             const classes = []
             //build new programs
             for(const program of programs){
+                if(program.kids.length===0)
+                    continue
                 const programWithUsersAndGroups = {
                     _id: program._id,
                     name: program.program_name,
@@ -178,8 +180,29 @@ export default class GroupController{
             res.status(500).json({error: error.message})
         }
     }   
-    static async updateReadStatus(req, res, next){
+    static async updateOpenStatus(req, res, next){
+        const {group_id: _id, user_id, readStatus} = req.body
+        console.log(req.body)
+        try {
+            const group = await Group.findById(ObjectId(_id))
 
+            group.readStatus = group.readStatus.map(status=>{
+                if(status.user_id.equals(ObjectId(user_id))){
+                    readStatus.lastModified = status.lastModified
+                    return readStatus
+                }else return status
+            })
+            await group.save()
+                .then(()=>{
+                    return res.json({status:"success", group: group})
+                })
+                .catch(err=>{
+                    throw new Error(err.message)
+                })
+        } catch (error) {
+            console.log(error.message)
+            res.status(401).json({error: error.message})
+        }
     }
     static async createGroup(req, res, next){
         const {members, name} = req.body

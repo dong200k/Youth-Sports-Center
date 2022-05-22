@@ -60,6 +60,9 @@ router.
 router.
     route("/classes/:id")
     .get(GroupController.getGroupsForUser)
+router
+    .route("/group/openstatus")
+    .put(GroupController.updateOpenStatus)
 //messages
 router
     .route("/message/post")
