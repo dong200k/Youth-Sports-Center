@@ -163,6 +163,14 @@ export default function Messenger(){
     
     //update hasNewMessage
     updateClassStatus(messageFromSocket.group_id, messageFromSocket.sender_id, "lastModified")
+
+    if(currentMember.group._id===messageFromSocket.group_id){
+      setTimeout(function () {
+        console.log("5 seconds passed since opening chat, updating class again")
+        updateClassStatus(messageFromSocket._id, user._id, "lastOpened")
+      }, 5000);
+    }
+
   }, [messageFromSocket])
 
   //update last opened when currentMember change
