@@ -37,15 +37,15 @@ export default class AttendanceController{
                     matchOneDate = true
                     break
                 }
-                else{
-                    console.log(new Date(programDate).toString().substring(0,15))
-                    console.log(new Date(date).toString().substring(0,15))
-                }
+                // else{
+                //     console.log(new Date(programDate).toString().substring(0,15))
+                //     console.log(new Date(date).toString().substring(0,15))
+                // }
             }
             if(!matchOneDate)
                 return res.status(403).json({error: "date has no class in session!"})
 
-            if(!attendance || attendance.length == undefined){
+            if(!attendance || attendance.length == 0){
                 //no attendance for that day yet, generate new one
                 attendanceWithNames = []
                 
@@ -86,6 +86,7 @@ export default class AttendanceController{
             }
             res.json({status: "success", attendance: attendanceWithNames})
         } catch (e) {
+            console.log(e.message)
             res.status(403).json({error: e.message})
         }
     }
