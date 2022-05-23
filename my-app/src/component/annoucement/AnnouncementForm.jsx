@@ -5,10 +5,12 @@ import {Dropdown} from "react-bootstrap"
 import {DropdownButton} from "react-bootstrap"
 import { GetUserContext } from '../../context/UserContext.jsx'
 import programService from '../../services/program.service.js'
+import MyAlert from '../myAlert/MyAlert.jsx'
 
 const AnnouncementForm = (props) => {
     const [programNames, setProgramNames] = useState([])
     const user = GetUserContext().user
+    const [error, setError] = useState('')
 
     //grab all programs names instructor teach
     useEffect(()=>{
@@ -31,27 +33,33 @@ const AnnouncementForm = (props) => {
     function handleChange(input, program){
         return (e)=>{
             e.preventDefault()
-            setAnnouncement(old=>{
-                let newAnnouncement = {
-                    title: old.title,
-                    message: old.message,
-                    program_id: old.program_id,
-                    program_name: old.program_name
-                }
-                if(input==="program_name"){
-                    newAnnouncement.program_name = program.program_name
-                    newAnnouncement.program_id = program._id
-                    console.log(newAnnouncement)
-                }
-                else
-                    newAnnouncement[input] = e.target.value
-                return newAnnouncement
-            })  
+            try {
+                setAnnouncement(old=>{
+                    let newAnnouncement = {
+                        title: old.title,
+                        message: old.message,
+                        program_id: old.program_id,
+                        program_name: old.program_name
+                    }
+                    if(input==="program_name"){
+                        newAnnouncement.program_name = program.program_name
+                        newAnnouncement.program_id = program._id
+                        console.log(newAnnouncement)
+                    }
+                    else
+                        newAnnouncement[input] = e.target.value
+                    return newAnnouncement
+                })  
+            } catch (error) {
+                setError(error)
+            }
+
         }
     }
-    
+
   return (
     <Form className="announcementForm" onSubmit={props.onCreateAnnouncement(announcement)}>
+        {error != '' && <MyAlert error={error} clear={()=>setError('')}/>}
         <Form.Group className="" controlId="formBasicProgram">
                 <DropdownButton className="announcementForm-Button"  
                             title={announcement.program_name===""?"Select Program":announcement.program_name}>

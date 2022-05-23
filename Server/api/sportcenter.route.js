@@ -57,6 +57,12 @@ router
 router.
     route("/group/create")
     .post(GroupController.createGroup)
+router.
+    route("/classes/:id")
+    .get(GroupController.getGroupsForUser)
+router
+    .route("/group/openstatus")
+    .put(GroupController.updateOpenStatus)
 //messages
 router
     .route("/message/post")
@@ -91,17 +97,17 @@ router
     .get(AttendanceController.getAttendance)
     .post(AttendanceController.upsertAttendance)
 //generate random data
-// router
-//     .route("/generate/programs")
-//     .post(GenerateData.generatePrograms)
-// router
-//     .route("/generate/instructors")
-//     .post(GenerateData.generatePrograms)
-// router
-//     .route("/generate/announcements")
-//     .post(GenerateData.generateAnnouncements)
-// router
-//     .route("/generate/deleterandom")
-//     .post(GenerateData.deletePrograms)
+router
+    .route("/generate/programs")
+    .post(GenerateData.generatePrograms)
+router
+    .route("/generate/instructors")
+    .post(GenerateData.generatePrograms)
+router
+    .route("/generate/announcements")
+    .post(GenerateData.generateAnnouncements)
+router
+    .route("/generate/deleterandom")
+    .post(GenerateData.deletePrograms)
 export default router
 

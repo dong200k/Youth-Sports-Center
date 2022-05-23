@@ -7,6 +7,7 @@ import Loading from '../../component/loading/loading'
 import programService from '../../services/program.service.js';
 import filter from '../../component/programFilter/filter.jsx';
 import { UserContext } from '../../context/UserContext';
+import MyAlert from '../../component/myAlert/MyAlert';
 
 export default class parentProgram extends Component {
   
@@ -23,6 +24,7 @@ export default class parentProgram extends Component {
         sportFilter:'',
         dayFilter:'',
         locationFilter: '',
+        myprogram: false,
       }
     }
   }
@@ -37,6 +39,7 @@ export default class parentProgram extends Component {
         ages: !filter.ageFilter||filter.ageFilter===''?null:[parseInt(filter.ageFilter)],
         sports: !filter.sportFilter||filter.sportFilter===''?null:[filter.sportFilter],
         locations: !filter.locationFilter||filter.locationFilter===''?null:[filter.locationFilter],
+        user_id: !filter.myprogram?null:this.context.user._id
         //for future maybe allow multiple selections with array
         // days: [...this.state.dayFilter],
         // ages: [...this.state.ageFilter].map(age=>parseInt(age)),
@@ -75,6 +78,7 @@ export default class parentProgram extends Component {
       sportFilter:'',
       dayFilter:'',
       locationFilter: '',
+      myprogram: false
     }
     this.updateProgram(filter)
   }
@@ -85,6 +89,7 @@ export default class parentProgram extends Component {
       sportFilter: stateObj.sportFilter || stateObj.sportFilter===""? stateObj.sportFilter : this.state.filter.sportFilter,
       dayFilter: stateObj.dayFilter || stateObj.dayFilter===""? stateObj.dayFilter : this.state.filter.dayFilter,
       locationFilter: stateObj.locationFilter || stateObj.locationFilter===""? stateObj.locationFilter : this.state.filter.locationFilter,
+      myprogram: stateObj.myprogram != undefined?stateObj.myprogram:this.state.filter.myprogram
     }
     this.setState({isLoad:true})
     this.updateProgram(filter)
@@ -109,51 +114,54 @@ export default class parentProgram extends Component {
       sportFilter:'',
       dayFilter:'',
       locationFilter: '',
+      myprogram: false
     }
     this.updateProgram(filter)
   }
 
-  getKidProgram = () => {
-    const user_id = this.context.user._id
-    const kid_id = this.props._id
-    // programService.getUserProgram(user._id)
-    //     .then(res=>{
-    //     if(res.data.status==="success"){
-    //         setProgramNames(res.data.programs)
-    //     }
-    //     })
-    //     .catch((e)=>console.log(e))
-    // }, [user])
+  // getKidProgram = () => {
+  //   const user_id = this.context.user._id
+  //   const kid_id = this.props._id
+  //   // programService.getUserProgram(user._id)
+  //   //     .then(res=>{
+  //   //     if(res.data.status==="success"){
+  //   //         setProgramNames(res.data.programs)
+  //   //     }
+  //   //     })
+  //   //     .catch((e)=>console.log(e))
+  //   // }, [user])
 
-    //********TODO: add loading here****************
-    programService.getUserProgram(user_id)
-      .then(response=>{
+  //   //********TODO: add loading here****************
+  //   programService.getUserProgram(user_id)
+  //     .then(response=>{
 
-        //********TODO: stop loading here****************
-        // let programs = []
-        // response.data.programs.map(program => program.kids.includes(kid_id)?programs.push(program):null)
-        console.log(response.data.programs)
-        this.setState({
-          programs: response.data.programs,
-        })
-      })
-      .catch(err=>{
-        this.setState({
-          isError: err
-        })
-        console.log(err)
-      })
+  //       //********TODO: stop loading here****************
+  //       // let programs = []
+  //       // response.data.programs.map(program => program.kids.includes(kid_id)?programs.push(program):null)
+  //       console.log(response.data.programs)
+  //       this.setState({
+  //         programs: response.data.programs,
+  //       })
+  //     })
+  //     .catch(err=>{
+  //       this.setState({
+  //         isError: err
+  //       })
+  //       console.log(err)
+  //     })
 
-    this.setState({
-      filter:{
-      ageFilter:'',
-      sportFilter:'',
-      dayFilter:'',
-      locationFilter: '',
-    }
-    }
-    )
-  }
+  //   this.setState({
+  //     filter:{
+  //     ageFilter:'',
+  //     sportFilter:'',
+  //     dayFilter:'',
+  //     locationFilter: '',
+  //   }
+  //   }
+  //   )
+  // }
+
+
 
   render() {
     return (

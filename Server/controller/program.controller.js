@@ -4,13 +4,13 @@ import Attendance from "../models/Attendance.js"
 import Kid from "../models/Kid.js";
 import User from "../models/User.js";
 import ProgramDAO from "../dao/programDAO.js";
+import Group from "../models/Group.js";
+import AnnouncementDao from "../dao/announcementDAO.js";
 
 export default class ProgramController{
     //program search
-    static async getProgram(req, res, next){
-        console.log("get protgram fitler")
-        console.log(req.body)
-        const {days, ages, sports, locations, pageNumber, pageSize, program_id} = req.body.filter
+    static async getProgram(req, res, next){    
+        const {days, ages, sports, locations, user_id, pageNumber, pageSize, program_id} = req.body.filter
         try{
 
             //filter for days, ages, sports, and locations
@@ -47,6 +47,25 @@ export default class ProgramController{
             }:
             null
 
+            const user = await User.findById(ObjectId(user_id))
+            
+            let user_filter
+            if(user?.user_type==="Parent"){
+                const kid_ids = user.kids.map(kid=> ObjectId(kid))
+                
+                //filter for programs of the parent's kids
+                user_filter = {
+                    kids: {
+                        "$in": kid_ids
+                    }
+                }
+            }else if(user?.user_type==="Instructor"){
+                //filter for programs instructor teach
+                user_filter = {
+                    instructors: ObjectId(user_id)
+                }
+            }
+
             //if filter exists add to pipeline array of filters
             const filters = []
             if(program_id)filters.push(program_id_filter)
@@ -54,6 +73,7 @@ export default class ProgramController{
             if(filter_ages)filters.push(filter_ages)
             if(filter_locations)filters.push(filter_locations)
             if(filter_sports)filters.push(filter_sports)
+            if(user_filter)filters.push(user_filter)
 
             //if there is one or more filters create match object
             let match 
@@ -114,7 +134,7 @@ export default class ProgramController{
         const {program_name, days, location, ages, sport_type, 
             capacity, waitlist_capacity, time, user_id, instructors
         } = req.body
-
+        console.log(req.body)
         try{
 
             const filter_instructor = {
@@ -128,12 +148,25 @@ export default class ProgramController{
                 throw new Error("must be instructor to access!")
             }
 
+            if(time.end_time<=time.start_time){
+                throw new Error("end time must be after start time")
+            }
+
+            if(time.end_date<=time.start_date){
+                throw new Error("end date must be after start date")
+            }
+
+            //for sorting days monday to sunday
+            const sortDay = ()=>{
+                const day_dict={"Monday": 1, "Tuesday": 2, "Wednesday":3, "Thursday": 4, "Friday":5, "Saturday": 6, "Sunday":7}
+                return (a,b)=>day_dict[a]-day_dict[b]
+            }
             const new_program = {
                 program_name: program_name, 
                 sport_type: sport_type, 
                 location: location, 
-                days: days, 
-                ages: ages,
+                days: days.sort(sortDay()), 
+                ages: ages.sort((a,b)=>a-b),
                 capacity: capacity, 
                 waitlist_capacity: waitlist_capacity, 
                 time:{
@@ -143,6 +176,17 @@ export default class ProgramController{
                     end_time: time.end_time
                 },
                 instructors: instructors.map(instructor=>ObjectId(instructor))
+            }
+
+            if(new_program.instructors.length===0)
+                throw new Error("please select 1 or more instructors!")
+            
+            //check for time conflict for every instructor
+            for(const i of instructors){
+                let conflictingProgram = await User().getConflictingProgram(i, new_program)
+                if(conflictingProgram){
+                    throw new Error(`instructor has program conflict with ${conflictingProgram}`)
+                }
             }
 
             for(const key in new_program){
@@ -163,8 +207,9 @@ export default class ProgramController{
                 else   
                     res.json({status:"success", program: program})
             })
-            .catch(()=>{throw new Error("error saving program in post program")})
-        }catch(e){
+                // .catch(()=>{throw new Error("error saving program in post program")})
+            }catch(e){
+            console.log(e.message)
             res.status(404).json({error: e.message})
         }
     }
@@ -257,17 +302,27 @@ export default class ProgramController{
 
             if(!user){
                 throw new Error("must be instructor to access!")
-            }
+            } 
+
+            //delete all program announcements
+            let {error} = await AnnouncementDao.deleteAnnouncements(program_id)
+            if(error)
+                throw new Error(error)
 
             Program.findByIdAndDelete(ObjectId(program_id), (err, doc)=>{
-                if(err)
+                if(err){
+                    console.log(err.message)
                     res.status(404).json({error: err.message})
-                else if(!doc)
+                }
+                else if(!doc){
+                    console.log("no program with that id")
                     res.status(404).json({error: "no program with that id"})
+                }
                 else
                     res.json({status:"success", program: doc})
             })
         }catch(e){
+            console.log(e.message)
             res.status(404).json({error: e.message})
         }
     }
@@ -286,8 +341,9 @@ export default class ProgramController{
             }
 
             //ensure parent is valid
-            if(!User.findOne(parent_filter)){
-                res.status(404).json({error: "invalid parent!"})
+            const parent = await User.findOne(parent_filter)
+            if(!parent){
+                throw new Error("Not parent of all the kids!")
             }
 
             //get all kids
@@ -329,9 +385,8 @@ export default class ProgramController{
             //check for time conflict for every kid
             for(const kid_id of kids){
                 let conflictingProgram = await Kid().getConflictingProgram(kid_id, program)
-                console.log(`conflict: ${conflictingProgram}`)
                 if(conflictingProgram){
-                    throw new Error(`kid ${kid_id} has program conflict with ${conflictingProgram}`)
+                    throw new Error(`kid has program conflict with ${conflictingProgram}`)
                 }
             }
 
@@ -344,16 +399,51 @@ export default class ProgramController{
             program.enrolled = program.kids.length
 
             //attempt to save
-            program.save()
-            .then(()=>{
-                res.json({status:"success", program: program})
-                return
-            })
-            .catch((err)=>{
-                console.log(err)
-                throw new Error("error saving program in enrollkid")}
-            )
+            await program.save()
+                .catch((err)=>{
+                    console.log(err)
+                    throw new Error("error saving program in enrollkid")}
+                )
+            console.log("saved program")
+            //create group chat for parent and all program instructors
+            for(const instructor of program.instructors){
+                const members = [ObjectId(instructor), ObjectId(parent_id)]
+                const group_name = program.program_name
+                let group_filter = {
+                    members: {
+                        "$size": 2,
+                        "$all": members
+                    }
+                }
+                //find if group chat already exist
+                let group_chat = await Group.findOne(group_filter)
+                if(!group_chat){
+                    //create group chat if not exist
+                    const query = {
+                        members: members,
+                        name : group_name,
+                        readStatus: [
+                            {
+                                user_id: ObjectId(instructor)
+                            },
+                            {
+                                user_id: ObjectId(parent_id)
+                            }
+                        ]
+                    }
+                    const group = new Group(query)
+                    await group.save()
+                        .then(()=>{
+                            console.log("parent-instructors group created successfully in program controller enrollKid")
+                        })
+                        .catch(err=>{
+                            throw new Error(err.message)
+                        })
+                }
+            }
+            res.json({status:"success", program: program})
         }catch(e){
+            console.log(e.message)
             res.status(404).json({error: e.message})
         }
     }

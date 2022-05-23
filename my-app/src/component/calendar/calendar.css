@@ -91,6 +91,7 @@
     margin-bottom: 15px;
     display: flex;
     flex-direction: row;
+    align-items: center;
 }
 
 .calendar-header-switch{
@@ -102,6 +103,7 @@
 
 .calendar-header-btn{
     cursor: pointer;
+    height: 100%;
     padding: 0 10px;
     border-radius: 25%;
     background-color: #f8f8f8;
@@ -137,6 +139,10 @@
     margin-left: 5px;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 14px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
 }
 
 .calendar-grid-shown:hover,.calendar-grid-shown:focus{
@@ -213,3 +219,51 @@
     border-radius: 10px;
     background   : #ededed; 
 } */
+
+
+.Calendar-Button{
+    color: black !important;
+    position: relative;
+    font-size: 20px;
+    width: max-content;
+}
+
+.Calendar-Button > button{
+    color: black !important;
+    background-color: tan !important;
+    box-shadow: none !important;
+
+}
+
+.Calendar-Button > .btn{
+    border: 0 !important;
+}
+
+
+.Calendar-Button > .dropdown-menu{
+    width: 100%;
+    width: max-content;
+    z-index: 2 !important;
+    overflow: auto;
+    max-height: 250px;
+    background-color: tan !important;
+}
+
+.Calendar-Button > .dropdown-menu > a:active{
+    background-color: peachpuff !important;
+}
+
+.Calendar-Button > .dropdown-menu::-webkit-scrollbar {
+    width : 5px;  
+    height: 5px;
+}
+.Calendar-Button > .dropdown-menu::-webkit-scrollbar-thumb {
+    box-shadow   : inset 0 0 5px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    background   : #a8a8a8;
+}
+.Calendar-Button > .dropdown-menu::-webkit-scrollbar-track {
+    box-shadow   : inset 0 0 5px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    background   : #ededed; 
+}

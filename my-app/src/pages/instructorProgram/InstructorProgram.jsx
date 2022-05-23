@@ -23,11 +23,13 @@ export default class parentProgram extends Component {
         sportFilter:'',
         dayFilter:'',
         locationFilter: '',
+        myprogram: true,
       }
     }
   }
 
   updateProgram(filter){
+    
     const data = {
       filter:{
         pageNumber: 1,
@@ -36,6 +38,8 @@ export default class parentProgram extends Component {
         ages: !filter.ageFilter||filter.ageFilter===''?null:[parseInt(filter.ageFilter)],
         sports: !filter.sportFilter||filter.sportFilter===''?null:[filter.sportFilter],
         locations: !filter.locationFilter||filter.locationFilter===''?null:[filter.locationFilter],
+        user_id: !filter.myprogram?null:this.context.user._id
+        
         //for future maybe allow multiple selections with array
         // days: [...this.state.dayFilter],
         // ages: [...this.state.ageFilter].map(age=>parseInt(age)),
@@ -49,8 +53,7 @@ export default class parentProgram extends Component {
       .then(response=>{
 
          //********TODO: stop loading here****************
-         
-        console.log(response.data.result[0].data)
+        console.log(response.data.result[0].data) 
         this.setState({
           programs: response.data.result[0].data,
           filter: filter,
@@ -75,6 +78,7 @@ export default class parentProgram extends Component {
       sportFilter:'',
       dayFilter:'',
       locationFilter: '',
+      myprogram: true,
     }
     this.updateProgram(filter)
   }
@@ -85,8 +89,10 @@ export default class parentProgram extends Component {
       sportFilter: stateObj.sportFilter || stateObj.sportFilter===""? stateObj.sportFilter : this.state.filter.sportFilter,
       dayFilter: stateObj.dayFilter || stateObj.dayFilter===""? stateObj.dayFilter : this.state.filter.dayFilter,
       locationFilter: stateObj.locationFilter || stateObj.locationFilter===""? stateObj.locationFilter : this.state.filter.locationFilter,
+      myprogram: stateObj.myprogram != undefined?stateObj.myprogram:this.state.filter.myprogram
     }
     this.setState({isLoad:true})
+    console.log(filter)
     this.updateProgram(filter)
   }
 
@@ -109,6 +115,7 @@ export default class parentProgram extends Component {
       sportFilter:'',
       dayFilter:'',
       locationFilter: '',
+      myprogram: true
     }
     this.updateProgram(filter)
   }
@@ -137,6 +144,47 @@ export default class parentProgram extends Component {
 // }
 
 
+  getMyProgram = () => { 
+    const user_id = this.context.user._id
+    const kid_id = this.props._id
+    // programService.getUserProgram(user._id)
+    //     .then(res=>{
+    //     if(res.data.status==="success"){
+    //         setProgramNames(res.data.programs)
+    //     }
+    //     })
+    //     .catch((e)=>console.log(e))
+    // }, [user])
+
+    //********TODO: add loading here****************
+    programService.getUserProgram(user_id)
+        .then(response=>{
+
+          //********TODO: stop loading here****************
+          // let programs = []
+          // response.data.programs.map(program => program.kids.includes(kid_id)?programs.push(program):null)
+          console.log(response.data.programs)
+          this.setState({
+            programs: response.data.programs,
+          })
+        })
+        .catch(err=>{
+          this.setState({
+            isError: err
+          })
+          console.log(err)
+        })
+
+      // this.setState({
+      //   filter:{
+      //     ageFilter:'',
+      //     sportFilter:'',
+      //     dayFilter:'',
+      //     locationFilter: '',
+      //   }
+      // })
+  }
+
   render() {
     return (
       <div className="instructorProgram">
@@ -148,7 +196,7 @@ export default class parentProgram extends Component {
         </div>  
         <div className="instructorProgram-filter">
           {/* <ProgramFilter updateAppState = {this.updateAppState}/> */}
-          <ProgramFilter updateAppState = {this.updateAppState} filter = {this.state.filter}/>
+          <ProgramFilter getKidProgram={this.getMyProgram} updateAppState = {this.updateAppState} filter = {this.state.filter}/>
         </div>
         <div className="instructorProgram-body">
           <Programs {...this.state} initailFilter={this.initailFilter}/>

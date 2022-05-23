@@ -1,6 +1,7 @@
 import mongoose from "mongoose"
 import { ObjectId } from "mongodb"
 import dotenv from "dotenv"
+import readStatusSchema from "./readStatus.js"
 dotenv.config()
 
 const {Schema} = mongoose
@@ -17,6 +18,10 @@ const GroupSchema = new Schema({
     createdAt:{
         type: Date,
         default: Date.now
+    },
+    readStatus:{
+        type: [readStatusSchema],
+        default: []
     }
 })
 

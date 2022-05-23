@@ -168,6 +168,7 @@ class UserCards extends Component {
                 <label className="kidCard-inputLabel kidInput">
                     Gender: 
                 </label>
+                
                 <input
                   className="loginMainBoxInput kidInput"
                   type="text"

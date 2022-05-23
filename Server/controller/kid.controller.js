@@ -27,12 +27,12 @@ export default class KidController{
 
             //try to insert kid
             await kid.save()
-                .catch(()=>{throw new Error("error saving kid in addkid")})
+                .catch((e)=>{throw new Error(e)})
 
             //try to add kid id to parent document
             parent.kids.push(ObjectId(kid._id))
             await parent.save()
-                .catch(()=>{throw new Error("error saving parent in addkid")})
+                .catch((e)=>{throw new Error(e)})
             res.json({status:'success', kid: kid, parent: parent})
 
         }catch(e){
@@ -93,7 +93,7 @@ export default class KidController{
 
             //try to update kid
             await kid.save()
-                .catch(()=>{throw new Error("error saving kid in updateKid")})
+                .catch((e)=>{throw new Error(e)})
             console.log(kid)
             // for(const key in update){
             //     if(update[key])

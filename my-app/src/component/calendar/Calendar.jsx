@@ -3,49 +3,47 @@ import CalendarHeader from './CalendarHeader'
 import { v4 as uuidv4 } from "uuid"
 import './calendar.css'
 import CalendarCol from './CalendarCol'
+import programService from '../../services/program.service.js';
+import KidService from "../../services/kid.service.js"
+import { UserContext } from '../../context/UserContext';
 
-let weekdayLabel = ["Monday", "Tuesday", "Wesdnesday", "Thursday", "Friday", "Saturday", "Sunday"]
+let weekdayLabel = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 let currentListIndex = 0
 let hourList= ["8:00", "10:00", "12:00", "14:00", "16:00", "18:00", "20:00"]
 export default class Calendar extends Component {
+    static contextType = UserContext
+
     constructor(props){
         super(props)
     }
 
     componentDidMount(){
         this.initDate()
+        this.getKidProgram()
+        this.getKids()
     }
 
     state = {
-        kids:[
-            {
-                name:'Lun',
-                programs:[
-                    {
-                        name: 'Soccor',
-                        _id:'',
-                        start_date:'2022-04-04',
-                        end_date:'2022-04-18',
-                        days:['Monday','Wesdnesday'],
-                        start_time:55,
-                        end_time:70
-                    }
-                ]
-            }
-        ],
+        kids:[],
+        //One week date
         currentList:[
             {cDate: "04", cMonth: "04", cYMD: "2022-04-04", cYear: 2022},
-            {cDate: "04", cMonth: "04", cYMD: "2022-04-04", cYear: 2022},
-            {cDate: "04", cMonth: "04", cYMD: "2022-04-04", cYear: 2022},
-            {cDate: "04", cMonth: "04", cYMD: "2022-04-04", cYear: 2022},
-            {cDate: "04", cMonth: "04", cYMD: "2022-04-04", cYear: 2022},
-            {cDate: "04", cMonth: "04", cYMD: "2022-04-04", cYear: 2022},
-            {cDate: "04", cMonth: "04", cYMD: "2022-04-04", cYear: 2022},
+            {cDate: "05", cMonth: "04", cYMD: "2022-04-05", cYear: 2022},
+            {cDate: "06", cMonth: "04", cYMD: "2022-04-06", cYear: 2022},
+            {cDate: "07", cMonth: "04", cYMD: "2022-04-07", cYear: 2022},
+            {cDate: "08", cMonth: "04", cYMD: "2022-04-08", cYear: 2022},
+            {cDate: "09", cMonth: "04", cYMD: "2022-04-09", cYear: 2022},
+            {cDate: "10", cMonth: "04", cYMD: "2022-04-10", cYear: 2022},
         ],
         currentMonth:'',
         currentYear:'',
         currentDate:'',
-        kidFilter:'Lun'
+        kidFilter:{
+            id:'',
+            name:''
+        },
+        programs:[],
+        filterPrograms:[]
     }
 
 
@@ -124,14 +122,87 @@ export default class Calendar extends Component {
     }
 
     handleFilter = (filter) =>{
-        this.setState({kidFilter:filter})
+        const filterPrograms = []
         //change the program list
+        this.state.programs.map((program)=>{
+            if(program.kids.includes(filter.id)){
+                filterPrograms.push(program)
+            }
+        })
+        this.setState({kidFilter:filter,filterPrograms:filterPrograms})
     }
+
+    getKidProgram = () => {
+        const user_id = this.context.user._id
+        // programService.getUserProgram(user._id)
+        //     .then(res=>{
+        //     if(res.data.status==="success"){
+        //         setProgramNames(res.data.programs)
+        //     }
+        //     })
+        //     .catch((e)=>console.log(e))
+        // }, [user])
+    
+        //********TODO: add loading here****************
+        programService.getUserProgram(user_id)
+          .then(response=>{
+    
+            //********TODO: stop loading here****************
+            // let programs = []
+            // response.data.programs.map(program => program.kids.includes(kid_id)?programs.push(program):null)
+            console.log(response.data.programs)
+            this.setState({
+              programs: response.data.programs,
+            })
+          })
+          .catch(err=>{
+            this.setState({
+              isError: err
+            })
+            console.log(err)
+        })
+    }
+
+    
+    getBirthDate = (d)=>{
+        let date = new Date(d)
+        let mm = date.getMonth() + 1; // Months start at 0!
+        let dd = date.getDate();
+        let yyyy = date.getFullYear()
+        if (dd < 10) dd = '0' + dd;
+        if (mm < 10) mm = '0' + mm; 
+        return dd + "/" + mm + "/"+ yyyy
+    }
+
+    getKids = () => {
+        const user_id = this.context.user._id
+        //get kid
+        KidService.getKids(user_id)
+        .then(res=>{
+            if(res.data.status==="success"){
+                const kids = res.data.kids
+                for(const i in kids){
+                    kids[i].birth_date = this.getBirthDate(kids[i].birth_date)
+                }
+                const kidFilter = {id:kids[0]._id, name:kids[0].first_name+' '+kids[0].last_name}
+                this.setState({kids: kids})
+                this.handleFilter(kidFilter)
+            }
+        })
+        .catch(err=>{
+            console.log(err)
+            console.log("error fetching kids")
+        })
+
+
+    }
+
+
   render() {
     let changeTime = true;
     return (
       <div className="calendar">
-        <CalendarHeader handleFilter={this.handleFilter} filter={this.state.kidFilter} currentList={this.state.currentList} nextClick={this.nextClick} prevClick={this.prevClick}/>
+        <CalendarHeader kids={this.state.kids} handleFilter={this.handleFilter} filter={this.state.kidFilter} currentList={this.state.currentList} nextClick={this.nextClick} prevClick={this.prevClick}/>
         <div className = "calendar-body">
             <div className = "calendar-body-time">
                 <div className="time-icon">
@@ -151,7 +222,9 @@ export default class Calendar extends Component {
             </div>
             {weekdayLabel.map((weekday, index)=>{
                 return(
-                    <CalendarCol kids={this.state.kids}
+                    <CalendarCol 
+                      programs={this.state.filterPrograms}
+                      kids={this.state.kids}
                       filter = {this.state.kidFilter}
                       currentDate={this.state.currentDate}
                       date={this.state.currentList[index]}
