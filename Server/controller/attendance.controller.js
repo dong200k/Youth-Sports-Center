@@ -33,7 +33,6 @@ export default class AttendanceController{
             let matchOneDate = false
             for(const programDate of program.schedule){
                 if(new Date(programDate).toString().substring(0,15)===new Date(date).toString().substring(0,15)){
-                    console.log(new Date(date))
                     matchOneDate = true
                     break
                 }
@@ -76,7 +75,7 @@ export default class AttendanceController{
                     //write their name to the attendance with names
                     attendanceWithNames[i].kid_name = ithKid.first_name + " "+ ithKid.last_name
                 }
-                console.log(attendanceWithNames)
+
             }
             res.json({status: "success", attendance: attendanceWithNames})
         } catch (e) {

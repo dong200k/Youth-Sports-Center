@@ -111,28 +111,6 @@ export default class Attendance extends Component {
         let currentDay = date.getDay()
         let cYMD = `${cYear}-${cMonth}-${cDate}T00:00:00.000Z`
         this.setState({date:cYMD,filter_date:cYMD})
-        this.getAttendance()
-
-        const data = {
-            program_id: this.props.program._id,
-            date: cYMD
-        }
-
-        console.log(data)
-        attendanceService.getAttendance(data)
-            .then(res=>{
-                if(res.data.status==="success"){
-                    console.log("nihao")
-                    this.setState({
-                        attendance: res.data.attendance
-                    })
-                }
-            })
-            .catch(err=>{
-                this.setState({
-                    attendance: []
-                })
-            })
     }
     
     handleFilter = (event) =>{
