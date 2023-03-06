@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/dong200k/Youth-Sports-Center#readme",
   "engines": {
-    "node": "16"
+    "node": "16.19.0"
   },
   "cacheDirectories": ["my-app/node_modules", "Server/node_modules"]
 }
