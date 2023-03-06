@@ -5,6 +5,8 @@ let announcement
 //create/post announcement
 //update/put announcement
 //read/get announcement
+
+// ***** the DAO, data access object is more difficult to use. I suggest using Mongoose models which we also have in the models folder. *****
 export default class AnnouncementDao{
     static async injectDB(conn){
         // if we have the annoucement collection return

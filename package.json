@@ -6,7 +6,7 @@
   "scripts": {
     "start" : "cd Server && npm run prod",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "heroku-postbuild": "npm run install-server && npm run install-socket && npm run install-my-app",
+    "build": "npm run install-server && npm run install-socket && npm run install-my-app",
     "install-server": "cd Server && npm install",
     "install-socket": "cd socket && npm install",
     "install-my-app": "cd my-app && npm install && npm run build"
