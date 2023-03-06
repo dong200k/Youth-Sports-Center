@@ -1,7 +1,7 @@
 import mongodb from 'mongodb'
 const ObjectId = mongodb.ObjectId
 let program
-
+// ***** the DAO, data access object is more difficult to use. I suggest using Mongoose models which we also have in the models folder. *****
 export default class ProgramDAO{
     static async injectDB(conn){
         // if we have the program collection return

@@ -79,6 +79,7 @@ export default class AttendanceController{
             }
             res.json({status: "success", attendance: attendanceWithNames})
         } catch (e) {
+            console.log(e.message)
             res.status(403).json({error: e.message})
         }
     }

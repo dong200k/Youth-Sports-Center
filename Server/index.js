@@ -27,7 +27,7 @@ MongoClient.connect(
 )
 .catch(err=>{
   //catch connection error
-  console.log("error!!!")
+  console.log("Error Connecting to MongoDB in index.js!")
   console.log(err.stack)
   process.exit(1)
 })

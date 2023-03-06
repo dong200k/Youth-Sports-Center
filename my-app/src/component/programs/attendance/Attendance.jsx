@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react'
 import { v4 as uuidv4 } from "uuid"
 import attendanceService from '../../../services/attendance.service.js';
@@ -21,7 +22,6 @@ export default class Attendance extends Component {
 
     componentDidMount(){ 
         this.initDate();
-
     }
 
     componentWillUnmount() {
@@ -49,13 +49,10 @@ export default class Attendance extends Component {
 
     getAttendance(){
         //get schedule for one program on one date
-        console.log(this.state.filter_date)
         const data = {
             program_id: this.props.program._id,
             date: this.state.filter_date
         }
-
-        console.log(data)
         attendanceService.getAttendance(data)
             .then(res=>{
                 if(res.data.status==="success"){
@@ -78,8 +75,6 @@ export default class Attendance extends Component {
             date: this.state.filter_date,
             attendances: this.state.attendance
         }
-        console.log("post attendance")
-        console.log(data)
         attendanceService.upsertAttendance(data)
             .then(res=>{
                 if(res.data.status==="success"){
@@ -109,7 +104,7 @@ export default class Attendance extends Component {
         let cMonth = this.format(date.getMonth() + 1)
         let cDate = this.format(date.getDate())
         let currentDay = date.getDay()
-        let cYMD = `${cYear}-${cMonth}-${cDate}T00:00:00.000Z`
+        let cYMD = `${cYear}-${cMonth}-${cDate}`
         this.setState({date:cYMD,filter_date:cYMD})
     }
     
